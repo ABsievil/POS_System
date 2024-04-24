@@ -11,12 +11,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-//@Builder
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorValue("CASHIER")
-public class Cashier extends Emloyee {
+// @DiscriminatorValue("CASHIER")
+public class Cashier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

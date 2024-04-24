@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorValue("PRODUCTBATCH")
+// @DiscriminatorValue("PRODUCTBATCH")
 @IdClass(ProductBatchId.class)
 public class ProductBatch {
     @Id

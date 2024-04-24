@@ -13,17 +13,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// @Builder
+@Builder
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorValue("MANAGER") // use only for disjoin constraints
-public class Manager extends Emloyee {
+// @DiscriminatorValue("MANAGER") // use only for disjoin constraints
+public class Manager {
     @Id
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_employee", referencedColumnName = "id")
-    private Emloyee emloyee;
+    private Employee emloyee;
 
     private String degree; //bằng cấp
 

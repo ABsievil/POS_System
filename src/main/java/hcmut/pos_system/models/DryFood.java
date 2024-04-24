@@ -3,6 +3,7 @@ package hcmut.pos_system.models;
 import java.time.LocalDate;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(DryFoodId.class)
+// @DiscriminatorValue("DRYFOOD")
 public class DryFood {
     @Id
     @OneToOne(cascade = CascadeType.REMOVE)

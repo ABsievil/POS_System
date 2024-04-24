@@ -17,11 +17,11 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-//@Builder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorValue("APPLIANCE")
-public class Appliance extends ProductBatch {
+// @DiscriminatorValue("APPLIANCE")
+public class Appliance {
     @Id
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_productBatch", referencedColumnName = "id")

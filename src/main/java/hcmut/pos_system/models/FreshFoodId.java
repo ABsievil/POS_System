@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class FreshFoodId implements Serializable {
     private ProductBatch productBatch1;
 
-    private ProductBatch productBatch2;
+    // private ProductBatch productBatch2;
 }
