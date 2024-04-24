@@ -18,6 +18,11 @@ public class PageController {
         return "login";
     }
 
+    @RequestMapping("/userProfile")
+    public String userProfile(){
+        return "userProfile";
+    }
+
     @Controller
     @RequestMapping("/update")
     public class update{
