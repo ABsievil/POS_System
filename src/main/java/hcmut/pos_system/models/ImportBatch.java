@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
@@ -20,20 +22,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @IdClass(ImportBatchId.class)
 public class ImportBatch {
-    @Id
-    @ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_branch", referencedColumnName = "id")
-    private Branch branch;
+    // @Id
+    // @ManyToMany(cascade = CascadeType.REMOVE)
+    // @JoinColumn(name = "id_branch", referencedColumnName = "id")
+    // private Branch branch;
+
+    // @Id
+    // @ManyToMany(cascade = CascadeType.REMOVE)
+    // @JoinColumn(name = "id_productType", referencedColumnName = "id")
+    // private ProductType productType;
+
+    // @Id
+    // private Long productQuantity;
+
+    // @Id
+    // private LocalDate date;
 
     @Id
-    @ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_productType", referencedColumnName = "id")
-    private ProductType productType;
-
-    @Id
-    private Long productQuantity;
-
-    @Id
-    private LocalDate date;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
 }
