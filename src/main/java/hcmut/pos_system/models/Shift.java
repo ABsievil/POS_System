@@ -21,7 +21,7 @@ public class Shift {
     @Id
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_employee", referencedColumnName = "id")
-    private Emloyee emloyee;
+    private Employee emloyee;
 
     @Id
     private String shift;

@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShiftId implements Serializable {
-    private Emloyee emloyee;
+    private Employee emloyee;
     private String shift; 
 }
