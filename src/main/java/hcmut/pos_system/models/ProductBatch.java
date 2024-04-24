@@ -31,7 +31,7 @@ public class ProductBatch {
 
     @Id
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_productType", referencedColumnName = "") //you must write this
+    @JoinColumn(name = "id_productType", referencedColumnName = "id") //you must write this
     private ProductType productType;
 
     private Long currentPrice;
