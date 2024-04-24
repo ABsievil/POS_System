@@ -1,5 +1,6 @@
 package hcmut.pos_system.model;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,13 +11,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+//@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cashier {
+@DiscriminatorValue("CASHIER")
+public class Cashier extends Emloyee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int typingSpeed;
 }

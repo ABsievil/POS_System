@@ -40,7 +40,7 @@ public class Emloyee {
     private String salary;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_supervisor")
+    @JoinColumn(name = "id_supervisor", referencedColumnName = "id")
     private Emloyee employee; 
 
     @ManyToOne(cascade = CascadeType.REMOVE)
