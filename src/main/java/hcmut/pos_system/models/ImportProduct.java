@@ -1,6 +1,4 @@
-package hcmut.pos_system.model;
-
-import java.time.LocalDate;
+package hcmut.pos_system.models;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -18,22 +16,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(ImportBatchId.class)
-public class ImportBatch {
-    @Id
-    @ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_branch", referencedColumnName = "id")
-    private Branch branch;
-
+@IdClass(ImportProductId.class)
+public class ImportProduct {
     @Id
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_productType", referencedColumnName = "id")
     private ProductType productType;
 
     @Id
-    private Long productQuantity;
-
-    @Id
-    private LocalDate date;
-
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_branch", referencedColumnName = "id")
+    private Branch branch;
 }

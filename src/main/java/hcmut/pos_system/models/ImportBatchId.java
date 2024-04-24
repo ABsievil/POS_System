@@ -1,6 +1,7 @@
-package hcmut.pos_system.model;
+package hcmut.pos_system.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +12,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductBatchId implements Serializable {
-    private Long id;
+public class ImportBatchId implements Serializable {
+    private Branch branch;
 
     private ProductType productType;
+
+    private Long productQuantity;
+
+    private LocalDate date;
 }

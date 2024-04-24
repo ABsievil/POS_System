@@ -1,25 +1,32 @@
-package hcmut.pos_system.model;
+package hcmut.pos_system.models;
 
-import jakarta.persistence.DiscriminatorValue;
+import java.time.LocalDate;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-//@Builder
 @Entity
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorValue("CASHIER")
-public class Cashier extends Emloyee {
+public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int typingSpeed;
+    private LocalDate date;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_cashier", referencedColumnName = "id")
+    private Cashier cashier;
 }

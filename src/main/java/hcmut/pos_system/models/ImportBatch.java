@@ -1,4 +1,4 @@
-package hcmut.pos_system.model;
+package hcmut.pos_system.models;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,18 +18,22 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(ActivityScheduleId.class)
-public class ActivitySchedule {
+@IdClass(ImportBatchId.class)
+public class ImportBatch {
     @Id
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_branch", referencedColumnName = "id")
     private Branch branch;
 
     @Id
-    private LocalDate saleDateInWeek;
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_productType", referencedColumnName = "id")
+    private ProductType productType;
 
     @Id
-    private LocalDate startTime;
+    private Long productQuantity;
+
     @Id
-    private LocalDate endTime;
+    private LocalDate date;
+
 }

@@ -1,4 +1,4 @@
-package hcmut.pos_system.model;
+package hcmut.pos_system.models;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

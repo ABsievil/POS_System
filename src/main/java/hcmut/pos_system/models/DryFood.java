@@ -1,11 +1,9 @@
-package hcmut.pos_system.model;
+package hcmut.pos_system.models;
 
 import java.time.LocalDate;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
@@ -15,13 +13,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(FreshFoodId.class)
-public class FreshFood {
+@IdClass(DryFoodId.class)
+public class DryFood {
     @Id
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_productBatch", referencedColumnName = "id")
@@ -32,6 +30,7 @@ public class FreshFood {
     @JoinColumn(name = "id_productType", referencedColumnName = "id_productType")
     private ProductBatch productBatch2;
 
-    private LocalDate dateOfManufacture;
+    private LocalDate describe;
+    private LocalDate expiredDate;
     
 }

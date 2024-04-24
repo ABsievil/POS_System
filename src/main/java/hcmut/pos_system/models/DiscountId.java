@@ -1,4 +1,4 @@
-package hcmut.pos_system.model;
+package hcmut.pos_system.models;
 
 import java.io.Serializable;
 
@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FreshFoodId implements Serializable {
-    private ProductBatch productBatch1;
+public class DiscountId implements Serializable {
+    private Long id;
 
-    private ProductBatch productBatch2;
+    private ProductType productType;
 }

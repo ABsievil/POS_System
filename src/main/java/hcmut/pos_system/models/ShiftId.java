@@ -1,4 +1,5 @@
-package hcmut.pos_system.model;
+package hcmut.pos_system.models;
+
 
 import java.io.Serializable;
 
@@ -11,8 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DiscountId implements Serializable {
-    private Long id;
-
-    private ProductType productType;
+public class ShiftId implements Serializable {
+    private Emloyee emloyee;
+    private String shift; 
 }

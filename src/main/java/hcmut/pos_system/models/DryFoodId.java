@@ -1,4 +1,4 @@
-package hcmut.pos_system.model;
+package hcmut.pos_system.models;
 
 import java.io.Serializable;
 
@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImportProductId implements Serializable {
-    private ProductType productType;
+public class DryFoodId implements Serializable {
+    private ProductBatch productBatch1;
 
-    private Branch branch;
+    private ProductBatch productBatch2;
 }
