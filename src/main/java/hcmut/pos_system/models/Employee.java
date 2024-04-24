@@ -22,9 +22,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 /* Use only for disjoin constraints */
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorValue("EMPLOYEE")
-public class Emloyee {
+// @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+// @DiscriminatorValue("EMPLOYEE")
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,7 +33,7 @@ public class Emloyee {
     private String middleName;
     private String firstName;
 
-    @Column(unique = true)
+    //@Column(unique = true)
     private String CCCD;
     private String phoneNumber;
     private String email;
@@ -41,8 +41,9 @@ public class Emloyee {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_supervisor", referencedColumnName = "id")
-    private Emloyee employee; 
+    private Employee employee; 
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    private Long id_branch;
+    @JoinColumn(name = "id_branch", referencedColumnName = "id")
+    private Branch branch;
 }
