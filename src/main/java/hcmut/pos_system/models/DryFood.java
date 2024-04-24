@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,18 +20,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(DryFoodId.class)
 // @DiscriminatorValue("DRYFOOD")
 public class DryFood {
     @Id
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_productBatch", referencedColumnName = "id")
-    private ProductBatch productBatch1;
-
-    @Id
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_productType", referencedColumnName = "id_productType")
-    private ProductBatch productBatch2;
+    @OneToOne
+    @JoinColumns({
+        @JoinColumn(name = "id_productBatch", referencedColumnName = "id"),
+        @JoinColumn(name = "id_productType", referencedColumnName = "id_productType")
+    })
+    private ProductBatch productBatch;
 
     private LocalDate describe;
     private LocalDate expiredDate;
