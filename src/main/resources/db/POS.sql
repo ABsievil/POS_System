@@ -107,6 +107,7 @@ CREATE TABLE ProductType (
 	SupplierID INT NOT NULL,
 	StockQuantity INT NOT NULL,
 	SalePrice DECIMAL(10, 3) NOT NULL,
+
 	CONSTRAINT PK_ProductType PRIMARY KEY (ProductTypeID),
 
 	CONSTRAINT FK_ProductTypeSupplier FOREIGN KEY (SupplierID)
