@@ -45,7 +45,7 @@ CREATE TABLE Shift (
 	ShiftTime INT NOT NULL,
 	ShiftDay VARCHAR(2) NOT NULL,
 
-	CONSTRAINT PK_WorkShift PRIMARY KEY (EmployeeID, ShiftTime),
+	CONSTRAINT PK_WorkShift PRIMARY KEY (EmployeeID, ShiftTime, ShiftDay),
 	
 	CONSTRAINT FK_WorkShiftEmployee FOREIGN KEY (EmployeeID)
 		REFERENCES Employee(EmployeeID),
@@ -232,7 +232,7 @@ ADD CONSTRAINT CHK_ShiftTimeRange CHECK (ShiftTime IN (1, 2, 3));
 
 -- Constraint on Discount's discount rate (in %)
 ALTER TABLE Discount
-ADD CONSTRAINT CHK_DiscountRange CHECK (Discount >= 5 AND Discount <= 50);
+ADD CONSTRAINT CHK_DiscountRange CHECK (Discount >= 5 AND Discount <= 90);
 
 -- Constraint on the number of each product type in a batch
 ALTER TABLE ImportBatch
