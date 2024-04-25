@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImportProductId implements Serializable {
-    // private ProductType productType;
+    private ProductType productType;
 
-    // private Branch branch;
-
-    private Long id;}
+    private Branch branch;
+}

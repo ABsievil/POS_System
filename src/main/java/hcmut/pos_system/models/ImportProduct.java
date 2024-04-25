@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,21 +26,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @IdClass(ImportProductId.class)
 public class ImportProduct {
-    // @Id
-    // @OneToMany(cascade = CascadeType.REMOVE)
-    // @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
-    // @ToString.Exclude // Không sử dụng trong toString()
-    // @JoinColumn(name = "id_productType", referencedColumnName = "id")
-    // private Collection<ProductType> productType;
-
-    // @Id
-    // @OneToMany(cascade = CascadeType.REMOVE)
-    // @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
-    // @ToString.Exclude // Không sử dụng trong toString()
-    // @JoinColumn(name = "id_branch", referencedColumnName = "id")
-    // private Collection<Branch> branch;
+    @Id
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_productType", referencedColumnName = "id")
+    private ProductType productType;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_branch", referencedColumnName = "id")
+    private Branch branch;
 }
