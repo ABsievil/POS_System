@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,24 +24,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @IdClass(ImportBatchId.class)
 public class ImportBatch {
-    // @Id
-    // @ManyToMany(cascade = CascadeType.REMOVE)
-    // @JoinColumn(name = "id_branch", referencedColumnName = "id")
-    // private Branch branch;
-
-    // @Id
-    // @ManyToMany(cascade = CascadeType.REMOVE)
-    // @JoinColumn(name = "id_productType", referencedColumnName = "id")
-    // private ProductType productType;
-
-    // @Id
-    // private Long productQuantity;
-
-    // @Id
-    // private LocalDate date;
+    // đợt nhập lấy 2 khóa ngoại từ bảng ImportProduct chứ k phải từ nguồn sinh ra của 2 khóa ngoại
+    @Id
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_branch", referencedColumnName = "id")
+    private Branch branch;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_productType", referencedColumnName = "id")
+    private ProductType productType;
+
+    @Id
+    private Long productQuantity;
+
+    @Id
+    private LocalDate date;
 
 }
