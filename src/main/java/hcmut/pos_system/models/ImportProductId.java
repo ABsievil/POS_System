@@ -16,5 +16,4 @@ public class ImportProductId implements Serializable {
 
     // private Branch branch;
 
-    private Long id;
-}
+    private Long id;}
