@@ -8,14 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PageController {
     
-    @RequestMapping(value = {"/", "index"})
+    @RequestMapping(value = {"/", "home"})
     public String welcome(){
-        return "index";
+        return "homePage";
     }
 
     @RequestMapping("/login")
     public String login(){
         return "login";
+    }
+
+    @RequestMapping("/userProfile")
+    public String userProfile(){
+        return "userProfile";
     }
 
     @Controller
