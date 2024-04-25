@@ -71,27 +71,83 @@ VALUES
     (40, N'Phan', N'Thị', N'Mai', '100000000044', '0835376220', 'maipt@gmail.com', 10.7, null, 5);
 
 -- Insert Cashier 
-INSERT INTO Cashier (EmployeeID, TypingSpeed) VALUES (41,2.5),(27,5.0),(31,3.5),(35,4.0),(43,2.5); 
+INSERT INTO Cashier (EmployeeID, TypingSpeed) 
+VALUES (41,2.5), (12, 4.7), (36, 6), (27,5.0), (31,3.5), (16, 2.3), (8, 7.2), (35,4.0), (20, 5.6), (43,2.5); 
 
 -- Insert Manager
-INSERT INTO Manager (EmployeeID, Degree, BranchID, ManageStartDate) VALUES (7, N'Cử nhân Quản trị kinh doanh', 1,'20240423'),(3, N'Cử nhân Quản trị kinh doanh', 2,'20240423'), (28, N'Cử nhân Quản trị kinh doanh', 3,'20240423'), (39, N'Cử nhân Quản trị kinh doanh', 4,'20240423'),(1,N'Cử nhân Quản trị kinh doanh', 5,'20240423');  
-
-Delete Shift
+INSERT INTO Manager (EmployeeID, Degree, BranchID, ManageStartDate) 
+VALUES 
+	(7, N'Cử nhân Quản trị kinh doanh', 1,'20240423'),
+	(3, N'Cử nhân Quản trị kinh doanh', 2,'20240423'), 
+	(39, N'Cử nhân Quản trị kinh doanh', 3,'20240423'), 
+	(28, N'Cử nhân Quản trị kinh doanh', 4,'20240423'),
+	(1, N'Cử nhân Quản trị kinh doanh', 5,'20240423');  
 
 -- Insert Shift
 CREATE PROCEDURE Insert_Shift AS
 BEGIN
 	DECLARE @EmployeeID INT = 1
 	WHILE @EmployeeID <= 50
-		BEGIN 
-			INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, @EmployeeID % 3 + 1, '2')
-			INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '3')
-			INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, @EmployeeID % 3 + 1, '4')
-			INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 2) % 3 + 1, '5')
-			INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '6')
-			INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '7')
-			SET @EmployeeID = @EmployeeID + 1;
-		END
+		BEGIN
+			IF @EmployeeID = 12 OR @EmployeeID = 27 OR @EmployeeID = 16 OR @EmployeeID = 8 OR @EmployeeID = 20
+				BEGIN
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 1, '2');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 2, '3');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 3, '3');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 2, '4');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 1, '5');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 3, '5');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 1, '6');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 1, '7');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 2, '7');
+				END
+			ELSE IF @EmployeeID = 41 OR @EmployeeID = 36 OR @EmployeeID = 31 OR @EmployeeID = 35 OR @EmployeeID = 43
+				BEGIN
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 2, '2');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 3, '2');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 1, '3');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 1, '4');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 3, '4');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 2, '5');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 2, '6');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 3, '6');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, 3, '7');
+				END
+			ELSE IF @EmployeeID % 3 = 0
+				BEGIN
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 2) % 3 + 1, '2');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '2');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 0) % 3 + 1, '3'); 
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '4'); 
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '5'); 
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 0) % 3 + 1, '5');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 2) % 3 + 1, '6'); 
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 0) % 3 + 1, '7'); 	 
+				END
+			ELSE IF @EmployeeID % 3 = 1
+				BEGIN
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 3) % 3 + 1, '2');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '2');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '3');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '4');  
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 0) % 3 + 1, '5');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 2) % 3 + 1, '6'); 
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 0) % 3 + 1, '7'); 
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '7'); 	 
+				END
+			ELSE 
+				BEGIN
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 3) % 3 + 1, '2');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '3');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 0) % 3 + 1, '3'); 
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '4');  
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 0) % 3 + 1, '5');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 2) % 3 + 1, '6'); 
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 1) % 3 + 1, '7');
+					INSERT INTO Shift(EmployeeID, ShiftTime, ShiftDay) VALUES (@EmployeeID, (@EmployeeID + 0) % 3 + 1, '7');  	 
+				END
+				SET @EmployeeID = @EmployeeID + 1;
+			END
 END
 EXEC Insert_Shift
 DROP PROCEDURE Insert_Shift
@@ -136,11 +192,11 @@ begin
 end
 
 -- Insert Branchschedules 
-INSERT INTO Branchschedules (BranchID,OpenDays,OpenTime,CloseTime) VALUES (1, N'Thứ 2 đến Chủ nhật','07:00:00', '10:30:00');  
+INSERT INTO Branchschedules (BranchID,OpenDays,OpenTime,CloseTime) VALUES (1, N'Thứ 2 đến Thứ 7','07:00:00', '10:30:00');  
 INSERT INTO Branchschedules (BranchID,OpenDays,OpenTime,CloseTime) VALUES (2,N'Thứ 2 đến Thứ 7','07:30:00', '10:30:00');  
-INSERT INTO Branchschedules (BranchID,OpenDays,OpenTime,CloseTime) VALUES (3, N'Thứ 2 đến Chủ nhật','08:00:00', '11:30:00');  
+INSERT INTO Branchschedules (BranchID,OpenDays,OpenTime,CloseTime) VALUES (3, N'Thứ 2 đến Thứ 7','08:00:00', '11:30:00');  
 INSERT INTO Branchschedules (BranchID,OpenDays,OpenTime,CloseTime) VALUES (4,N'Thứ 2 đến Thứ 7','07:00:00', '10:30:00');  
-INSERT INTO Branchschedules (BranchID,OpenDays,OpenTime,CloseTime) VALUES (5,N'Thứ 2 đến Chủ nhật','09:00:00', '12:00:00');  
+INSERT INTO Branchschedules (BranchID,OpenDays,OpenTime,CloseTime) VALUES (5,N'Thứ 2 đến Thứ 7','09:00:00', '12:00:00');  
 
 -- Insert Bill
 INSERT INTO Bill (BillID, OrderDate, CashierID) VALUES
@@ -153,21 +209,49 @@ INSERT INTO Bill (BillID, OrderDate, CashierID) VALUES
 -- Insert Supplier
 INSERT INTO Supplier (SupplierID, SupplierName, Email, ZipCode, PhoneNo)
 VALUES
-    (1, N'Công ty Sữa Vinamilk', 'vinamilk@example.com', '12345', '123-456-7890'),
-    (2, N'Công ty nước giải khát CocaCola', 'coke@example.com', '23456', '234-567-8901'),
-    (3, N'Công ty Dầu ăn Tường An', 'dichvukhachhang@tuongan.com.vn', '34567', '345-678-9012'),
-    (4, N'Công ty Thương mại Toàn cầu', ' info@toancaugroup.com.vn ', '45678', '456-789-0123');
+    (1, N'Công ty Sữa Vinamilk', 'vinamilk@vinamilk.com.vn', '69000', '(028) 54 155 555'),
+	(2, N'Công ty Acecook Việt Nam', 'info@acecookvietnam.com', '90000', '(028) 3815 4064'),
+    (3, N'Công ty nước giải khát CocaCola', 'coke@example.com', '76000', '1900 5555 84'),
+    (4, N'Công ty Dầu ăn Tường An', 'dichvukhachhang@tuongan.com.vn', '55000', '028 3827 7805'),
+
+    (5, N'Công ty Thương mại Toàn cầu', ' info@toancaugroup.com.vn ', '32000', '0868.136.563'),
+
+	(6, N'Đầu mối rau củ', ' // ', ' // ', '0975780703'),
+    (7, N'Đầu mối cá thịt', ' // ', ' // ', '0385676052');
 
 -- Insert ProductType
 INSERT INTO ProductType (ProductTypeID, ProductTypeName, SupplierID, StockQuantity, SalePrice)
 VALUES
-	('VNM001', N'Sữa chua uống Probi có đường', 1, 90, 49.500),
-	('VNM002', N'Sữa chua uống Vinamilk vị dâu', 1, 80, 29.500),
-	('CC001', N'Coca Cola', 1, 50, 20.752),
-	('CC002', N'Sprite', 1, 80, 18.752),
-	('TA001', N'Dầu ăn Tường An', 2, 50, 120.500),
-	('TA002', N'Nước mắm cá cơm Tường An', 2, 100, 85.200),
-	('TC001', N'Chất phục hồi sáng bóng gỗ Howard Restor-A-Shine', 3, 100, 429.000);
+	('VNM001', N'Nước cam ép Vfresh', 1, 100, 44.500),
+	('VNM002', N'Sữa chua Vinamilk có đường', 1, 100, 6.125),
+	('VNM003', N'Sữa chua Vinamilk không đường', 1, 100, 6.125),
+	('VNM004', N'Sữa tươi Vinamilk có đường', 1, 100, 4.800),
+	('VNM005', N'Sữa tươi Vinamilk không đường', 1, 100, 4.800),
+
+	('ACE001', N'Mì hảo hảo', 2, 500, 4.500),
+	('ACE002', N'Mì ly Modern', 2, 300, 12.000),
+	('ACE003', N'Mì xào Táo Quân', 2, 300, 12.900),
+
+	('CC001', N'Coca Cola', 3, 500, 9.600),
+	('CC002', N'Sprite', 3, 500, 9.600),
+
+	('TA001', N'Dầu ăn Tường An', 4, 50, 120.500),
+	('TA002', N'Nước mắm cá cơm Tường An', 4, 50, 85.200),
+
+	('C001', N'Cá diêu hồng', 6, 5, 45.000),
+	('C002', N'Cá Ngừ', 6, 5, 249.000),
+	('T001', N'Thịt heo', 6, 5, 132.000),
+	('T002', N'Ức gà', 6, 5, 65.000),
+
+	('R001', N'Cải thìa', 3, 5, 20.000),
+	('R002', N'Cà chua', 3, 5, 30.000),
+	('R003', N'Nấm kim châm', 5, 100, 120.000),
+	('R004', N'Cải thảo', 3, 5, 30.000),
+
+	('TC001', N'Xịt khử mùi', 5, 40, 86.000),
+	('TC002', N'Mặt nạ ban đêm', 5, 100, 12.300),
+	('TC003', N'Đũa ăn', 5, 20, 46.000);
+
 
 -- Insert ProductLot
 INSERT INTO ProductLot (ProductLotID, ProductTypeID, QuantityInLot, ExpireDate)
@@ -181,6 +265,7 @@ VALUES
 	(7, 'VNM001', 10, '20241231'),
 	(8, 'VNM001', 10, '20241231'),
 	(9, 'VNM001', 10, '20241231'),
+	(10, 'VNM001', 10, '20241231'),
 
 	(1, 'VNM002', 10, '20241231'),
 	(2, 'VNM002', 10, '20241231'),
@@ -190,108 +275,249 @@ VALUES
 	(6, 'VNM002', 10, '20241231'),
 	(7, 'VNM002', 10, '20241231'),
 	(8, 'VNM002', 10, '20241231'),
+	(9, 'VNM002', 10, '20241231'),
+	(10, 'VNM002', 10, '20241231'),
 
-	(1, 'CC001', 10, '20241231'),
-	(2, 'CC001', 10, '20241231'),
-	(3, 'CC001', 10, '20241231'),
-	(4, 'CC001', 10, '20241231'),
-	(5, 'CC001', 10, '20241231'),
+	(1, 'VNM003', 10, '20241231'),
+	(2, 'VNM003', 10, '20241231'),
+	(3, 'VNM003', 10, '20241231'),
+	(4, 'VNM003', 10, '20241231'),
+	(5, 'VNM003', 10, '20241231'),
+	(6, 'VNM003', 10, '20241231'),
+	(7, 'VNM003', 10, '20241231'),
+	(8, 'VNM003', 10, '20241231'),
+	(9, 'VNM003', 10, '20241231'),
+	(10, 'VNM003', 10, '20241231'),
 
-	(1, 'CC002', 20, '20241231'),
-	(2, 'CC002', 20, '20241231'),
-	(3, 'CC002', 20, '20241231'),
-	(4, 'CC002', 20, '20241231'),
+	(1, 'VNM004', 10, '20241231'),
+	(2, 'VNM004', 10, '20241231'),
+	(3, 'VNM004', 10, '20241231'),
+	(4, 'VNM004', 10, '20241231'),
+	(5, 'VNM004', 10, '20241231'),
+	(6, 'VNM004', 10, '20241231'),
+	(7, 'VNM004', 10, '20241231'),
+	(8, 'VNM004', 10, '20241231'),
+	(9, 'VNM004', 10, '20241231'),
+	(10, 'VNM004', 10, '20241231'),
 
-	(1, 'TA001', 25, '20241231'),
-	(2, 'TA001', 25, '20241231'),
+	(1, 'VNM005', 10, '20241231'),
+	(2, 'VNM005', 10, '20241231'),
+	(3, 'VNM005', 10, '20241231'),
+	(4, 'VNM005', 10, '20241231'),
+	(5, 'VNM005', 10, '20241231'),
+	(6, 'VNM005', 10, '20241231'),
+	(7, 'VNM005', 10, '20241231'),
+	(8, 'VNM005', 10, '20241231'),
+	(9, 'VNM005', 10, '20241231'),
+	(10, 'VNM005', 10, '20241231'),
 
-	(1, 'TA002', 25, '20241231'),
-	(2, 'TA002', 25, '20241231'),
-	(3, 'TA002', 25, '20241231'),
-	(4, 'TA002', 25, '20241231'),
+	(1, 'ACE001', 50, '20241231'),
+	(2, 'ACE001', 50, '20241231'),
+	(3, 'ACE001', 50, '20241231'),
+	(4, 'ACE001', 50, '20241231'),
+	(5, 'ACE001', 50, '20241231'),
+	(6, 'ACE001', 50, '20241231'),
+	(7, 'ACE001', 50, '20241231'),
+	(8, 'ACE001', 50, '20241231'),
+	(9, 'ACE001', 50, '20241231'),
+	(10, 'ACE001', 50, '20241231'),
 
-	(1, 'TC001', 25, '20241231'),
-	(2, 'TC001', 25, '20241231'),
-	(3, 'TC001', 25, '20241231'),
-	(4, 'TC001', 25, '20241231');
+	(1, 'ACE002', 50, '20241231'),
+	(2, 'ACE002', 50, '20241231'),
+	(3, 'ACE002', 50, '20241231'),
+	(4, 'ACE002', 50, '20241231'),
+	(5, 'ACE002', 50, '20241231'),
+	(6, 'ACE002', 50, '20241231'),
+
+	(1, 'ACE003', 50, '20241231'),
+	(2, 'ACE003', 50, '20241231'),
+	(3, 'ACE003', 50, '20241231'),
+	(4, 'ACE003', 50, '20241231'),
+	(5, 'ACE003', 50, '20241231'),
+	(6, 'ACE003', 50, '20241231'),
+
+	(1, 'CC001', 100, '20241231'),
+	(2, 'CC001', 100, '20241231'),
+	(3, 'CC001', 100, '20241231'),
+	(4, 'CC001', 100, '20241231'),
+	(5, 'CC001', 100, '20241231'),
+
+	(1, 'CC002', 100, '20241231'),
+	(2, 'CC002', 100, '20241231'),
+	(3, 'CC002', 100, '20241231'),
+	(4, 'CC002', 100, '20241231'),
+	(5, 'CC002', 100, '20241231'),
+
+	(1, 'TA001', 10, '20241231'),
+	(2, 'TA001', 10, '20241231'),
+	(3, 'TA001', 10, '20241231'),
+	(4, 'TA001', 10, '20241231'),
+	(5, 'TA001', 10, '20241231'),
+
+	(1, 'TA002', 10, '20241231'),
+	(2, 'TA002', 10, '20241231'),
+	(3, 'TA002', 10, '20241231'),
+	(4, 'TA002', 10, '20241231'),
+	(5, 'TA002', 10, '20241231'),
+
+	(1, 'C001', 1, '20241231'),
+	(2, 'C001', 1, '20241231'),
+	(3, 'C001', 1, '20241231'),
+	(4, 'C001', 1, '20241231'),
+	(5, 'C001', 1, '20241231'),
+
+	(1, 'C002', 1, '20241231'),
+	(2, 'C002', 1, '20241231'),
+	(3, 'C002', 1, '20241231'),
+	(4, 'C002', 1, '20241231'),
+	(5, 'C002', 1, '20241231'),
+
+	(1, 'T001', 1, '20241231'),
+	(2, 'T001', 1, '20241231'),
+	(3, 'T001', 1, '20241231'),
+	(4, 'T001', 1, '20241231'),
+	(5, 'T001', 1, '20241231'),
+
+	(1, 'T002', 1, '20241231'),
+	(2, 'T002', 1, '20241231'),
+	(3, 'T002', 1, '20241231'),
+	(4, 'T002', 1, '20241231'),
+	(5, 'T002', 1, '20241231'),
+
+	(1, 'R001', 1, '20241231'),
+	(2, 'R001', 1, '20241231'),
+	(3, 'R001', 1, '20241231'),
+	(4, 'R001', 1, '20241231'),
+	(5, 'R001', 1, '20241231'),
+
+	(1, 'R002', 1, '20241231'),
+	(2, 'R002', 1, '20241231'),
+	(3, 'R002', 1, '20241231'),
+	(4, 'R002', 1, '20241231'),
+	(5, 'R002', 1, '20241231'),
+
+	(1, 'R003', 1, '20241231'),
+	(2, 'R003', 1, '20241231'),
+	(3, 'R003', 1, '20241231'),
+	(4, 'R003', 1, '20241231'),
+	(5, 'R003', 1, '20241231'),
+
+	(1, 'R004', 1, '20241231'),
+	(2, 'R004', 1, '20241231'),
+	(3, 'R004', 1, '20241231'),
+	(4, 'R004', 1, '20241231'),
+	(5, 'R004', 1, '20241231'),
+
+	(1, 'TC001', 8, '20241231'),
+	(2, 'TC001', 8, '20241231'),
+	(3, 'TC001', 8, '20241231'),
+	(4, 'TC001', 8, '20241231'),
+	(5, 'TC001', 8, '20241231'),
+
+	(1, 'TC002', 20, '20241231'),
+	(2, 'TC002', 20, '20241231'),
+	(3, 'TC002', 20, '20241231'),
+	(4, 'TC002', 20, '20241231'),
+	(5, 'TC002', 20, '20241231'),
+
+	(1, 'TC003', 4, '20241231'),
+	(2, 'TC003', 4, '20241231'),
+	(3, 'TC003', 4, '20241231'),
+	(4, 'TC003', 4, '20241231'),
+	(5, 'TC003', 4, '20241231');
 
 --Insert Bill_ProductLot
-
-INSERT INTO Bill_ProductLot(BillID, ProductLotID, ProductTypeID, QuantityInBill, SalePrice)
+INSERT INTO Bill_ProductLot (BillID, ProductLotID, ProductTypeID, QuantityInBill, SalePrice)
 VALUES
-	(1, 1, 'VNM001', 10, 20.752),
-	(1, 1, 'VNM002', 10, 159.250),
-	(3, 2, '29413', 2, 20.000);
-	(4, 2, '29413', 2, 20.000);
-	(5, 2, '29413', 2, 20.000);
+	(1, 2, 'VNM001', 5, 49.500),
+	(1, 2, 'R004', 1, 32.000),
+	(1, 2, 'C001', 1, 49.500),
+	(1, 2, 'TA002', 1,86.000),
+
+	(2, 5, 'ACE001', 50, 5.000),
+
+	(3, 5, 'ACE002', 10, 12.500),
+
+	(4, 3, 'ACE003', 25, 12.900),
+
+	(5, 4, 'TC001', 1, 95.000);
+
 
 --Insert ImportProduct
 INSERT INTO ImportProduct (ProductTypeID, BranchID)
 VALUES
-	('VNM001', 1),
-	('VNM001', 2),
-	('VNM001', 3),
-	('VNM001', 4),
-	('VNM001', 5),
+	('VNM001', 1),('VNM001', 2),('VNM001', 3),('VNM001', 4),('VNM001', 5),
+	('VNM002', 1),('VNM002', 2),('VNM002', 3),('VNM002', 4),('VNM002', 5),
+	('VNM003', 1),('VNM003', 2),('VNM003', 3),('VNM003', 4),('VNM003', 5),
+	('VNM004', 1),('VNM004', 2),('VNM004', 3),('VNM004', 4),('VNM004', 5),
+	('VNM005', 1),('VNM005', 2),('VNM005', 3),('VNM005', 4),('VNM005', 5),
 
-	('VNM002', 1),
-	('VNM002', 2),
-	('VNM002', 3),
-	('VNM002', 4),
-	('VNM002', 5),
+	('ACE001', 1),('ACE001', 2),('ACE001', 3),('ACE001', 4),('ACE001', 5),
+	('ACE002', 1),('ACE002', 2),('ACE002', 3),('ACE002', 4),('ACE002', 5),
+	('ACE003', 1),('ACE003', 2),('ACE003', 3),('ACE003', 4),('ACE003', 5),
 
-	('CC001', 1),
-	('CC001', 2),
+	('CC001', 1),('CC001', 2),('CC001', 3),('CC001', 4),('CC001', 5),
+	('CC002', 1),('CC002', 2),('CC002', 3),('CC002', 4),('CC002', 5),
 
-	('CC002', 3),
-	('CC002', 5),
+	('TA001', 1),('TA001', 2),('TA001', 3),('TA001', 4),('TA001', 5),
+	('TA002', 1),('TA002', 2),('TA002', 3),('TA002', 4),('TA002', 5),
 
-	('TA001', 4),
+	('C001', 1),('C001', 2),('C001', 3),('C001', 4),('C001', 5),
+	('C002', 1),('C002', 2),('C002', 3),('C002', 4),('C002', 5),
+	('T001', 1),('T001', 2),('T001', 3),('T001', 4),('T001', 5),
+	('T002', 1),('T002', 2),('T002', 3),('T002', 4),('T002', 5),
 
-	('TA002', 2),
-	('TA002', 4),
-	('TA002', 5),
-	
-	('TC001', 1),
-	('TC001', 5);
+	('R001', 1),('R001', 2),('R001', 3),('R001', 4),('R001', 5),
+	('R002', 1),('R002', 2),('R002', 3),('R002', 4),('R002', 5),
+	('R003', 1),('R003', 2),('R003', 3),('R003', 4),('R003', 5),
+	('R004', 1),('R004', 2),('R004', 3),('R004', 4),('R004', 5),
+
+	('TC001', 1),('TC001', 2),('TC001', 3),('TC001', 4),('TC001', 5),
+	('TC002', 1),('TC002', 2),('TC002', 3),('TC002', 4),('TC002', 5),
+	('TC003', 1),('TC003', 2),('TC003', 3),('TC003', 4),('TC003', 5);
 	
 --Insert ImportBatch
 INSERT INTO ImportBatch (ProductTypeID, BranchID, ProductQuantity, BatchDate)
 VALUES
-	('VNM001', 1, 10, '20240424'),
-	('VNM001', 2, 20, '20240424'),
-	('VNM001', 3, 20, '20240424'),
-	('VNM001', 4, 20, '20240424'),
-	('VNM001', 5, 20, '20240424'),
+	('VNM001', 1, 10, '20240424'),('VNM001', 2, 20, '20240424'),('VNM001', 3, 20, '20240424'),('VNM001', 4, 20, '20240424'),('VNM001', 5, 20, '20240424'),
+	('VNM002', 1, 20, '20240424'),('VNM002', 2, 20, '20240424'),('VNM002', 3, 20, '20240424'),('VNM002', 4, 20, '20240424'),('VNM002', 5, 20, '20240424'),
+	('VNM003', 1, 20, '20240424'),('VNM003', 2, 20, '20240424'),('VNM003', 3, 20, '20240424'),('VNM003', 4, 20, '20240424'),('VNM003', 5, 20, '20240424'),
+	('VNM004', 1, 20, '20240424'),('VNM004', 2, 20, '20240424'),('VNM004', 3, 20, '20240424'),('VNM004', 4, 20, '20240424'),('VNM004', 5, 20, '20240424'),
+	('VNM005', 1, 20, '20240424'),('VNM005', 2, 20, '20240424'),('VNM005', 3, 20, '20240424'),('VNM005', 4, 20, '20240424'),('VNM005', 5, 20, '20240424'),
+
+	('ACE001', 1, 100, '20240424'),('ACE001', 2, 100, '20240424'),('ACE001', 3, 100, '20240424'),('ACE001', 4, 100, '20240424'),('ACE001', 5, 100, '20240424'),
+	('ACE002', 1, 100, '20240424'),('ACE002', 2, 50, '20240424'),('ACE002', 3, 50, '20240424'),('ACE002', 4, 50, '20240424'),('ACE002', 5, 50, '20240424'),
+	('ACE003', 1, 50, '20240424'),('ACE003', 2, 50, '20240424'),('ACE003', 3, 50, '20240424'),('ACE003', 4, 100, '20240424'),('ACE003', 5, 50, '20240424'),
+
+	('CC001', 1, 100, '20240424'),('CC001', 2, 100, '20240424'),('CC001', 3, 100, '20240424'),('CC001', 4, 100, '20240424'),('CC001', 5, 100, '20240424'),
+	('CC002', 1, 100, '20240424'),('CC002', 2, 100, '20240424'),('CC002', 3, 100, '20240424'),('CC002', 4, 100, '20240424'),('CC002', 5, 100, '20240424'),
+
+	('TA001', 1, 10, '20240424'),('TA001', 2, 10, '20240424'),('TA001', 3, 10, '20240424'),('TA001', 4, 10, '20240424'),('TA001', 5, 10, '20240424'),
+	('TA002', 1, 10, '20240424'),('TA002', 2, 10, '20240424'),('TA002', 3, 10, '20240424'),('TA002', 4, 10, '20240424'),('TA002', 5, 10, '20240424'),
+
+	('C001', 1, 1, '20240424'),('C001', 2, 1, '20240424'),('C001', 3, 1, '20240424'),('C001', 4, 1, '20240424'),('C001', 5, 1, '20240424'),
+	('C002', 1, 1, '20240424'),('C002', 2, 1, '20240424'),('C002', 3, 1, '20240424'),('C002', 4, 1, '20240424'),('C002', 5, 1, '20240424'),
+	('T001', 1, 1, '20240424'),('T001', 2, 1, '20240424'),('T001', 3, 1, '20240424'),('T001', 4, 1, '20240424'),('T001', 5, 1, '20240424'),
+	('T002', 1, 1, '20240424'),('T002', 2, 1, '20240424'),('T002', 3, 1, '20240424'),('T002', 4, 1, '20240424'),('T002', 5, 1, '20240424'),
 	
+	('R001', 1, 1, '20240424'),('R001', 2, 1, '20240424'),('R001', 3, 1, '20240424'),('R001', 4, 1, '20240424'),('R001', 5, 1, '20240424'),
+	('R002', 1, 1, '20240424'),('R002', 2, 1, '20240424'),('R002', 3, 1, '20240424'),('R002', 4, 1, '20240424'),('R002', 5, 1, '20240424'),
+	('R003', 1, 1, '20240424'),('R003', 2, 1, '20240424'),('R003', 3, 1, '20240424'),('R003', 4, 1, '20240424'),('R003', 5, 1, '20240424'),
+	('R004', 1, 1, '20240424'),('R004', 2, 1, '20240424'),('R004', 3, 1, '20240424'),('R004', 4, 1, '20240424'),('R004', 5, 1, '20240424'),
 
-	('VNM002', 1, 20, '20240424'),
-	('VNM002', 2, 10, '20240424'),
-	('VNM002', 3, 20, '20240424'),
-	('VNM002', 4, 10, '20240424'),
-	('VNM002', 5, 20, '20240424'),
-
-	('CC001', 1, 20, '20240424'),
-	('CC001', 2, 30, '20240424'),
-
-	('CC002', 3, 40, '20240424'),
-	('CC002', 5, 40, '20240424'),
-
-	('TA001', 4, 50, '20240424'),
-
-	('TA002', 2, 25, '20240424'),
-	('TA002', 4, 25, '20240424'),
-	('TA002', 5, 50, '20240424'),
-
-	('TC001', 1, 50, '20240424'),
-	('TC001', 5, 50, '20240424');
+	('TC001', 1, 8, '20240424'),('TC001', 2, 8, '20240424'),('TC001', 3, 8, '20240424'),('TC001', 4, 8, '20240424'),('TC001', 5, 8, '20240424'),
+	('TC002', 1, 20, '20240424'),('TC002', 2, 20, '20240424'),('TC002', 3, 20, '20240424'),('TC002', 4, 20, '20240424'),('TC002', 5, 20, '20240424'),
+	('TC003', 1, 4, '20240424'),('TC003', 2, 4, '20240424'),('TC003', 3, 4, '20240424'),('TC003', 4, 4, '20240424'),('TC003', 5, 4, '20240424');
 
 --Insert Discount
 INSERT INTO Discount (ProductTypeID, DiscountID, DiscountDate, Discount)
 VALUES 
 	('VNM001', 1, '20240424', 10),
-	('VNM001', 2, '20240424', 5),
-	('VNM002', 1, '20240424', 20),
-	('VNM002', 2, '20240424', 5);
+	('VNM001', 2, '20240425', 5),
+	('VNM002', 1, '20240429', 20),
+	('VNM002', 2, '20240430', 5);
 
 
+SELECT ProductTypeName, QuantityInBill, Bill_ProductLot.SalePrice
+FROM Bill_ProductLot, ProductType
+WHERE BillID = 1 AND Bill_ProductLot.ProductTypeID = ProductType.ProductTypeID
