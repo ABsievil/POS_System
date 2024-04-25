@@ -1,6 +1,4 @@
-﻿CREATE DATABASE POS
-
-CREATE TABLE Employee (
+﻿CREATE TABLE Employee (
 	EmployeeID INT NOT NULL,
 	LastName NVARCHAR(10) NOT NULL,
 	MiddleName NVARCHAR(20),
@@ -45,6 +43,7 @@ CREATE TABLE Manager (
 CREATE TABLE Shift (
 	EmployeeID INT NOT NULL,
 	ShiftTime INT NOT NULL,
+	ShiftDay VARCHAR(2) NOT NULL,
 
 	CONSTRAINT PK_WorkShift PRIMARY KEY (EmployeeID, ShiftTime),
 	
@@ -118,23 +117,38 @@ CREATE TABLE ProductLot (
 	ProductLotID INT NOT NULL, 
 	ProductTypeID NVARCHAR(20) NOT NULL, 
 	QuantityInLot INT,
-	SellPrice DECIMAL (10,3), 
-	BillID INT,
-	QuantityInBill INT,
+	ExpireDate DATE NOT NULL,
 
 	CONSTRAINT PK_Product PRIMARY KEY (ProductLotID, ProductTypeID),
 
 	CONSTRAINT FK_ProductType FOREIGN KEY (ProductTypeID)
 		REFERENCES ProductType(ProductTypeID),
 )
+
+CREATE TABLE Bill_ProductLot (
+	BillID INT NOT NULL,
+	ProductTypeID NVARCHAR(20) NOT NULL,
+	ProductLotID INT NOT NULL,
+	QuantityInBill INT NOT NULL,
+	SalePrice DECIMAL(10, 3) NOT NULL,
+
+	CONSTRAINT PK_BillProductLotList PRIMARY KEY (BillID, ProductTypeID, ProductLotID),
+
+	CONSTRAINT FK_ListBill FOREIGN KEY (BillID)
+		REFERENCES Bill(BillID),
+
+	CONSTRAINT FK_ListProductLot FOREIGN KEY (ProductLotID, ProductTypeID)
+		REFERENCES ProductLot(ProductLotID, ProductTypeID),
+)
+
 CREATE TABLE Equipments (
-	ProductID INT NOT NULL,
+	ProductLotID INT NOT NULL,
 	ProductTypeID NVARCHAR(20) NOT NULL ,
 	WarrantyPeriod INT NOT NULL,
 
-	CONSTRAINT PK_Equipment PRIMARY KEY (ProductID, ProductTypeID),
+	CONSTRAINT PK_Equipment PRIMARY KEY (ProductLotID, ProductTypeID),
 	
-	CONSTRAINT FK_EquipmentProduct FOREIGN KEY (ProductID,ProductTypeID)
+	CONSTRAINT FK_EquipmentProduct FOREIGN KEY (ProductLotID,ProductTypeID)
 		REFERENCES ProductLot(ProductLotID, ProductTypeID),
 
 	CONSTRAINT FK_EquipmentProductType FOREIGN KEY (ProductTypeID)
@@ -142,13 +156,13 @@ CREATE TABLE Equipments (
 );
 
 CREATE TABLE FreshFoods (
-	ProductID INT NOT NULL,
+	ProductLotID INT NOT NULL,
 	ProductTypeID NVARCHAR(20) NOT NULL, 
 	ManufactureDate DATE NOT NULL,
 
-	CONSTRAINT PK_FreshFoods PRIMARY KEY (ProductID, ProductTypeID),
+	CONSTRAINT PK_FreshFoods PRIMARY KEY (ProductLotID, ProductTypeID),
 
-	CONSTRAINT FK_FreshFoodProduct FOREIGN KEY (ProductID, ProductTypeID)
+	CONSTRAINT FK_FreshFoodProduct FOREIGN KEY (ProductLotID, ProductTypeID)
 		REFERENCES ProductLot(ProductLotID, ProductTypeID),
 
 	CONSTRAINT FK_FreshFoodProductType FOREIGN KEY (ProductTypeID)
@@ -156,14 +170,14 @@ CREATE TABLE FreshFoods (
 );
 
 CREATE TABLE DryFoods (
-	ProductID INT NOT NULL,
+	ProductLotID INT NOT NULL,
 	ProductTypeID NVARCHAR(20) Not null, 
 	ProductDescription NVARCHAR(500),
 	ExpirationDate DATE NOT NULL,
 
-	CONSTRAINT PK_DryFoods PRIMARY KEY (ProductID, ProductTypeID),
+	CONSTRAINT PK_DryFoods PRIMARY KEY (ProductLotID, ProductTypeID),
 
-	CONSTRAINT FK_DryFoodProduct FOREIGN KEY (ProductID,ProductTypeID)
+	CONSTRAINT FK_DryFoodProduct FOREIGN KEY (ProductLotID,ProductTypeID)
 		REFERENCES ProductLot(ProductLotID, ProductTypeID),
 
 	CONSTRAINT FK_DryFoodProductType FOREIGN KEY (ProductTypeID)
@@ -205,11 +219,8 @@ CREATE TABLE ImportBatch (
 		ProductTypeID, BranchID, ProductQuantity, BatchDate
 	),
 
-	CONSTRAINT FK_BatchProductType FOREIGN KEY (ProductTypeID)
-		REFERENCES ProductType(ProductTypeID),
-
-	CONSTRAINT FK_BatchBranch FOREIGN KEY (BranchID)
-		REFERENCES Branch(BranchID),
+	CONSTRAINT FK_BatchProductType_Branch FOREIGN KEY (ProductTypeID, BranchID)
+		REFERENCES ImportProduct(ProductTypeID, BranchID),	
 );
 
 -- Constraint on employee's salary
@@ -232,8 +243,8 @@ ADD CONSTRAINT CHK_BatchQuantityRange CHECK (ProductQuantity > 0 AND ProductQuan
 GO
 
 -- Constraint on total price of an Bill (trigger when Product changes)
-CREATE TRIGGER trg_CheckBillTotalPrice_Product
-ON ProductLot
+CREATE TRIGGER trg_CheckBillTotalPrice_Bill
+ON Bill
 AFTER INSERT, UPDATE
 AS
 BEGIN
@@ -244,8 +255,8 @@ BEGIN
     SELECT @BillID = BillID FROM inserted;
 
     -- Calculate the total price for this Bill
-   SELECT @TotalPrice = SUM(SellPrice)
-   FROM ProductLot
+   SELECT @TotalPrice = SUM(bp.SalePrice * bp.QuantityInBill)
+   FROM Bill_ProductLot AS bp
    WHERE BillID = @BillID;
 
     -- If the total price exceeds the limit 20,000,000 vnd, raise an error
@@ -255,4 +266,3 @@ BEGIN
         ROLLBACK TRANSACTION
     END
 END
-
