@@ -25,4 +25,6 @@ public class Shift {
 
     @Id
     private String shift;
+    
+    private String weekdays;
 }
