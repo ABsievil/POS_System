@@ -1,4 +1,6 @@
-﻿CREATE TABLE Employee (
+﻿CREATE DATABASE POS
+
+CREATE TABLE Employee (
 	EmployeeID INT NOT NULL,
 	LastName NVARCHAR(10) NOT NULL,
 	MiddleName NVARCHAR(20),
@@ -102,7 +104,6 @@ CREATE TABLE Supplier (
 CREATE TABLE ProductType (
 	ProductTypeID NVARCHAR(20) NOT NULL,
 	ProductTypeName NVARCHAR(100) NOT NULL,
-	CostPrice DECIMAL(10, 3) NOT NULL,
 	SupplierID INT NOT NULL,
 	StockQuantity INT NOT NULL,
 	SalePrice DECIMAL(10, 3) NOT NULL,
