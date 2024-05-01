@@ -65,6 +65,8 @@ delete from shift
 where EmployeeID = 2 and ShiftTime =3; 
 insert into Shift values (1,2,6) 
 insert into Bill  values (7,'2023-02-02 12:00:00',35);
+delete from bill where billID = 7
 INSERT INTO Bill_ProductLot (BillID, ProductLotID, ProductTypeID, QuantityInBill, SalePrice)
 VALUES
 	(7, 2, 'VNM001', 3, 49.500)
+delete form Bill_ProductLot where billID = 7; 
