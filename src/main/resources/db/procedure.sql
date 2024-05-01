@@ -5,7 +5,7 @@ select *
 from manager
 
 */
-
+-- thủ tục thêm nhân viên mới 
 create proc insertemp 
 	@manv INT ,
 	@ho NVARCHAR(10) ,
@@ -22,23 +22,23 @@ begin
 	declare @luongql decimal(6,3); 
 	select @luongql = salary from employee e join manager m on e.employeeID = m.employeeID
 	where @machinhanh = m.branchID; 
-	if not exists (select * from employee where @cccd = CCCD or @manv = employeeID) 
+	if exists (select * from employee where @cccd = CCCD or @manv = employeeID) -- kiểm tra nv đã tồn tại chưa
 	begin 
 		raiserror('Nhân viên đã tồn tại',16,1 ) ;
 	end
-	if not exists ( select * from Branch where branchID = @machinhanh) 
+	if not exists ( select * from Branch where branchID = @machinhanh) -- kiểm tra chi nhánh tồn tại chưa 
 	begin 
 		raiserror('Chi nhánh không tồn tại',16,1); 
 	end
-	if( len(@cccd) <>12) 
+	if( len(@cccd) <>12)    -- kiểm tra cccd có đủ 12 ký tự không 
 	begin 
 		raiserror('Căn cước công dân không hợp lệ',16,1); 
 	end
-	if (@sdt not like '0%') 
+	if (@sdt not like '0%')  -- kiểm tra sdt có bắt đầu bằng 0 
 	begin 
 		raiserror('Số điện thoại không họp lệ',16,1); 
 	end
-	if(@luongnv >= @luongql) 
+	if(@luongnv >= @luongql)  -- kiểm tra lương nhân viên có ít hơn lương quản lí không 
 	begin 
 		raiserror('Lương nhân viên phải thấp hơn lương quản lí', 16,1);
 	end
@@ -47,7 +47,7 @@ VALUES (@manv,@ho,@tenlot, @ten, @cccd,@sdt,@email,@luongnv,@nguoigiamsat,@machi
 end;
 
 drop proc insertemp
- 
+-- kiểm tra hợp lệ khi thêm nhân viên 
 begin try 
 	exec insertemp  120, 'Trương', 'Gia', 'Hân','079305102880', '353215330', 'dhan@gmail.com', 10, null, 10
 	print('Nhập thông tin thành công'); 
@@ -64,6 +64,7 @@ end catch;
 
 delete from employee where employeeid =120
 
+-- thủ tục xóa chi nhánh và kiểm tra hợp lệ 
 create proc deletebranch 
  @machinhanh INT 
 as 
@@ -82,6 +83,7 @@ begin catch
 	ERROR_PROCEDURE() as ErrorProcedure
 end catch
 
+--thủ tục thay đổi giờ làm và kiểm tra hợp lệ 
 create proc updateshifttime
 @manv  INT,
 @giolam INT,
@@ -100,6 +102,7 @@ begin
 	update shift set shifttime = @giolammoi 
 	where @manv =employeeId and @giolam = shifttime and @ngaylam =shiftday;
 end; 
+
 
 begin try 
 	exec updateshifttime 1,2,'8',2
