@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Branch")
 public class Branch {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BranchID", nullable = false)
     private Integer branchId;
 

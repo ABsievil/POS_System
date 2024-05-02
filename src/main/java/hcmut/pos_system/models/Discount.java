@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Discount")
 public class Discount {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DiscountID", nullable = false)
     private Integer discountId;
 

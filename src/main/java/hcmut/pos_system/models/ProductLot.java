@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 @IdClass(ProductLotId.class)
 public class ProductLot {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ProductLotID", nullable = false)
     private Long productLotId;
 
