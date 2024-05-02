@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,14 +26,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(ImportProductId.class)
+@Table(name = "ImportProduct")
 public class ImportProduct {
     @Id
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_productType", referencedColumnName = "id")
+    @JoinColumn(name = "ProductTypeID", referencedColumnName = "productTypeId", nullable = false)
     private ProductType productType;
 
     @Id
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "id_branch", referencedColumnName = "id")
+    @JoinColumn(name = "BranchID", referencedColumnName = "branchId", nullable = false)
     private Branch branch;
 }

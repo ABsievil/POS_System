@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BillAndProductBatchId implements Serializable {
+public class Bill_ProductLotId implements Serializable {
     private Bill bill;
 
-    private ProductBatch productBatch;
+    private ProductLot productLot;
 }

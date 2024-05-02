@@ -1,17 +1,15 @@
 package hcmut.pos_system.models;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -24,18 +22,25 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@DiscriminatorValue("FRESHFOOD")
-@Table(name = "FreshFoods")
-public class FreshFood {
+@IdClass(Bill_ProductLotId.class)
+@Table(name = "Bill_ProductLot")
+public class Bill_ProductLot {
     @Id
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "BillID", referencedColumnName = "billId", nullable = false)
+    private Bill bill;
+
+    @Id
+    @ManyToOne
     @JoinColumns({
         @JoinColumn(name = "ProductLotID", referencedColumnName = "productLotId", nullable = false),
         @JoinColumn(name = "ProductTypeID", referencedColumnName = "productTypeId", nullable = false)
     })
     private ProductLot productLot;
 
-    @Column(name = "ManufactureDate", nullable = false)
-    private LocalDate dateOfManufacture;
-    
+    @Column(name = "QuantityInBill", nullable = false)
+    private Integer quantityEachType;
+
+    @Column(name = "SalePrice", precision = 10, scale = 3, nullable = false)
+    private BigDecimal currentPrice;
 }

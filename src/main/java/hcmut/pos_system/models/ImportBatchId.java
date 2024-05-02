@@ -13,9 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImportBatchId implements Serializable {
-    private Branch branch;
-
-    private ProductType productType;
+    private ImportProduct importProduct;
 
     private Long productQuantity;
 

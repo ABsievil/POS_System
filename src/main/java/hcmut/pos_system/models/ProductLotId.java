@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductBatchId implements Serializable {
-    private Long id;
+public class ProductLotId implements Serializable {
+    private Long productLotId;
 
     private ProductType productType;
 }

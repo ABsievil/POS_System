@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DiscountId implements Serializable {
-    private Long id;
+    private Long discountId;
 
     private ProductType productType;
 }
