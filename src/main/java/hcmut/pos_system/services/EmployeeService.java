@@ -18,7 +18,7 @@ public class EmployeeService {
 
     // Tìm tất cả Nhân viên y tế
     public ResponseEntity<ResponseObject> getAllEmployee() {
-        List<Employee> employeeList = employeeRepository.findAll();
+        List<Object[]> employeeList = employeeRepository.findEmployeesWithSupervisorAndBranchId();
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseObject("OK", "Query employee successfully", employeeList));
     }
