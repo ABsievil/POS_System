@@ -1,122 +1,76 @@
-/*select * from branch
-select * 
-from employee
-select * 
-from manager
-
+﻿--Câu số 1
+/*
+Yêu cầu: 2 bảng trở lên, có where, order by. Tham số đầu vào sẽ nằm trong mệnh đề where or having.
+Mô tả: Hiển thị thông tin Họ và tên, Số điện thoại, Lương, ID chi nhánh của nhân viên có lương lớn hơn hoặc bằng
+		7 triệu làm việc tại chi nhánh có Địa chỉ là biến đầu vào của thủ tục, và kết quả trả về được sắp xếp theo
+		chiều tăng dần của lương. Nếu địa chỉ không hợp lệ, trả về "Không tìm thấy chi nhánh có địa chỉ : biến đầu
+		vào". Nếu không có nhân viên nào ở chi nhánh đó thỏa mãn điều kiện thì trả về "Không tìm thấy nhân viên nào thỏa mãn".
 */
--- thủ tục thêm nhân viên mới 
-create proc insertemp 
-	@manv INT ,
-	@ho NVARCHAR(10) ,
-	@tenlot NVARCHAR(20),
-	@ten NVARCHAR(10) ,
-	@cccd VARCHAR(12) ,
-	@sdt VARCHAR(10) ,
-	@email NVARCHAR(320) ,
-	@luongnv DECIMAL(6, 3) ,
-	@nguoigiamsat INT,
-	@machinhanh INT
- as 
-begin
-	declare @luongql decimal(6,3); 
-	select @luongql = salary from employee e join manager m on e.employeeID = m.employeeID
-	where @machinhanh = m.branchID; 
-	if exists (select * from employee where @cccd = CCCD or @manv = employeeID) -- kiểm tra nv đã tồn tại chưa
-	begin 
-		raiserror('Nhân viên đã tồn tại',16,1 ) ;
-	end
-	if not exists ( select * from Branch where branchID = @machinhanh) -- kiểm tra chi nhánh tồn tại chưa 
-	begin 
-		raiserror('Chi nhánh không tồn tại',16,1); 
-	end
-	if( len(@cccd) <>12)    -- kiểm tra cccd có đủ 12 ký tự không 
-	begin 
-		raiserror('Căn cước công dân không hợp lệ',16,1); 
-	end
-	if (@sdt not like '0%')  -- kiểm tra sdt có bắt đầu bằng 0 
-	begin 
-		raiserror('Số điện thoại không họp lệ',16,1); 
-	end
-	if(@luongnv >= @luongql)  -- kiểm tra lương nhân viên có ít hơn lương quản lí không 
-	begin 
-		raiserror('Lương nhân viên phải thấp hơn lương quản lí', 16,1);
-	end
- INSERT INTO Employee (EmployeeID, LastName, MiddleName, FirstName, CCCD, PhoneNo, Email, Salary, SupervisorID, BranchID)
-VALUES (@manv,@ho,@tenlot, @ten, @cccd,@sdt,@email,@luongnv,@nguoigiamsat,@machinhanh);
-end;
+CREATE PROCEDURE FindEmployee
+	@BranchAddress		nvarchar(320)
+AS
+BEGIN 
+	IF NOT EXISTS (SELECT * FROM Branch WHERE @BranchAddress = BranchAddress)
+		BEGIN
+			PRINT N'Không tìm thấy chi nhánh có địa chỉ : ' + @BranchAddress;
+			RETURN;
+		END
+	ELSE IF NOT EXISTS (SELECT * FROM Employee WHERE Salary >= 7)
+		BEGIN 
+			PRINT N'Không tìm thấy nhân viên nào thỏa mãn';
+			RETURN;
+		END
+	ELSE 
+		BEGIN
+			SELECT LastName + ' ' + MiddleName + ' ' + FirstName AS Name, PhoneNo, Salary, Employee.BranchID
+			FROM Employee, Branch
+			WHERE @BranchAddress = BranchAddress AND Salary >= 7 AND Employee.BranchID = Branch.BranchID
+			ORDER BY Salary ASC;
+		END
+END
 
-drop proc insertemp
--- kiểm tra hợp lệ khi thêm nhân viên 
-begin try 
-	exec insertemp  120, 'Trương', 'Gia', 'Hân','079305102880', '353215330', 'dhan@gmail.com', 10, null, 10
-	print('Nhập thông tin thành công'); 
-	end try 
-begin catch 
-	select 
-	ERROR_MESSAGE() as Message,
-	ERROR_LINE() as Line,
-	ERROR_NUMBER() as Number, 
-	ERROR_SEVERITY() as Severity, 
-	ERROR_STATE() as State, 
-	Error_procedure() as ErrorProcedure
-end catch; 
-
-delete from employee where employeeid =120
-
--- thủ tục xóa chi nhánh và kiểm tra hợp lệ 
-create proc deletebranch 
- @machinhanh INT 
-as 
-begin 
-	delete from branch where branchid = @machinhanh
-end
-
-begin try 
-	exec deletebranch 1 
-	print('Xóa dữ liệu thành công'); 
-end try 
-begin catch 
-	select 
-	ERROR_LINE() as Line, 
-	ERROR_MESSAGE() as Message, 
-	ERROR_PROCEDURE() as ErrorProcedure
-end catch
-
---thủ tục thay đổi giờ làm và kiểm tra hợp lệ 
-create proc updateshifttime
-@manv  INT,
-@giolam INT,
-@ngaylam VARCHAR(2),
-@giolammoi INT
-as 
-begin 
-	if not exists( select * from employee where @manv = EmployeeID) 
-	begin 
-		raiserror('Nhân viên không tồn tại',16,1); 
-	end 
-	if not exists (select * from shift where @giolam = shifttime and @ngaylam = shiftday) 
-	begin
-		raiserror ('Ca làm không tồn tại',16,1);
-	end 
-	update shift set shifttime = @giolammoi 
-	where @manv =employeeId and @giolam = shifttime and @ngaylam =shiftday;
-end; 
+EXEC dbo.FindEmployee
+	@BranchAddress = N'123 Lý Thường Kiệt, Q.10, TP.HCM';
+DROP PROCEDURE FindEmployee
 
 
-begin try 
-	exec updateshifttime 1,2,'8',2
-	print('Đổi ca làm thành công'); 
-end try
-begin catch 
-	select 
-	ERROR_MESSAGE() as Message,
-	ERROR_LINE() as Line,
-	ERROR_NUMBER() as Number, 
-	ERROR_SEVERITY() as Severity, 
-	ERROR_STATE() as State, 
-	Error_procedure() as ErrorProcedure
-end catch; 
+--Câu số 2
+/*
+Yêu cầu: 2 bảng trở lên, có hàm(MIN, MAX, SUM, AVG,...), group by, having, order by, where. Tham số đầu vào sẽ nằm trong mệnh đề where or having.
+Mô tả: Hiển thị thông tin: ID chi nhánh, Ngày nhập, Tên loại sản phẩm, Tổng số lượng, Tổng tiền nhập của các đợt 
+		nhập sản phẩm từ nhà cung cấp với tên là tham số đầu vào. Ngoài ra, ta còn có một tham số đầu vào khác là
+		số tiền tối đa để kiểm tra đợt nhập ở mỗi chi nhánh có số tiền vượt quá cho phép. Sắp xếp theo chiều tăng dần của ID 
+		chi nhánh kết quả trả về.
+*/
 
-select * from shift where employeeid =1 
+CREATE PROCEDURE ImportProductBatch
+	@SupplierName		nvarchar(100),
+	@MaxMoney			int
+AS
+BEGIN 
+	IF NOT EXISTS (SELECT * FROM Supplier WHERE @SupplierName = SupplierName)
+		BEGIN
+			PRINT N'Không tìm thấy nhà cung cấp : ' + @SupplierName;
+			RETURN;
+		END
+	ELSE 
+		BEGIN
+			SELECT B.BranchID, I.BatchDate, P.ProductTypeName, SUM(I.ProductQuantity) AS TotalQuantity, SUM(I.ProductQuantity * P.SalePrice) AS Total
+			FROM Branch AS B, ImportBatch AS I, ProductType AS P, Supplier AS S
+			WHERE B.BranchID = I.BranchID AND I.ProductTypeID = P.ProductTypeID AND P.SupplierID = S.SupplierID AND SupplierName = @SupplierName
+			GROUP BY B.BranchID, BatchDate, ProductTypeName, ProductQuantity, ProductQuantity * SalePrice, SupplierName
+			HAVING SUM(I.ProductQuantity * P.SalePrice) > @MaxMoney 
+			ORDER BY B.BranchID
+		END
+END
+
+EXEC dbo.ImportProductBatch 
+	@SupplierName = N'Công ty Sữa Vinamilk',
+	@MaxMoney = 110.000;
+DROP PROCEDURE ImportProductBatch
+
+
+
+
+
 
