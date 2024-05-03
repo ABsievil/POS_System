@@ -62,7 +62,70 @@ begin catch
 	Error_procedure() as ErrorProcedure
 end catch; 
 
-delete from employee where employeeid =120
+-- thu tuc xoa nhan vien
+create proc deleteemployee 
+@manv int
+as 
+begin 
+	if not exists (select * from employee where employeeid = @manv)
+	begin 
+		raiserror ('Nhan vien khong ton tai',16,1); 
+	end
+	delete from employee where employeeid = @manv; 
+end;
+
+drop proc deleteemployee
+
+begin try 
+	exec deleteemployee 190
+	print ('Xoa nhan vien thanh cong') 
+end try 
+begin catch 
+	select 
+	ERROR_LINE() as Line, 
+	ERROR_MESSAGE() as Message, 
+	ERROR_PROCEDURE() as ErrorProcedure
+end catch
+
+select * 
+from employee 
+
+--thu tuc update luong nhan vien
+create proc updatesalary
+@manv int, 
+@luongnv decimal(6,3)
+as 
+begin 
+	declare @machinhanh int; 
+	select @machinhanh = branchID from employee where employeeID = @manv; 
+	declare @maql int; 
+	select @maql = EmployeeID from manager where BranchID=@machinhanh; 
+	declare @luongql decimal(6,3); 
+	select @luongql = salary from employee where EmployeeID = @maql; 
+	if not exists (select * from employee where employeeid = @manv)
+	begin 
+		raiserror ('Nhan vien khong ton tai',16,1); 
+	end	
+	if ( @maql != @manv and @luongnv >= @luongql) 
+	begin 
+		raiserror('Luong nhan vien phai thap hon luong quan li cua ho',16,1); 
+	end 
+	update employee set salary = @luongnv where EmployeeID = @manv 
+end; 
+
+drop proc updatesalary
+
+begin try 
+	exec updatesalary 7, 18
+	print('Cap nhat luong thanh cong')
+end try 
+begin catch 
+	select 
+	ERROR_LINE() as Line, 
+	ERROR_MESSAGE() as Message, 
+	ERROR_PROCEDURE() as ErrorProcedure
+end catch; 
+
 
 -- thủ tục xóa chi nhánh và kiểm tra hợp lệ 
 create proc deletebranch 
