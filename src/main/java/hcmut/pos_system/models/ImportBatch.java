@@ -39,7 +39,7 @@ public class ImportBatch {
 
     @Id
     @Column(name = "ProductQuantity", nullable = false)
-    private Long productQuantity;
+    private Integer productQuantity;
 
     @Id
     @Column(name = "BatchDate", nullable = false)
