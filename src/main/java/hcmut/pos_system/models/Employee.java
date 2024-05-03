@@ -59,7 +59,7 @@ public class Employee {
     // referencedColumnName is the name of entity Employee or the name of attribute in table 
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "SupervisorID", referencedColumnName = "employeeId")
-    private Employee employee; 
+    private Employee supervisor; 
 
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "BranchID", referencedColumnName = "branchId", nullable = false)
