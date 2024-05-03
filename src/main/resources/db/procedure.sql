@@ -7,7 +7,7 @@ Mô tả: Hiển thị thông tin Họ và tên, Số điện thoại, Lương, 
 		vào". Nếu không có nhân viên nào ở chi nhánh đó thỏa mãn điều kiện thì trả về "Không tìm thấy nhân viên nào thỏa mãn".
 */
 CREATE PROCEDURE FindEmployee
-	@BranchID		nvarchar(320)
+	@BranchID		int
 AS
 BEGIN 
 	IF NOT EXISTS (SELECT * FROM Branch WHERE @BranchID = BranchID)
@@ -45,7 +45,7 @@ Mô tả: Hiển thị thông tin: ID chi nhánh, Ngày nhập, Tên loại sả
 
 CREATE PROCEDURE ImportProductBatch
 	@SupplierName		nvarchar(100),
-	@MaxMoney			int
+	@MaxMoney			decimal(10, 3)
 AS
 BEGIN 
 	IF NOT EXISTS (SELECT * FROM Supplier WHERE @SupplierName = SupplierName)
