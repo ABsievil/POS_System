@@ -12,12 +12,12 @@ AS
 BEGIN 
 	IF NOT EXISTS (SELECT * FROM Branch WHERE @BranchID = BranchID)
 		BEGIN
-			PRINT N'Không tìm thấy chi nhánh có ID : ' + @BranchID;
+			RAISERROR('Không tìm thấy chi nhánh có ID: %s', 16, 1, @BranchID);
 			RETURN;
 		END
 	ELSE IF NOT EXISTS (SELECT * FROM Employee WHERE Salary >= 7)
 		BEGIN 
-			PRINT N'Không tìm thấy nhân viên nào thỏa mãn';
+			RAISERROR('Không tìm thấy nhân viên nào thỏa mãn', 16, 1);
 			RETURN;
 		END
 	ELSE 
@@ -50,7 +50,7 @@ AS
 BEGIN 
 	IF NOT EXISTS (SELECT * FROM Supplier WHERE @SupplierName = SupplierName)
 		BEGIN
-			PRINT N'Không tìm thấy nhà cung cấp : ' + @SupplierName;
+			RAISERROR('Không tìm thấy nhà cung cấp: %s', 16, 1, @SupplierName);
 			RETURN;
 		END
 	ELSE 
