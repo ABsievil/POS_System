@@ -7,12 +7,12 @@ Mô tả: Hiển thị thông tin Họ và tên, Số điện thoại, Lương, 
 		vào". Nếu không có nhân viên nào ở chi nhánh đó thỏa mãn điều kiện thì trả về "Không tìm thấy nhân viên nào thỏa mãn".
 */
 CREATE PROCEDURE FindEmployee
-	@BranchAddress		nvarchar(320)
+	@BranchID		nvarchar(320)
 AS
 BEGIN 
-	IF NOT EXISTS (SELECT * FROM Branch WHERE @BranchAddress = BranchAddress)
+	IF NOT EXISTS (SELECT * FROM Branch WHERE @BranchID = BranchID)
 		BEGIN
-			PRINT N'Không tìm thấy chi nhánh có địa chỉ : ' + @BranchAddress;
+			PRINT N'Không tìm thấy chi nhánh có ID : ' + @BranchID;
 			RETURN;
 		END
 	ELSE IF NOT EXISTS (SELECT * FROM Employee WHERE Salary >= 7)
@@ -22,15 +22,15 @@ BEGIN
 		END
 	ELSE 
 		BEGIN
-			SELECT LastName + ' ' + MiddleName + ' ' + FirstName AS Name, PhoneNo, Salary, Employee.BranchID
+			SELECT LastName + ' ' + MiddleName + ' ' + FirstName AS Name, PhoneNo, Salary
 			FROM Employee, Branch
-			WHERE @BranchAddress = BranchAddress AND Salary >= 7 AND Employee.BranchID = Branch.BranchID
+			WHERE @BranchID = Branch.BranchID AND Salary >= 7 AND Employee.BranchID = Branch.BranchID
 			ORDER BY Salary ASC;
 		END
 END
 
 EXEC dbo.FindEmployee
-	@BranchAddress = N'123 Lý Thường Kiệt, Q.10, TP.HCM';
+	@BranchID = 1;
 DROP PROCEDURE FindEmployee
 
 
