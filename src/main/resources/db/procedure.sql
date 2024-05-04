@@ -22,7 +22,7 @@ BEGIN
 		END
 	ELSE 
 		BEGIN
-			SELECT EmployeeID, LastName, MiddleName, FirstName, CCCD, PhoneNo, Email, Salary
+			SELECT EmployeeID, LastName, MiddleName, FirstName, CCCD, PhoneNo, Email, Salary, SupervisorID, Employee.BranchID
 			FROM Employee, Branch
 			WHERE @BranchID = Branch.BranchID AND Employee.BranchID = Branch.BranchID
 			ORDER BY Salary ASC;
@@ -42,6 +42,19 @@ Mô tả: Hiển thị thông tin: ID chi nhánh, Ngày nhập, Tên loại sả
 		số tiền tối đa để kiểm tra đợt nhập ở mỗi chi nhánh có số tiền vượt quá cho phép. Sắp xếp theo chiều tăng dần của ID 
 		chi nhánh kết quả trả về.
 */
+
+CREATE PROCEDURE ImportProductBatchAll
+AS
+BEGIN 
+		SELECT B.BranchID, I.BatchDate, P.ProductTypeName, SUM(I.ProductQuantity) AS TotalQuantity, SUM(I.ProductQuantity * P.SalePrice) AS Total
+		FROM Branch AS B, ImportBatch AS I, ProductType AS P, Supplier AS S
+		WHERE B.BranchID = I.BranchID AND I.ProductTypeID = P.ProductTypeID AND P.SupplierID = S.SupplierID
+		GROUP BY B.BranchID, BatchDate, ProductTypeName, ProductQuantity, ProductQuantity * SalePrice, SupplierName
+		ORDER BY B.BranchID
+END
+
+EXEC dbo.ImportProductBatchAll
+
 
 CREATE PROCEDURE ImportProductBatch
 	@SupplierName		nvarchar(100),
@@ -69,8 +82,4 @@ EXEC dbo.ImportProductBatch
 	@MaxMoney = 110.000;
 DROP PROCEDURE ImportProductBatch
 
-
-
-
-
-
+CREATE PROCEDURE ImportProductBatch
