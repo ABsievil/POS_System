@@ -12,14 +12,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeeDTO {
-     private Integer employeeId;
-    private String lastName;
-    private String middleName;
-    private String firstName;
+    private Integer EmployeeID;
+    private String LastName;
+    private String MiddleName;
+    private String FirstName;
     private String CCCD;
-    private String phoneNumber;
-    private String email;
-    private BigDecimal salary;
-    private Integer supervisorId;
-    private Integer branchId;
+    private String PhoneNo;
+    private String Email;
+    private BigDecimal Salary;
+    private Integer SupervisorID;
+    private Integer BranchID;
+
+    // {
+    //     "employeeID": 120,
+    //     "lastName": "Trương",
+    //     "middleName": "Gia",
+    //     "firstName": "Hân",
+    //     "cccd": "079305102880",
+    //     "phoneNo": "03392427223",
+    //     "email": "dhan@gmail.com",
+    //     "salary": 5,
+    //     "supervisorID": null,
+    //     "branchID": 5
+    // }
+    // when insert, you must use this value label in FE
 }
