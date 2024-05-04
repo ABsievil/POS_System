@@ -11,7 +11,7 @@ create proc insertemp
 	@ho NVARCHAR(10) ,
 	@tenlot NVARCHAR(20),
 	@ten NVARCHAR(10) ,
-	@cccd VARCHAR(12) ,
+	@cccd VARCHAR(13) ,
 	@sdt VARCHAR(10) ,
 	@email NVARCHAR(320) ,
 	@luongnv DECIMAL(6, 3) ,
@@ -30,7 +30,7 @@ begin
 	begin 
 		raiserror('Chi nhánh không tồn tại',16,1); 
 	end
-	if( len(@cccd) <>12)    -- kiểm tra cccd có đủ 12 ký tự không 
+	if( len(@cccd) != 12)    -- kiểm tra cccd có đủ 12 ký tự không 
 	begin 
 		raiserror('Căn cước công dân không hợp lệ',16,1); 
 	end
