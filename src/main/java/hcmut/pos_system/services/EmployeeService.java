@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import hcmut.pos_system.DTO.EmployeeDTO;
 import hcmut.pos_system.DTO.EmployeeRowMapper;
-import hcmut.pos_system.DTO.FindEmployeeDTO;
-import hcmut.pos_system.DTO.FindEmployeeRowMapper;
 import hcmut.pos_system.models.Employee;
 import hcmut.pos_system.models.ResponseObject;
 import hcmut.pos_system.repositories.EmployeeRepository;
@@ -43,8 +41,8 @@ public class EmployeeService {
 
     public ResponseEntity<ResponseObject> PROC_findEmployeesByBranchID(Integer branchID){
         try {
-            List<FindEmployeeDTO> employees = jdbcTemplate.query(
-            "EXEC dbo.FindEmployee @BranchID =?", new FindEmployeeRowMapper(), branchID);
+            List<EmployeeDTO> employees = jdbcTemplate.query(
+            "EXEC dbo.FindEmployee @BranchID =?", new EmployeeRowMapper(), branchID);
 
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ResponseObject("OK", "Query to find Employee By BranchID successfully", employees));
@@ -57,7 +55,7 @@ public class EmployeeService {
                     .body(new ResponseObject("ERROR", e.getMessage(), null));
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error finding Employee By BranchID", null));
+                    .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error finding Employee By BranchID", branchID));
             }
         }
     }

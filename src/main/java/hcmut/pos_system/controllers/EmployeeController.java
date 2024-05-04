@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hcmut.pos_system.DTO.EmployeeDTO;
-import hcmut.pos_system.DTO.FindEmployeeDTO;
 import hcmut.pos_system.models.Employee;
 import hcmut.pos_system.models.ResponseObject;
 import hcmut.pos_system.services.EmployeeService;

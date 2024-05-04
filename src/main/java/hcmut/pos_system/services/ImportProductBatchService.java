@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import hcmut.pos_system.DTO.FindEmployeeDTO;
-import hcmut.pos_system.DTO.FindEmployeeRowMapper;
 import hcmut.pos_system.DTO.ImportProductBatchDTO;
 import hcmut.pos_system.DTO.ImportProductBatchRowMapper;
 import hcmut.pos_system.models.ResponseObject;
