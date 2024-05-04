@@ -1,0 +1,40 @@
+<nav class="nav-bar">
+    <ul>
+        <li><a href="#" class="user">
+                <i class="fas fa-user" aria-hidden="true"></i>
+                <span class="nav-item">
+                    <div class="user-name" th:text="${employee.username}"></div>
+                    <div class="user-role" th:text="${employee.role}"></div>
+                </span>
+            </a></li>
+        <li><a href="#">
+                <i class="fas fa-home" aria-hidden="true"></i>
+                <span class="nav-item">Trang Chủ</span>
+            </a></li>
+        <li><a href="#">
+                <i class="fas fa-info" aria-hidden="true"></i>
+                <span class="nav-item">Thông Tin Cá Nhân</span>
+            </a></li>
+        <li><a href="#">
+                <i class="fas fa-user" aria-hidden="true"></i>
+                <span class="nav-item">Nhân Viên</span>
+            </a></li>
+        <li><a href="#">
+                <i class="fas fa-archive" aria-hidden="true"></i>
+                <span class="nav-item">Sản Phẩm</span>
+            </a></li>
+        <li><a href="#">
+                <i class="fas fa-truck" aria-hidden="true"></i>
+                <span class="nav-item">Nhà Cung Cấp</span>
+            </a></li>
+        <li><a href="/setting">
+                <i class="fas fa-cog" aria-hidden="true"></i></i>
+                <span class="nav-item">Cài Đặt</span>
+            </a></li>
+
+        <li><a class="logout" th:href="@{/logout}">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-item">Đăng xuất</span>
+            </a></li>
+    </ul>
+</nav>
