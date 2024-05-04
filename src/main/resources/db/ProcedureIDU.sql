@@ -25,22 +25,27 @@ begin
 	if exists (select * from employee where @CCCD = CCCD or @EmployeeID = employeeID) 
 	begin 
 		raiserror('Nhân viên đã tồn tại',16,1 ) ;
+		return; 
 	end
 	if not exists ( select * from Branch where branchID = @BranchID) 
 	begin 
 		raiserror('Chi nhánh không tồn tại',16,1); 
+		return; 
 	end
 	if( len(@CCCD) != 12) 
 	begin 
 		raiserror('Căn cước công dân không hợp lệ',16,1); 
+		return; 
 	end
 	if (@PhoneNo not like '0%') 
 	begin 
 		raiserror('Số điện thoại không họp lệ',16,1); 
+		return; 
 	end
 	if(@Salary >= @luongql) 
 	begin 
 		raiserror('Lương nhân viên phải thấp hơn lương quản lí', 16,1);
+		return; 
 	end
  INSERT INTO Employee (EmployeeID, LastName, MiddleName, FirstName, CCCD, PhoneNo, Email, Salary, SupervisorID, BranchID)
 VALUES (@EmployeeID,@LastName,@MiddleName, @FirstName, @CCCD,@PhoneNo,@Email,@Salary,@SupervisorID,@BranchID);
