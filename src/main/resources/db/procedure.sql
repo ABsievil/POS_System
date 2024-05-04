@@ -1,8 +1,8 @@
 ﻿--Câu số 1
 /*
 Yêu cầu: 2 bảng trở lên, có where, order by. Tham số đầu vào sẽ nằm trong mệnh đề where or having.
-Mô tả: Hiển thị thông tin Họ và tên, Số điện thoại, Lương, ID chi nhánh của nhân viên có lương lớn hơn hoặc bằng
-		7 triệu làm việc tại chi nhánh có Địa chỉ là biến đầu vào của thủ tục, và kết quả trả về được sắp xếp theo
+Mô tả: Hiển thị thông tin Họ và tên, Số điện thoại, Lương, ID chi nhánh của nhân viên làm việc tại
+		chi nhánh có Địa chỉ là biến đầu vào của thủ tục, và kết quả trả về được sắp xếp theo
 		chiều tăng dần của lương. Nếu địa chỉ không hợp lệ, trả về "Không tìm thấy chi nhánh có địa chỉ : biến đầu
 		vào". Nếu không có nhân viên nào ở chi nhánh đó thỏa mãn điều kiện thì trả về "Không tìm thấy nhân viên nào thỏa mãn".
 */
@@ -15,22 +15,22 @@ BEGIN
 			RAISERROR('Không tìm thấy chi nhánh có ID: %d', 16, 1, @BranchID);
 			RETURN;
 		END
-	ELSE IF NOT EXISTS (SELECT * FROM Employee WHERE Salary >= 7)
+	ELSE IF NOT EXISTS (SELECT * FROM Employee)
 		BEGIN 
 			RAISERROR('Không tìm thấy nhân viên nào thỏa mãn', 16, 1);
 			RETURN;
 		END
 	ELSE 
 		BEGIN
-			SELECT LastName + ' ' + MiddleName + ' ' + FirstName AS Name, PhoneNo, Salary
+			SELECT EmployeeID, LastName, MiddleName, FirstName, CCCD, PhoneNo, Email, Salary
 			FROM Employee, Branch
-			WHERE @BranchID = Branch.BranchID AND Salary >= 7 AND Employee.BranchID = Branch.BranchID
+			WHERE @BranchID = Branch.BranchID AND Employee.BranchID = Branch.BranchID
 			ORDER BY Salary ASC;
 		END
 END
 
 EXEC dbo.FindEmployee
-	@BranchID = 100;
+	@BranchID = 1;
 DROP PROCEDURE FindEmployee
 
 
