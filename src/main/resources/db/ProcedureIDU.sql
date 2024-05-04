@@ -25,22 +25,27 @@ begin
 	if exists (select * from employee where @cccd = CCCD or @manv = employeeID) -- kiểm tra nv đã tồn tại chưa
 	begin 
 		raiserror('Nhân viên đã tồn tại',16,1 ) ;
+		return; 
 	end
 	if not exists ( select * from Branch where branchID = @machinhanh) -- kiểm tra chi nhánh tồn tại chưa 
 	begin 
 		raiserror('Chi nhánh không tồn tại',16,1); 
+		return; 
 	end
 	if( len(@cccd) != 12)    -- kiểm tra cccd có đủ 12 ký tự không 
 	begin 
 		raiserror('Căn cước công dân không hợp lệ',16,1); 
+		return; 
 	end
 	if (@sdt not like '0%')  -- kiểm tra sdt có bắt đầu bằng 0 
 	begin 
 		raiserror('Số điện thoại không họp lệ',16,1); 
+		return; 
 	end
 	if(@luongnv >= @luongql)  -- kiểm tra lương nhân viên có ít hơn lương quản lí không 
 	begin 
 		raiserror('Lương nhân viên phải thấp hơn lương quản lí', 16,1);
+		return; 
 	end
  INSERT INTO Employee (EmployeeID, LastName, MiddleName, FirstName, CCCD, PhoneNo, Email, Salary, SupervisorID, BranchID)
 VALUES (@manv,@ho,@tenlot, @ten, @cccd,@sdt,@email,@luongnv,@nguoigiamsat,@machinhanh);
@@ -70,6 +75,7 @@ begin
 	if not exists (select * from employee where employeeid = @manv)
 	begin 
 		raiserror ('Nhan vien khong ton tai',16,1); 
+		return;
 	end
 	delete from employee where employeeid = @manv; 
 end;
@@ -78,7 +84,7 @@ drop proc deleteemployee
 
 begin try 
 	exec deleteemployee 190
-	print ('Xoa nhan vien thanh cong') 
+	print ('Xoa nhan vien thanh cong')
 end try 
 begin catch 
 	select 
@@ -105,10 +111,12 @@ begin
 	if not exists (select * from employee where employeeid = @manv)
 	begin 
 		raiserror ('Nhan vien khong ton tai',16,1); 
+		return;
 	end	
 	if ( @maql != @manv and @luongnv >= @luongql) 
 	begin 
 		raiserror('Luong nhan vien phai thap hon luong quan li cua ho',16,1); 
+		return;
 	end 
 	update employee set salary = @luongnv where EmployeeID = @manv 
 end; 
