@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hcmut.pos_system.DTO.EmployeeDTO;
 import hcmut.pos_system.DTO.FindEmployeeDTO;
-import hcmut.pos_system.DTO.InsertEmpDTO;
 import hcmut.pos_system.models.Employee;
 import hcmut.pos_system.models.ResponseObject;
 import hcmut.pos_system.services.EmployeeService;
@@ -37,11 +36,6 @@ public class EmployeeController {
 
     @PostMapping("/insertEmployee")
     public ResponseEntity<ResponseObject> insertEmployee(@RequestBody EmployeeDTO newEmployee) {
-        return employeeService.PROC_insertEmp(newEmployee);
-    }
-
-    @PostMapping("/insertEmployeeWithEmployeeDTO")
-    public ResponseEntity<ResponseObject> insertEmployeeWithEmployeeDTO(@RequestBody EmployeeDTO newEmployee) {
         return employeeService.PROC_insertEmp(newEmployee);
     }
 

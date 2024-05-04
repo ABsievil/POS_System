@@ -16,7 +16,6 @@ import hcmut.pos_system.DTO.EmployeeDTO;
 import hcmut.pos_system.DTO.EmployeeRowMapper;
 import hcmut.pos_system.DTO.FindEmployeeDTO;
 import hcmut.pos_system.DTO.FindEmployeeRowMapper;
-import hcmut.pos_system.DTO.InsertEmpDTO;
 import hcmut.pos_system.models.Employee;
 import hcmut.pos_system.models.ResponseObject;
 import hcmut.pos_system.repositories.EmployeeRepository;
@@ -94,39 +93,6 @@ public class EmployeeService {
             }
         }
     }
-
-    public ResponseEntity<ResponseObject> PROC_insertEmp(InsertEmpDTO newEmployee){
-        try {
-            jdbcTemplate.update("EXEC dbo.insertemp @manv =?, @ho =?, @tenlot =?, @ten =?, @cccd =?, @sdt =?, @email =?, @luongnv =?, @nguoigiamsat =?, @machinhanh =?",  
-            newEmployee.getManv(), 
-            newEmployee.getHo(), 
-            newEmployee.getTenlot(), 
-            newEmployee.getTen(), 
-            newEmployee.getCccd(), 
-            newEmployee.getSdt(), 
-            newEmployee.getEmail(), 
-            newEmployee.getLuongnv(), 
-            newEmployee.getNguoigiamsat(), 
-            newEmployee.getMachinhanh());
-
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ResponseObject("OK", "Query to insert Employee successfully", null));
-
-        } catch (DataAccessException e) {
-            if (e.getMessage().contains("Nhân viên đã tồn tại") ||
-                e.getMessage().contains("Chi nhánh không tồn tại") ||
-                e.getMessage().contains("Căn cước công dân không hợp lệ") ||
-                e.getMessage().contains("Số điện thoại không hợp lệ") ||
-                e.getMessage().contains("Lương nhân viên phải thấp hơn lương quản lí")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ResponseObject("ERROR", e.getMessage(), null));
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error inserting Employee failed", null));
-            }
-        }
-    }
-
 
     public ResponseEntity<ResponseObject> PROC_deleteEmployeeById(Integer manv){
         try {
