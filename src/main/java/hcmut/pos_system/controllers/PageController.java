@@ -52,6 +52,34 @@ public class PageController {
     }
 
     @Controller
+    @RequestMapping("/supplier")
+    public class supplier{
+        @GetMapping("")
+        public String getSuppliers(){
+            return "supplier";
+        }   
+
+        @PostMapping("")
+        public void postSuppliers(){
+
+        }
+    }
+
+    @Controller
+    @RequestMapping("/product")
+    public class product{
+        @GetMapping("")
+        public String getProducts(){
+            return "product";
+        }   
+
+        @PostMapping("")
+        public void postProducts(){
+
+        }
+    }
+
+    @Controller
     @RequestMapping("/callfunc")
     public class callfunc{
         @GetMapping("")
