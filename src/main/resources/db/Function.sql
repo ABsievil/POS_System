@@ -16,7 +16,6 @@ RETURNS @ExpiredLots TABLE (
 	ProductTypeID NVARCHAR(20),
 	QuantityInLot INT,
 	ExpireDate DATE
-	
 )
 AS
 BEGIN
@@ -51,6 +50,12 @@ BEGIN
 	DEALLOCATE LotCursor;
 	RETURN;
 END;
+
+GO
+
+-- Example for GetExpiredLots: getting ProductLot with ID 4 in which there are expired product types before 2025-01-10
+SELECT * FROM dbo.GetExpiredLots('2025-01-10')
+WHERE ProductLotID = 4;
 
 GO
 
@@ -100,6 +105,11 @@ BEGIN
 	DEALLOCATE DiscountCursor;
 	RETURN @FoundDiscount;
 END;
+
+GO
+
+-- Example for GetDiscountRate: Getting Discount Rate of Product Type VNM002 at 2024-04-29
+SELECT dbo.GetDiscountRate('VNM002', '2024-04-29') AS DiscountRate;
 
 GO
 
