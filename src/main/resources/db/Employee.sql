@@ -1,0 +1,9 @@
+CREATE PROCEDURE EmployeeInfor AS
+BEGIN
+	SELECT *
+	FROM EMPLOYEE
+END
+
+EXEC dbo.EmployeeInfor 
+
+DROP PROCEDURE EmployeeInfor
