@@ -38,11 +38,11 @@ public class PageController {
     }
 
     @Controller
-    @RequestMapping("/display")
-    public class display{
+    @RequestMapping("/employeeList")
+    public class employeeList{
         @GetMapping("")
         public String getDisplay(){
-            return "displayData";
+            return "employeeList";
         }   
 
         @PostMapping("")
