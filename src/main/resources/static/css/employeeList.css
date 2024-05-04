@@ -138,3 +138,14 @@ table thead tr {
     color: #fff;
     transition: 0.5rem;
 }
+
+.table-wrapper span {
+    text-decoration: underline;
+    display: flex;
+    align-items: center;
+}
+
+.table-wrapper span:hover {
+    color: var(--card-button-hover-color);
+    cursor: pointer;
+}
