@@ -16,7 +16,6 @@ RETURNS @ExpiredLots TABLE (
 	ProductTypeID NVARCHAR(20),
 	QuantityInLot INT,
 	ExpireDate DATE
-	
 )
 AS
 BEGIN
@@ -51,6 +50,12 @@ BEGIN
 	DEALLOCATE LotCursor;
 	RETURN;
 END;
+
+GO
+
+-- Example for GetExpiredLots: getting ProductLot with ID 4 in which there are expired product types before 2025-01-10
+SELECT * FROM dbo.GetExpiredLots('2025-01-10')
+WHERE ProductLotID = 4;
 
 GO
 
@@ -103,6 +108,16 @@ END;
 
 GO
 
+-- Example for GetDiscountRate: getting Discount Rate of Product Type VNM002 at 2024-04-29
+SELECT dbo.GetDiscountRate('VNM002', '2024-04-29') AS DiscountRate;
+
+-- Example for GetDiscountRate: getting table of discount rate for each product type at 2024-04-24
+SELECT ProductTypeID, dbo.GetDiscountRate(ProductTypeID, '2024-04-24') AS DiscountRate
+FROM Discount
+GROUP BY ProductTypeID;
+
+GO
+
 /*
   Function CalcBillPrice retrieves the total price of a given bill.
 
@@ -150,3 +165,38 @@ BEGIN
 	DEALLOCATE BillCursor;
 	RETURN @TotalPrice;
 END;
+
+GO
+
+-- Example for CalcBillPrice: getting table of total price for each bill
+SELECT BillID, dbo.CalcBillPrice(BillID) AS TotalPrice
+FROM Bill_ProductLot
+GROUP BY BillID;
+
+GO
+
+/*
+  Function GetMatchedEmployees retrieves a list of employees that at least one cell match MatchingString
+
+  Parameters:
+    - @MatchingString: the given string to be matched
+  Return:
+    - Return a table of employees who has at least one cell matches given string
+*/
+CREATE FUNCTION dbo.GetMatchedEmployees(@MatchingString NVARCHAR(320))
+RETURNS TABLE
+AS
+RETURN (
+	SELECT * FROM Employee
+	WHERE LastName = @MatchingString OR
+		  MiddleName = @MatchingString OR
+		  FirstName = @MatchingString OR
+		  CCCD = @MatchingString OR
+		  PhoneNo = @MatchingString OR
+		  Email = @MatchingString
+);
+
+GO
+
+-- Example for GetMatchedEmployees: getting employes that has Thị in their name
+SELECT * FROM dbo.GetMatchedEmployees(N'Thị');
