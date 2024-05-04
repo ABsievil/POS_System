@@ -86,7 +86,7 @@ public class EmployeeService {
                 e.getMessage().contains("Số điện thoại không hợp lệ") ||
                 e.getMessage().contains("Lương nhân viên phải thấp hơn lương quản lí")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ResponseObject("ERROR", e.getMessage(), newEmployee));
+                    .body(new ResponseObject("ERROR", e.getMessage(), null));
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error inserting Employee failed", null));
