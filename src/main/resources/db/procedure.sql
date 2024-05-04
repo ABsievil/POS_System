@@ -12,7 +12,7 @@ AS
 BEGIN 
 	IF NOT EXISTS (SELECT * FROM Branch WHERE @BranchID = BranchID)
 		BEGIN
-			RAISERROR('Không tìm thấy chi nhánh có ID: %s', 16, 1, @BranchID);
+			RAISERROR('Không tìm thấy chi nhánh có ID: %d', 16, 1, @BranchID);
 			RETURN;
 		END
 	ELSE IF NOT EXISTS (SELECT * FROM Employee WHERE Salary >= 7)
@@ -30,7 +30,7 @@ BEGIN
 END
 
 EXEC dbo.FindEmployee
-	@BranchID = 1;
+	@BranchID = 100;
 DROP PROCEDURE FindEmployee
 
 
