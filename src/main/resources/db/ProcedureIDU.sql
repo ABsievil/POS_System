@@ -5,50 +5,51 @@ select *
 from manager
 
 */
+
 -- thủ tục thêm nhân viên mới 
 create proc insertemp 
-	@EmployeeID INT ,
-	@LastName NVARCHAR(10) ,
-	@MiddleName NVARCHAR(20),
-	@FirstName NVARCHAR(10) ,
-	@CCCD VARCHAR(13) ,
-	@PhoneNo VARCHAR(10) ,
-	@Email NVARCHAR(320) ,
-	@Salary DECIMAL(6, 3) ,
-	@SupervisorID INT,
-	@BranchID INT
+	@manv INT ,
+	@ho NVARCHAR(10) ,
+	@tenlot NVARCHAR(20),
+	@ten NVARCHAR(10) ,
+	@cccd VARCHAR(13) ,
+	@sdt VARCHAR(10) ,
+	@email NVARCHAR(320) ,
+	@luongnv DECIMAL(6, 3) ,
+	@nguoigiamsat INT,
+	@machinhanh INT
  as 
 begin
 	declare @luongql decimal(6,3); 
 	select @luongql = salary from employee e join manager m on e.employeeID = m.employeeID
-	where @BranchID = m.branchID; 
-	if exists (select * from employee where @CCCD = CCCD or @EmployeeID = employeeID) 
+	where @machinhanh = m.branchID; 
+	if exists (select * from employee where @cccd = CCCD or @manv = employeeID) -- kiểm tra nv đã tồn tại chưa
 	begin 
 		raiserror('Nhân viên đã tồn tại',16,1 ) ;
 		return; 
 	end
-	if not exists ( select * from Branch where branchID = @BranchID) 
+	if not exists ( select * from Branch where branchID = @machinhanh) -- kiểm tra chi nhánh tồn tại chưa 
 	begin 
 		raiserror('Chi nhánh không tồn tại',16,1); 
 		return; 
 	end
-	if( len(@CCCD) != 12) 
+	if( len(@cccd) != 12)    -- kiểm tra cccd có đủ 12 ký tự không 
 	begin 
 		raiserror('Căn cước công dân không hợp lệ',16,1); 
 		return; 
 	end
-	if (@PhoneNo not like '0%') 
+	if (@sdt not like '0%')  -- kiểm tra sdt có bắt đầu bằng 0 
 	begin 
 		raiserror('Số điện thoại không họp lệ',16,1); 
 		return; 
 	end
-	if(@Salary >= @luongql) 
+	if(@luongnv >= @luongql)  -- kiểm tra lương nhân viên có ít hơn lương quản lí không 
 	begin 
 		raiserror('Lương nhân viên phải thấp hơn lương quản lí', 16,1);
 		return; 
 	end
  INSERT INTO Employee (EmployeeID, LastName, MiddleName, FirstName, CCCD, PhoneNo, Email, Salary, SupervisorID, BranchID)
-VALUES (@EmployeeID,@LastName,@MiddleName, @FirstName, @CCCD,@PhoneNo,@Email,@Salary,@SupervisorID,@BranchID);
+VALUES (@manv,@ho,@tenlot, @ten, @cccd,@sdt,@email,@luongnv,@nguoigiamsat,@machinhanh);
 end;
 
 drop proc insertemp
@@ -66,6 +67,7 @@ begin catch
 	ERROR_STATE() as State, 
 	Error_procedure() as ErrorProcedure
 end catch; 
+
 
 -- thu tuc xoa nhan vien
 create proc deleteemployee 
