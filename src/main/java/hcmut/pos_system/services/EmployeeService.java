@@ -16,13 +16,9 @@ import hcmut.pos_system.DTO.EmployeeDTO;
 import hcmut.pos_system.DTO.EmployeeRowMapper;
 import hcmut.pos_system.models.Employee;
 import hcmut.pos_system.models.ResponseObject;
-import hcmut.pos_system.repositories.EmployeeRepository;
 
 @Service
 public class EmployeeService {
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
