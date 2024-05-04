@@ -108,7 +108,7 @@ END;
 
 GO
 
--- Example for GetDiscountRate: Getting Discount Rate of Product Type VNM002 at 2024-04-29
+-- Example for GetDiscountRate: getting Discount Rate of Product Type VNM002 at 2024-04-29
 SELECT dbo.GetDiscountRate('VNM002', '2024-04-29') AS DiscountRate;
 
 GO
@@ -160,3 +160,8 @@ BEGIN
 	DEALLOCATE BillCursor;
 	RETURN @TotalPrice;
 END;
+
+-- Example for CalcBillPrice: getting table of total price for each bill
+SELECT BillID, dbo.CalcBillPrice(BillID) AS TotalPrice
+FROM Bill_ProductLot
+GROUP BY BillID;
