@@ -222,3 +222,11 @@ GO
 
 -- Example for GetMatchedEmployees: getting employes that has Thị in their name
 SELECT * FROM dbo.GetMatchedEmployees(N'Thị');
+
+-- Function to get all entries in ProductLot table
+CREATE FUNCTION dbo.FindAllProductLots()
+RETURNS TABLE
+AS
+RETURN (
+	SELECT * FROM ProductLot
+);
