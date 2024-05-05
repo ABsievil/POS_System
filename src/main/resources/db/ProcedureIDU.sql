@@ -47,6 +47,11 @@ begin
 		raiserror('Căn cước công dân không hợp lệ',16,1); 
 		return; 
 	end
+	if (@email not like '%@%' ) 
+	begin 
+		raiserror('Email không hợp lệ',16,1);
+		return; 
+	end
 	if (@sdt not like '0%')  -- kiểm tra sdt có bắt đầu bằng 0 
 	begin 
 		raiserror('Số điện thoại không họp lệ',16,1); 
