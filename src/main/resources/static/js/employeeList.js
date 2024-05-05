@@ -21,7 +21,7 @@ fetch('http://localhost:8090/api/v1/Employee/getAllEmployee')
         <td>${employee.supervisorID}</td>
         <td>${employee.salary}</td>
         <td>${employee.branchID}</td>
-        <td><button onclick="location.href='/updateInfor/${employee.employeeID}'">Chỉnh Sửa</button></td>
+        <td><button onclick="location.href='/employeeList/updateInfor/${employee.employeeID}'">Chỉnh Sửa</button></td>
       `;
 
       employeeBody.appendChild(row);

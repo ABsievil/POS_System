@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="/css/navbar.css" />
     <link rel="stylesheet" href="/css/inforCard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <script src ="js/employeeInfor.js"></script>
 </head>
 
 <body>
@@ -35,17 +34,6 @@
                         </tr>
                     </thead>
                     <tbody id = "employeeBody">
-                      <tr>
-                        <th id="manv"></th>
-                        <th id ="ten"></th>
-                        <th id ="CCCD"></th>
-                        <th id ="sdt"></th>
-                        <th id="email"></th>
-                        <th id="idgiamsat"></th>
-                        <th id ="luong"></th>
-                        <th id ="idchinhanh"></th>
-                        <td><button>Xóa</button></td>
-                      </tr>
                     </tbody>
                 </table>
             </div>
@@ -148,6 +136,7 @@
         </section>
     </div>
     <div id="employeeID" th:text="${employeeID}" style="display: none;"></div>
+    <script src="/js/employeeInfor.js"></script>
 </body>
 
 </html>

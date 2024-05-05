@@ -35,29 +35,12 @@ public class PageController {
         public String getDisplay(){
             return "employeeList";
         }   
-
         @GetMapping("/updateInfor/{employeeID}")
         public String getUpdate(@PathVariable Integer employeeID, Model model){
             model.addAttribute("employeeID", employeeID);
             return "updateInfor";
         }   
     }
-
-    @Controller
-    @RequestMapping("/updateInfor")
-    public class updateInfor{
-        @GetMapping("/{employeeID}")
-        public String getUpdate(@PathVariable Integer employeeID, Model model){
-            model.addAttribute("employeeID", employeeID);
-            return "updateInfor";
-        }   
-    }
-    
-    @GetMapping("/employeeList/updateUserInfor/{employeeID}")
-    public String getUpdateUserInfor(@PathVariable Integer employeeID, Model model){
-        model.addAttribute("employeeID", employeeID);
-        return "updateUserInfor";
-    }   
 
     @Controller
     @RequestMapping("/supplier")
@@ -81,7 +64,7 @@ public class PageController {
             return "productBill";
         }   
 
-        @RequestMapping(value = "totalPrice", method = RequestMethod.GET)
+        @RequestMapping(value = "/totalPrice", method = RequestMethod.GET)
         public String getMethodName() {
             return "totalPrice";
         }
