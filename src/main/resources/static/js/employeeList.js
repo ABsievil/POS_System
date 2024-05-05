@@ -13,7 +13,6 @@ fetch('http://localhost:8090/api/v1/Employee/getAllEmployee')
 
       // Create table cells for each column
       row.innerHTML = `
-      <tr>
         <td>${employee.employeeID}</td>
         <td>${employee.lastName} ${employee.middleName} ${employee.firstName}</td>
         <td>${employee.cccd}</td>
@@ -22,11 +21,11 @@ fetch('http://localhost:8090/api/v1/Employee/getAllEmployee')
         <td>${employee.supervisorID}</td>
         <td>${employee.salary}</td>
         <td>${employee.branchID}</td>
-        <td><button onclick="location.href='/update'">Chỉnh Sửa</button></td>
-      </tr>
+        <td><button onclick="location.href='/updateInfor/${employee.employeeID}'">Chỉnh Sửa</button></td>
       `;
 
       employeeBody.appendChild(row);
     });
   })
  .catch(error => console.error('Error:', error));
+ 
