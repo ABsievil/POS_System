@@ -56,6 +56,20 @@ public class EmployeeService {
         }
     }
 
+    public ResponseEntity<ResponseObject> PROC_findEmployeeByEmployeeID(Integer employeeID){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query(
+            "EXEC dbo.FindEmployeeByEmployeeID @EmployeeID =?", new EmployeeRowMapper(), employeeID);
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to find Employee By employeeID successfully", employees));
+        } catch(DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error finding Employee By employeeID", null));
+        }
+    }
+
+
     public ResponseEntity<ResponseObject> PROC_insertEmp(EmployeeDTO newEmployee){
         try {
             jdbcTemplate.update("EXEC dbo.insertemp @manv =?, @ho =?, @tenlot =?, @ten =?, @cccd =?, @sdt =?, @email =?, @luongnv =?, @nguoigiamsat =?, @machinhanh =?",  
