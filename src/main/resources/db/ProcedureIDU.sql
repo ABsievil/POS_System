@@ -33,7 +33,16 @@ begin
 		raiserror('Chi nhánh không tồn tại',16,1); 
 		return; 
 	end
+<<<<<<< HEAD
+	if not exists (select * from employee where supervisorid = @Supervisorid) 
+	begin 
+		raiserror('Nhân viên quản lí không tồn tại',16,1);
+		return; 
+	end
+	if( len(@CCCD) != 12) 
+=======
 	if( len(@cccd) != 12)    -- kiểm tra cccd có đủ 12 ký tự không 
+>>>>>>> 31e454f9a5139b02f4a5e5ec8f7e40eff9e55856
 	begin 
 		raiserror('Căn cước công dân không hợp lệ',16,1); 
 		return; 
@@ -51,11 +60,11 @@ begin
  INSERT INTO Employee (EmployeeID, LastName, MiddleName, FirstName, CCCD, PhoneNo, Email, Salary, SupervisorID, BranchID)
 VALUES (@manv,@ho,@tenlot, @ten, @cccd,@sdt,@email,@luongnv,@nguoigiamsat,@machinhanh);
 end;
-
+---------------------
 drop proc insertemp
--- kiểm tra hợp lệ khi thêm nhân viên 
+---------------------
 begin try 
-	exec insertemp  120, 'Trương', 'Gia', 'Hân','079305102880', '353215330', 'dhan@gmail.com', 10, null, 10
+	exec insertemp  120, 'Trương', 'Gia', 'Hân','079305102880', '0353215330', 'dhan@gmail.com', 100, null, 1
 	print('Nhập thông tin thành công'); 
 	end try 
 begin catch 
@@ -68,25 +77,38 @@ begin catch
 	Error_procedure() as ErrorProcedure
 end catch; 
 
+<<<<<<< HEAD
+-- thủ tục xóa nhân viên
+=======
 
 -- thu tuc xoa nhan vien
+>>>>>>> 31e454f9a5139b02f4a5e5ec8f7e40eff9e55856
 create proc deleteemployee 
 @manv int
 as 
-begin 
+begin	
 	if not exists (select * from employee where employeeid = @manv)
 	begin 
-		raiserror ('Nhan vien khong ton tai',16,1); 
+		raiserror ('Nhân viên không tồn tại',16,1); 
 		return;
 	end
+	declare @supervisedID int; 
+	select @supervisedID = EmployeeID from employee where @manv = SupervisorID; 
+	--NOTE: nếu set on delete cascade ở khoá ngoại supervisorid -> employeeid thì không cần đoạn này nữa
+	if exists ( select supervisorid from employee where supervisorid = @manv) 
+	begin 
+		update employee set supervisorID = null where @supervisedID = employeeID; 
+	end; 
+	---------------------------------------------------------------------------------------------------
 	delete from employee where employeeid = @manv; 
 end;
-
+	--NOTE: chỗ này nếu delete thu ngân và quản lí thì sẽ báo lỗi hệ thống do mình chưa qui định khi mà xóa nv thì nv này ở bảng employee sẽ như nào 
+-----------------------------
 drop proc deleteemployee
-
+---------------------------------------------------------
 begin try 
-	exec deleteemployee 190
-	print ('Xoa nhan vien thanh cong')
+	exec deleteemployee 120
+	print ('Xóa nhân viên thành công')
 end try 
 begin catch 
 	select 
@@ -94,12 +116,11 @@ begin catch
 	ERROR_MESSAGE() as Message, 
 	ERROR_PROCEDURE() as ErrorProcedure
 end catch
+---------------------------------------------------------
 
-select * 
-from employee 
 
---thu tuc update luong nhan vien
-create proc updatesalary
+--thủ tục update lương nhân viên
+create proc updateSalary
 @manv int, 
 @luongnv decimal(6,3)
 as 
@@ -112,32 +133,182 @@ begin
 	select @luongql = salary from employee where EmployeeID = @maql; 
 	if not exists (select * from employee where employeeid = @manv)
 	begin 
-		raiserror ('Nhan vien khong ton tai',16,1); 
+		raiserror ('Nhân viên không tồn tại',16,1); 
 		return;
 	end	
 	if ( @maql != @manv and @luongnv >= @luongql) 
 	begin 
-		raiserror('Luong nhan vien phai thap hon luong quan li cua ho',16,1); 
+		raiserror('Lương nhân viên phải thấp hơn quản lí của họ',16,1); 
 		return;
 	end 
 	update employee set salary = @luongnv where EmployeeID = @manv 
 end; 
-
+-------------------------
 drop proc updatesalary
-
+-------------------------
 begin try 
-	exec updatesalary 7, 18
-	print('Cap nhat luong thanh cong')
+	exec updatesalary 2, 30
+	print('Cập nhật lương thành công')
 end try 
 begin catch 
 	select 
 	ERROR_LINE() as Line, 
 	ERROR_MESSAGE() as Message, 
 	ERROR_PROCEDURE() as ErrorProcedure
-end catch; 
+end catch;  
+
+-- thủ tục update chi nhánh làm việc
+create proc updateBranch 
+@manv int, 
+@machinhanh int
+as
+begin 
+	if not exists (select * from employee where @manv = EmployeeID) 
+	begin 
+		raiserror('Nhân viên không tồn tại',16,1); 
+		return; 
+	end; 
+	if not exists ( select * from branch where @machinhanh = branchid ) 
+	begin 
+		raiserror('Chi nhánh không tồn tại',16,1); 
+		return; 
+	end; 
+end;
+-----------------------------------------------------------------------
+drop proc updatebranch 
+------------------------------------------------------------------------
+exec updatebranch 1,15
+-------------------------------------------------------------------------
+-- Thủ tục cập nhật email 
+create proc updateEmail
+@manv	int, 
+@email	NVARCHAR(320)
+as 
+begin 
+	if not exists (select * from employee where @manv = EmployeeID) 
+	begin 
+		raiserror('Nhân viên không tồn tại',16,1); 
+		return; 
+	end; 
+	if (@email not like '%@%' ) 
+	begin 
+		raiserror('Email không hợp lệ',16,1);
+		return; 
+	end
+	update Employee set email = @email where employeeid = @manv; 
+end; 
+------------------------------------------------
+drop proc updateEmail 
+----------------------------------------------
+begin try 
+	exec updateEmail 102,'dgh@gmail.com' 
+	print('Cập nhật email thành công'); 
+end try 
+begin catch 
+select 
+	ERROR_LINE() as Line, 
+	ERROR_MESSAGE() as Message, 
+	ERROR_PROCEDURE() as ErrorProcedure
+end catch
+
+-- thủ tục cập nhâtj cccd 
+create proc updateCCCD
+@manv	int,
+@cccd	varchar(13)
+as
+begin 
+	if not exists (select * from employee where @manv = EmployeeID) 
+	begin 
+		raiserror('Nhân viên không tồn tại',16,1); 
+		return; 
+	end; 
+	if (len(@cccd ) != 12) 
+	begin 
+		raiserror ('Căn cước công dân không hợp lệ',16,1) 
+		return; 
+	end
+	update employee set cccd = @cccd where employeeid = @manv;
+end; 
+
+drop proc updateCCCD
+
+exec updateCCCD 1,'24444'
+--thủ tục update sdt 
+create proc updatePhoneno
+@manv	int, 
+@sdt	varchar(10)
+as 
+begin 
+	if not exists (select * from employee where @manv = EmployeeID) 
+	begin 
+		raiserror('Nhân viên không tồn tại',16,1); 
+		return; 
+	end; 
+	if (@sdt not like '0%') 
+	begin 
+		raiserror ('Số điện thoại không hợp lệ',16,1);
+		return ; 
+	end
+	update employee set phoneno = @sdt where employeeid = @manv; 
+end ;
+---------------------------------------------------
+exec updatePhoneno 1,'023423421234'
+---------------------------------------------------
+--thủ tục update người giám sát 
+create proc updateSupervisor 
+@manv	int, 
+@manguoigiamsat	int
+as 
+begin
+	if not exists (select * from employee where @manv = EmployeeID) 
+	begin 
+		raiserror('Nhân viên không tồn tại',16,1); 
+		return; 
+	end; 
+	if (@manv = @manguoigiamsat) 
+	begin 
+		raiserror('Nhân viên không thể là người giám sát của mình',16,1);
+		return; 
+	end
+	update employee set supervisorid = @manguoigiamsat where employeeid = @manv
+end
+------------------------------------------
+drop proc updateSupervisor
+--------------------------------------------
+exec updateSupervisor 1,12
+-- thủ tục update tên nhân viên 
+create proc updateName 
+@manv	int, 
+@ho		nvarchar(10) ,
+@tenlot nvarchar(20) , 
+@ten	nvarchar(10)
+as 
+begin 
+	update employee set Lastname = @ho, Middlename = @tenlot, firstname = @ten where employeeid = @manv
+end; 
+------------------------------------------
+drop proc updateName
+--------------------------------------------
+exec updateName 1,N'Nguyễn',N'Mỹ',N'Trang'
 
 
--- thủ tục xóa chi nhánh và kiểm tra hợp lệ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- thủ tục xóa chi nhánh 
 create proc deletebranch 
  @machinhanh INT 
 as 
@@ -193,3 +364,4 @@ end catch;
 
 select * from shift where employeeid =1 
 
+ 

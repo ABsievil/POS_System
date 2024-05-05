@@ -18,7 +18,7 @@ begin
 	end 
 	if @sumofshift <4 
 	begin 
-		raiserror('Nhan vien lam viec khong du so ca qui dinh',16,2); 
+		print('Nhan vien lam viec chua du so ca qui dinh',16,2);  -- chỉ thông báo không báo lỗi, có thể không có  
 		end
 end;
 -- kiểm tra số ca làmm tối thiếu của nhân viên 
