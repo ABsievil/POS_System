@@ -23,6 +23,11 @@ public class PageController {
         return "login";
     }
 
+    @RequestMapping("/about")
+    public String about(){
+        return "about";
+    }
+
     @RequestMapping("/userProfile")
     public String userProfile(){
         return "userProfile";
