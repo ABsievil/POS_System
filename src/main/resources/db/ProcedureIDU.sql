@@ -94,15 +94,13 @@ begin
 	end
 	declare @supervisedID int; 
 	select @supervisedID = EmployeeID from employee where @manv = SupervisorID; 
-	--NOTE: nếu set on delete cascade ở khoá ngoại supervisorid -> employeeid thì không cần đoạn này nữa
+	--NOTE: nếu set on delete set null ở khoá ngoại supervisorid -> employeeid thì không cần đoạn này nữa
 	if exists ( select supervisorid from employee where supervisorid = @manv) 
 	begin 
 		update employee set supervisorID = null where @supervisedID = employeeID; 
 	end; 
-	---------------------------------------------------------------------------------------------------
 	delete from employee where employeeid = @manv; 
 end;
-	--NOTE: chỗ này nếu delete thu ngân và quản lí thì sẽ báo lỗi hệ thống do mình chưa qui định khi mà xóa nv thì nv này ở bảng employee sẽ như nào 
 -----------------------------
 drop proc deleteemployee
 ---------------------------------------------------------
