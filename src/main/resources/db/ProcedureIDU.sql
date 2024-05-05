@@ -263,6 +263,11 @@ begin
 		raiserror('Nhân viên không tồn tại',16,1); 
 		return; 
 	end; 
+	if not exists (select * from employee where supervisorid = @manguoigiamsat) and @manguoigiamsat !=0 
+	begin 
+		raiserror('Nhân viên giám sát không tồn tại',16,1);
+		return; 
+	end
 	if (@manv = @manguoigiamsat) 
 	begin 
 		raiserror('Nhân viên không thể là người giám sát của mình',16,1);
