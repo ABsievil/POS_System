@@ -9,6 +9,7 @@ GO
   Return:
     - Return a table with ProductLotID, ProductTypeID, QuantityInLot, ExpireDate for product lots
 	that have been expired.
+	- If @GivenDate is null, return empty table.
 */
 CREATE FUNCTION dbo.GetExpiredLots(@GivenDate DATE)
 RETURNS @ExpiredLots TABLE (
@@ -19,11 +20,15 @@ RETURNS @ExpiredLots TABLE (
 )
 AS
 BEGIN
+	IF @GivenDate IS NULL
+	BEGIN
+		RETURN;
+	END;
+
 	DECLARE @ProductLotID INT;
     DECLARE @ProductTypeID NVARCHAR(20);
     DECLARE @QuantityInLot INT;
 	DECLARE @ExpireDate DATE;
-    
 
 	-- Create a cursor for looping through ProductLot table
 	DECLARE LotCursor CURSOR FOR
@@ -214,11 +219,20 @@ GO
     - @BillID: the ID of an entry in Bill table.
   Return:
     - Return calculated total price of the specified bill.
+	- If @BillID is not found, return null.
 */
 CREATE FUNCTION dbo.CalcBillPrice(@BillID INT)
 RETURNS DECIMAL(10, 3)
 AS
 BEGIN
+	IF NOT EXISTS (
+        SELECT 1 FROM Bill
+        WHERE BillID = @BillID
+    )
+    BEGIN
+        RETURN NULL;
+    END;
+
 	DECLARE @ProductTypeID NVARCHAR(20);
 	DECLARE @ProductLotID INT;
 	DECLARE @QuantityInBill INT;
