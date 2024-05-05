@@ -40,18 +40,18 @@
 
             <div class="infor-card">
                 <header>
-                    <h1>Chỉnh Sửa Thông Tin Nhân Viên</h1>
+                    <h1>Thêm Nhân Viên</h1>
                     <!-- <span onclick="location.href='/profile/edit'">Chỉnh Sửa</span> -->
                 </header>
-                <div class="infor-content">
+                <form class="infor-content" id = "infoForm">
                     <!-- <div class="title">Thông tin chung</div> -->
                     <div class="field-wrapper">
-
+                        
                         <div class="field">
                             <label for="">Họ</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id = "Lname">
+                            <input type="text" class ="infor-text Lname" id = "Lname" name ="lastName" required>
 
                             
                         </div>
@@ -59,7 +59,7 @@
                             <label for="">Tên đệm</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id = "Mname">
+                            <input type="text" class ="infor-text Mname" id = "Mname" name = "middleName" required>
 
                             
                         </div>
@@ -68,7 +68,7 @@
                             <label for="">Tên</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id = "Fname">
+                            <input type="text" class ="infor-text Fname" id = "Fname" name = "firstName" required>
 
                             
                         </div>
@@ -77,7 +77,7 @@
                             <label for="">MSNV</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id = "empID">
+                            <input type="text" class ="infor-text empID" id = "empID" name = "employeeID" required>
 
                             
                         </div>
@@ -85,7 +85,7 @@
                             <label for="">Giám sát viên</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id ="supID">
+                            <input type="text" class ="infor-text supID" id ="supID" name = "supervisorID">
 
                             
                         </div>
@@ -94,7 +94,7 @@
                             <label for="">Chi nhánh</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id = "brID">
+                            <input type="text" class ="infor-text brID" id = "brID" name = "branchID" required>
 
                             
                         </div>
@@ -104,7 +104,7 @@
                             <label for="">CCCD</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id = "mycccd">
+                            <input type="text" class ="infor-text mycccd" id = "mycccd" name = "cccd" required>
 
                             
                         </div>
@@ -113,24 +113,26 @@
                             <label for="">Số điện thoại</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id = "mysdt">
+                            <input type="text" class ="infor-text mysdt" id = "mysdt" name = "phoneNo" required>
                         </div>
 
                         <div class="field">
                             <label for="">Email</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id = "myemail">
+                            <input type="text" class ="infor-text myemail" id = "myemail" name = "email" required>
                         </div>
                         <div class="field">
                             <label for="">Lương</label>
                             <!-- <div class="infor-text"></div> -->
                             <br>
-                            <input type="text" class ="infor-text" id ="mysalary">
+                            <input type="text" class ="infor-text mysalary" id ="mysalary" name = "salary" required>
                         </div>
                     </div>
-                </div>
-                <span onclick="location.href=''">Gửi thông tin</span>
+                    <input type="submit" value="Tạo mới ngay!" class="submit">
+                    <p class="error" id="postStatus" style="display: none;"><br>Mời bạn nhập lại. </p>
+                    <p class="error" id="postMessage" style="display: none;">Do thiếu nội dung (*).</p>
+                </form>
             </div>
             
         </section>
