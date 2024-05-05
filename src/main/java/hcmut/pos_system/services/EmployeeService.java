@@ -2,6 +2,7 @@ package hcmut.pos_system.services;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,19 +102,33 @@ public class EmployeeService {
                     .body(new ResponseObject("OK", "Query to insert Employee successfully", null));
 
         } catch (DataAccessException e) {
-            if (e.getMessage().contains("Nhân viên đã tồn tại") ||
-                e.getMessage().contains("Chi nhánh không tồn tại") ||
-                e.getMessage().contains("Căn cước công dân không hợp lệ") ||
-                e.getMessage().contains("Số điện thoại không hợp lệ") ||
-                e.getMessage().contains("Lương nhân viên phải thấp hơn lương quản lí")) {
+            String errorMessage = null;
+            for (String error : ERROR_MESSAGES) {
+                if (e.getMessage().contains(error)) {
+                    errorMessage = error;
+                    break;
+                }
+            }
+        
+            if (errorMessage != null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ResponseObject("ERROR", e.getMessage(), null));
+                        .body(new ResponseObject("FAILED", errorMessage, newEmployee));
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error inserting Employee failed", null));
+                        .body(new ResponseObject("ERROR" + e.getMessage().toString(), "Error inserting Employee failed", newEmployee));
             }
         }
     }
+
+    private static final List<String> ERROR_MESSAGES = Arrays.asList(
+    "Nhân viên đã tồn tại",
+    "Chi nhánh không tồn tại",
+    "Nhân viên giám sát không tồn tại",
+    "Căn cước công dân không hợp lệ",
+    "Email không hợp lệ",
+    "Số điện thoại không hợp lệ",
+    "Lương nhân viên phải thấp hơn lương quản lí"
+    );
 
     public ResponseEntity<ResponseObject> PROC_deleteEmployeeById(Integer manv){
         try {

@@ -153,3 +153,9 @@ table thead tr {
 .infor-text {
     padding-left: 10px;
   }
+
+  .error {
+    display: inline;
+    font-size: 13px;
+    color: red;
+}
