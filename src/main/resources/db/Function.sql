@@ -96,45 +96,12 @@ GO
 	that have exceeded the given limit of quantity.
 */
 CREATE FUNCTION dbo.GetExceedQuantityLots(@MaxLimitQuantity INT)
-RETURNS @ExpiredLots TABLE (
-	ProductLotID INT,
-	ProductTypeID NVARCHAR(20),
-	QuantityInLot INT,
-	ExpireDate DATE
-)
+RETURNS TABLE
 AS
-BEGIN
-	DECLARE @ProductLotID INT;
-    DECLARE @ProductTypeID NVARCHAR(20);
-    DECLARE @QuantityInLot INT;
-	DECLARE @ExpireDate DATE;
-    
-
-	-- Create a cursor for looping through ProductLot table
-	DECLARE LotCursor CURSOR FOR
-	SELECT ProductLotID, ProductTypeID, QuantityInLot, ExpireDate
-	FROM ProductLot;
-
-	OPEN LotCursor;
-	FETCH NEXT FROM LotCursor INTO @ProductLotID, @ProductTypeID, @QuantityInLot, @ExpireDate;
-
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-		-- Add product lot to the returned table if its quantity exceeds given limit
-		IF @QuantityInLot > @MaxLimitQuantity
-		BEGIN
-			INSERT INTO @ExpiredLots (ProductLotID, ProductTypeID, QuantityInLot, ExpireDate)
-			VALUES (@ProductLotID, @ProductTypeID, @QuantityInLot, @ExpireDate);
-		END;
-
-		FETCH NEXT FROM LotCursor INTO @ProductLotID, @ProductTypeID, @QuantityInLot, @ExpireDate;
-	END;
-
-	-- Clean up cursor and return table
-	CLOSE LotCursor;
-	DEALLOCATE LotCursor;
-	RETURN;
-END;
+RETURN (
+	SELECT * FROM ProductLot
+	WHERE QuantityInLot > @MaxLimitQuantity
+);
 
 GO
 
