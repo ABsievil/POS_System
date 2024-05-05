@@ -173,6 +173,17 @@ SELECT BillID, dbo.CalcBillPrice(BillID) AS TotalPrice
 FROM Bill_ProductLot
 GROUP BY BillID;
 
+CREATE PROCEDURE CallAllBill 
+AS
+BEGIN
+	SELECT *
+	FROM Bill_ProductLot
+END
+
+EXEC dbo.CallAllBill 
+DROP PROCEDURE FindEmployeeByEmployeeID
+
+
 GO
 
 /*
