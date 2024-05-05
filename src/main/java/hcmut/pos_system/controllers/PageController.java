@@ -85,17 +85,12 @@ public class PageController {
     }
 
     @Controller
-    @RequestMapping("/product")
-    public class product{
+    @RequestMapping("/productLot")
+    public class productLot{
         @GetMapping("")
         public String getProducts(){
-            return "product";
+            return "productLot";
         }   
-
-        @PostMapping("")
-        public void postProducts(){
-
-        }
     }
 
     @Controller
