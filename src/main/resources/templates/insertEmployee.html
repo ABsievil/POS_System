@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"></html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display page</title>
+    <link rel="stylesheet" href="/css/employeeList.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/inforCard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <nav th:replace="navbar :: nav"></nav>
+
+        <section class="main">
+            <div class="infor-card">
+                <header>
+                    <h1>Thêm Nhân Viên</h1>
+                    <!-- <span onclick="location.href='/profile/edit'">Chỉnh Sửa</span> -->
+                </header>
+                <div class="infor-content">
+                    <!-- <div class="title">Thông tin chung</div> -->
+                    <div class="field-wrapper">
+
+                        <div class="field">
+                            <label for="">Họ</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id = "Lname">
+
+                            
+                        </div>
+                        <div class="field">
+                            <label for="">Tên đệm</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id = "Mname">
+
+                            
+                        </div>
+
+                        <div class="field">
+                            <label for="">Tên</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id = "Fname">
+
+                            
+                        </div>
+
+                        <div class="field">
+                            <label for="">MSNV</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id = "empID">
+
+                            
+                        </div>
+                        <div class="field">
+                            <label for="">Giám sát viên</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id ="supID">
+
+                            
+                        </div>
+
+                        <div class="field">
+                            <label for="">Chi nhánh</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id = "brID">
+
+                            
+                        </div>
+
+
+                        <div class="field">
+                            <label for="">CCCD</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id = "mycccd">
+
+                            
+                        </div>
+
+                        <div class="field">
+                            <label for="">Số điện thoại</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id = "mysdt">
+                        </div>
+
+                        <div class="field">
+                            <label for="">Email</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id = "myemail">
+                        </div>
+                        <div class="field">
+                            <label for="">Lương</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text" id ="mysalary">
+                        </div>
+                    </div>
+                </div>
+                <span onclick="location.href=''">Tạo mới ngay!</span>
+            </div>
+            
+        </section>
+    </div>
+    <div id="employeeID" th:text="${employeeID}" style="display: none;"></div>
+    <script src="/js/employeeInfor.js"></script>
+</body>
+
+</html>
