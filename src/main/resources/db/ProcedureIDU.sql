@@ -34,7 +34,7 @@ begin
 		return; 
 	end
 <<<<<<< HEAD
-	if not exists (select * from employee where supervisorid = @Supervisorid) and @supervisorid !=0 
+	if not exists (select * from employee where supervisorid = @Supervisorid) and @supervisorid !=null 
 	begin 
 		raiserror('Nhân viên giám sát không tồn tại',16,1);
 		return; 
@@ -45,6 +45,11 @@ begin
 >>>>>>> 31e454f9a5139b02f4a5e5ec8f7e40eff9e55856
 	begin 
 		raiserror('Căn cước công dân không hợp lệ',16,1); 
+		return; 
+	end
+	if (@email not like '%@%' ) 
+	begin 
+		raiserror('Email không hợp lệ',16,1);
 		return; 
 	end
 	if (@sdt not like '0%')  -- kiểm tra sdt có bắt đầu bằng 0 
@@ -263,7 +268,7 @@ begin
 		raiserror('Nhân viên không tồn tại',16,1); 
 		return; 
 	end; 
-	if not exists (select * from employee where supervisorid = @manguoigiamsat) and @manguoigiamsat !=0 
+	if not exists (select * from employee where supervisorid = @manguoigiamsat) and @manguoigiamsat !=null
 	begin 
 		raiserror('Nhân viên giám sát không tồn tại',16,1);
 		return; 
