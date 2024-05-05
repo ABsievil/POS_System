@@ -154,65 +154,6 @@ INNER JOIN dbo.GetExceedQuantityLots(30) AS exc
 GO
 
 /*
-  Function GetDiscountRate retrieves discount rate of a specified product type on a given date.
-
-  Parameters:
-    - @ProductTypeID: the ID of an entry in ProductType table.
-	- @GivenDate: the date to check discount rate.
-  Return:
-    - Return discount rate in DECIMAL(5, 2). If no match found, return 0.
-*/
-CREATE FUNCTION dbo.GetDiscountRate(@ProductTypeID NVARCHAR(20), @GivenDate DATETIME)
-RETURNS DECIMAL(5, 2)
-AS
-BEGIN
-	DECLARE @DiscountID INT;
-	DECLARE @DiscountDate DATETIME;
-	DECLARE @Discount DECIMAL(5, 2);
-
-	-- Default return discount is 0 if no match found
-	DECLARE @FoundDiscount DECIMAL(5, 2) = 0;
-
-	-- Create a cursor for looping through Discount table
-	DECLARE DiscountCursor CURSOR FOR
-	SELECT DiscountID, DiscountDate, Discount
-	FROM Discount
-	WHERE ProductTypeID = @ProductTypeID;
-
-	OPEN DiscountCursor;
-	FETCH NEXT FROM DiscountCursor INTO @DiscountID, @DiscountDate, @Discount;
-
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-		-- Loop end when there is discount that matches specified date
-		IF @DiscountDate = @GivenDate
-		BEGIN
-			SET @FoundDiscount = @Discount;
-			BREAK;
-		END;
-
-		FETCH NEXT FROM DiscountCursor INTO @DiscountID, @DiscountDate, @Discount;
-	END;
-
-	-- Clean up cursor and return matched discount rate
-	CLOSE DiscountCursor;
-	DEALLOCATE DiscountCursor;
-	RETURN @FoundDiscount;
-END;
-
-GO
-
--- Example for GetDiscountRate: getting Discount Rate of Product Type VNM002 at 2024-04-29
-SELECT dbo.GetDiscountRate('VNM002', '2024-04-29') AS DiscountRate;
-
--- Example for GetDiscountRate: getting table of discount rate for each product type at 2024-04-24
-SELECT ProductTypeID, dbo.GetDiscountRate(ProductTypeID, '2024-04-24') AS DiscountRate
-FROM Discount
-GROUP BY ProductTypeID;
-
-GO
-
-/*
   Function CalcBillPrice retrieves the total price of a given bill.
 
   Parameters:
