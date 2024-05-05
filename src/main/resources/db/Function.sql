@@ -60,6 +60,95 @@ WHERE ProductLotID = 4;
 GO
 
 /*
+  Function GetExpiredLotsToday retrieves expired product lots respect to today date.
+
+  Return:
+    - Return a table with ProductLotID, ProductTypeID, QuantityInLot, ExpireDate for product lots
+	that have been expired.
+*/
+CREATE FUNCTION dbo.GetExpiredLotsToday()
+RETURNS TABLE
+AS
+RETURN (
+	-- Reuse GetExpiredLots with today as GivenDate parameter
+	SELECT * FROM dbo.GetExpiredLots(CAST(GETDATE() AS DATE))
+);
+
+GO
+
+-- Exampple for GetExpiredLotsToday
+SELECT * FROM dbo.GetExpiredLotsToday();
+
+GO
+
+/*
+  Function GetExceedQuantityLots retrieves table of lots that has quantity exceeding certain limit.
+
+  Parameter:
+    - @MaxLimitQuantity: the given limit of maximum quantity.
+  Return:
+    - Return a table with ProductLotID, ProductTypeID, QuantityInLot, ExpireDate for product lots
+	that have exceeded the given limit of quantity.
+*/
+CREATE FUNCTION dbo.GetExceedQuantityLots(@MaxLimitQuantity INT)
+RETURNS @ExpiredLots TABLE (
+	ProductLotID INT,
+	ProductTypeID NVARCHAR(20),
+	QuantityInLot INT,
+	ExpireDate DATE
+)
+AS
+BEGIN
+	DECLARE @ProductLotID INT;
+    DECLARE @ProductTypeID NVARCHAR(20);
+    DECLARE @QuantityInLot INT;
+	DECLARE @ExpireDate DATE;
+    
+
+	-- Create a cursor for looping through ProductLot table
+	DECLARE LotCursor CURSOR FOR
+	SELECT ProductLotID, ProductTypeID, QuantityInLot, ExpireDate
+	FROM ProductLot;
+
+	OPEN LotCursor;
+	FETCH NEXT FROM LotCursor INTO @ProductLotID, @ProductTypeID, @QuantityInLot, @ExpireDate;
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		-- Add product lot to the returned table if its quantity exceeds given limit
+		IF @QuantityInLot > @MaxLimitQuantity
+		BEGIN
+			INSERT INTO @ExpiredLots (ProductLotID, ProductTypeID, QuantityInLot, ExpireDate)
+			VALUES (@ProductLotID, @ProductTypeID, @QuantityInLot, @ExpireDate);
+		END;
+
+		FETCH NEXT FROM LotCursor INTO @ProductLotID, @ProductTypeID, @QuantityInLot, @ExpireDate;
+	END;
+
+	-- Clean up cursor and return table
+	CLOSE LotCursor;
+	DEALLOCATE LotCursor;
+	RETURN;
+END;
+
+GO
+
+-- Example for GetExceedQuantityLots: getting product lots that exceed 50 in quantity
+SELECT * FROM dbo.GetExceedQuantityLots(50);
+
+GO
+
+-- Example for both GetExpiredLotsToday and GetExceedQuantityLots (optional):
+-- getting product lots that have expired and also exceed 30 in quantity
+SELECT exp.ProductLotID, exp.ProductTypeID, exp.QuantityInLot, exp.ExpireDate
+FROM dbo.GetExpiredLots('2025-01-01') AS exp
+INNER JOIN dbo.GetExceedQuantityLots(30) AS exc
+    ON exp.ProductLotID = exc.ProductLotID
+   AND exp.ProductTypeID = exc.ProductTypeID;
+
+GO
+
+/*
   Function GetDiscountRate retrieves discount rate of a specified product type on a given date.
 
   Parameters:
