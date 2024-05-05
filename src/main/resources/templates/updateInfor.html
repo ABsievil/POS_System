@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"></html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display page</title>
+    <link rel="stylesheet" href="/css/employeeList.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/inforCard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <script src ="js/employeeInfor.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <nav th:replace="navbar :: nav"></nav>
+
+        <section class="main">
+            <div class="table-wrapper">
+                <h1>thông tin nhân viên</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã nhân viên</th>
+                            <th>Họ và tên</th>
+                            <th>CCCD</th>
+                            <th>Số điện thoại</th>
+                            <th>Email</th>
+                            <th>Giám sát viên</th>
+                            <th>Lương</th>
+                            <th>Chi nhánh</th>
+                            <th>Xóa nhân viên</th>
+                        </tr>
+                    </thead>
+                    <tbody id = "employeeBody">
+                      <tr>
+                        <th id="manv"></th>
+                        <th id ="ten"></th>
+                        <th id ="CCCD"></th>
+                        <th id ="sdt"></th>
+                        <th id="email"></th>
+                        <th id="idgiamsat"></th>
+                        <th id ="luong"></th>
+                        <th id ="idchinhanh"></th>
+                        <td><button>Xóa</button></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="infor-card">
+                <header>
+                    <h1>Chỉnh Sửa Thông Tin Nhân Viên</h1>
+                    <!-- <span onclick="location.href='/profile/edit'">Chỉnh Sửa</span> -->
+                </header>
+                <div class="infor-content">
+                    <!-- <div class="title">Thông tin chung</div> -->
+                    <div class="field-wrapper">
+
+                        <div class="field">
+                            <label for="">Họ</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+
+                            
+                        </div>
+                        <div class="field">
+                            <label for="">Tên đệm</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+
+                            
+                        </div>
+
+                        <div class="field">
+                            <label for="">Tên</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+
+                            
+                        </div>
+
+                        <div class="field">
+                            <label for="">MSNV</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+
+                            
+                        </div>
+                        <div class="field">
+                            <label for="">Giám sát viên</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+
+                            
+                        </div>
+
+                        <div class="field">
+                            <label for="">Chi nhánh</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+
+                            
+                        </div>
+
+
+                        <div class="field">
+                            <label for="">CCCD</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+
+                            
+                        </div>
+
+                        <div class="field">
+                            <label for="">Số điện thoại</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+                        </div>
+
+                        <div class="field">
+                            <label for="">Email</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+                        </div>
+                        <div class="field">
+                            <label for="">Lương</label>
+                            <!-- <div class="infor-text"></div> -->
+                            <br>
+                            <input type="text" class ="infor-text">
+                        </div>
+                    </div>
+                </div>
+                <span onclick="location.href=''">Gửi thông tin</span>
+            </div>
+            
+        </section>
+    </div>
+    <div id="employeeID" th:text="${employeeID}" style="display: none;"></div>
+</body>
+
+</html>
