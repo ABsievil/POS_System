@@ -40,6 +40,13 @@ public class PageController {
         public String getDisplay(){
             return "employeeList";
         }   
+
+        @GetMapping("/insert")
+        public String getInsert(){
+            return "insertEmployee";
+        }   
+
+
         @GetMapping("/updateInfor/{employeeID}")
         public String getUpdate(@PathVariable Integer employeeID, Model model){
             model.addAttribute("employeeID", employeeID);
