@@ -149,3 +149,7 @@ table thead tr {
     color: var(--card-button-hover-color);
     cursor: pointer;
 }
+
+.infor-text {
+    padding-left: 10px;
+  }

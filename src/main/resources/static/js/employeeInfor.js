@@ -25,8 +25,29 @@ fetch(`http://localhost:8090/api/v1/Employee/${employeeID}`)
       <td>${employee.branchID}</td>
       <td><button>Xóa</button></td>
     `;
-
     employeeBody.appendChild(row);
+
+    const Lname = document.getElementById("Lname");
+    const Mname = document.getElementById("Mname");
+    const Fname = document.getElementById("Fname");
+    const empID = document.getElementById("empID");
+    const supID = document.getElementById("supID");
+    const BrID = document.getElementById("brID");
+    const mycccd = document.getElementById("mycccd");
+    const mysdt = document.getElementById("mysdt");
+    const myemail = document.getElementById("myemail");
+    const mysalary = document.getElementById("mysalary");
+    Lname.value = employee.lastName;
+    Mname.value = employee.middleName;
+    Fname.value = employee.firstName;
+    empID.value = employee.employeeID;
+    supID.value = employee.supervisorID;
+    BrID.value = employee.branchID;
+    mycccd.value = employee.cccd;
+    mysdt.value = employee.phoneNo;
+    myemail.value = employee.email;
+    mysalary.value = employee.salary;
+    
   });
  })
 .catch(error => console.error('Error:', error));
