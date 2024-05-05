@@ -1,9 +1,14 @@
 package hcmut.pos_system.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class PageController {
@@ -24,20 +29,6 @@ public class PageController {
     }
 
     @Controller
-    @RequestMapping("/update")
-    public class update{
-        @GetMapping("")
-        public String getUpdate(){
-            return "updateData";
-        }   
-
-        @PostMapping("")
-        public void postUpdate(){
-
-        }
-    }
-
-    @Controller
     @RequestMapping("/employeeList")
     public class employeeList{
         @GetMapping("")
@@ -45,11 +36,28 @@ public class PageController {
             return "employeeList";
         }   
 
-        @PostMapping("")
-        public void postDisplay(){
-
-        }
+        @GetMapping("/updateInfor/{employeeID}")
+        public String getUpdate(@PathVariable Integer employeeID, Model model){
+            model.addAttribute("employeeID", employeeID);
+            return "updateInfor";
+        }   
     }
+
+    @Controller
+    @RequestMapping("/updateInfor")
+    public class updateInfor{
+        @GetMapping("/{employeeID}")
+        public String getUpdate(@PathVariable Integer employeeID, Model model){
+            model.addAttribute("employeeID", employeeID);
+            return "updateInfor";
+        }   
+    }
+    
+    @GetMapping("/employeeList/updateUserInfor/{employeeID}")
+    public String getUpdateUserInfor(@PathVariable Integer employeeID, Model model){
+        model.addAttribute("employeeID", employeeID);
+        return "updateUserInfor";
+    }   
 
     @Controller
     @RequestMapping("/supplier")
@@ -63,6 +71,29 @@ public class PageController {
         public void postSuppliers(){
 
         }
+    }
+
+    @Controller
+    @RequestMapping("/productBill")
+    public class productBill{
+        @GetMapping("")
+        public String getProductBill(){
+            return "productBill";
+        }   
+
+        @RequestMapping(value = "totalPrice", method = RequestMethod.GET)
+        public String getMethodName() {
+            return "totalPrice";
+        }
+    }
+
+    @Controller
+    @RequestMapping("/totalPrice")
+    public class totalPrice{
+        @GetMapping("")
+        public String getProductBill(){
+            return "totalPrice";
+        }   
     }
 
     @Controller
