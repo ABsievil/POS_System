@@ -85,15 +85,6 @@ public class PageController {
     }
 
     @Controller
-    @RequestMapping("/totalPrice")
-    public class totalPrice{
-        @GetMapping("")
-        public String getProductBill(){
-            return "totalPrice";
-        }   
-    }
-
-    @Controller
     @RequestMapping("/product")
     public class product{
         @GetMapping("")
