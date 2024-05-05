@@ -263,7 +263,7 @@ begin
 		raiserror('Nhân viên không tồn tại',16,1); 
 		return; 
 	end; 
-	if not exists (select * from employee where supervisorid = @manguoigiamsat) and @manguoigiamsat !=0 
+	if not exists (select * from employee where supervisorid = @manguoigiamsat) and @manguoigiamsat !=null
 	begin 
 		raiserror('Nhân viên giám sát không tồn tại',16,1);
 		return; 
