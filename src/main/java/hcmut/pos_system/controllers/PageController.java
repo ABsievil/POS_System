@@ -74,6 +74,20 @@ public class PageController {
     }
 
     @Controller
+    @RequestMapping("/importBatch")
+    public class importBatch{
+        @GetMapping("")
+        public String getImportBatch(){
+            return "importBatch";
+        }   
+
+        @PostMapping("")
+        public void postImportBatch(){
+
+        }
+    }
+
+    @Controller
     @RequestMapping("/productBill")
     public class productBill{
         @GetMapping("")
