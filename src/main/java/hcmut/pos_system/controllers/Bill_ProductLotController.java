@@ -19,4 +19,9 @@ public class Bill_ProductLotController {
     public ResponseEntity<ResponseObject> calcBillPrice(){
         return bill_ProductLotService.CalcBillPrice();
     }
+
+    @GetMapping("/callAllBill")
+    public ResponseEntity<ResponseObject> callAllBill(){
+        return bill_ProductLotService.PROC_callAllBill();
+    }
 }
