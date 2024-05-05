@@ -33,6 +33,11 @@ public class EmployeeController {
         return  employeeService.PROC_findEmployeesByBranchID(branchID);
     }
 
+    @GetMapping("/{employeeID}")
+    public ResponseEntity<ResponseObject> getEmployeesByEmployeeID(@PathVariable Integer employeeID) {
+        return  employeeService.PROC_findEmployeeByEmployeeID(employeeID);
+    }
+
     @PostMapping("/insertEmployee")
     public ResponseEntity<ResponseObject> insertEmployee(@RequestBody EmployeeDTO newEmployee) {
         return employeeService.PROC_insertEmp(newEmployee);
