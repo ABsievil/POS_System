@@ -167,6 +167,7 @@ begin
 		raiserror('Chi nhánh không tồn tại',16,1); 
 		return; 
 	end; 
+	update Employee set BranchID = @machinhanh where employeeid = @manv; 
 end;
 -----------------------------------------------------------------------
 drop proc updatebranch 
