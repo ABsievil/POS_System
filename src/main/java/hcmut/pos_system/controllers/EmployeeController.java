@@ -14,6 +14,10 @@ import hcmut.pos_system.DTO.EmployeeDTO;
 import hcmut.pos_system.models.Employee;
 import hcmut.pos_system.models.ResponseObject;
 import hcmut.pos_system.services.EmployeeService;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/Employee")
@@ -31,6 +35,24 @@ public class EmployeeController {
     @GetMapping("/branch/{branchID}")
     public ResponseEntity<ResponseObject> getEmployeesBybranchID(@PathVariable Integer branchID) {
         return  employeeService.PROC_findEmployeesByBranchID(branchID);
+    }
+
+    @GetMapping("/search/{employeeKey}")
+    public ResponseEntity<ResponseObject> getEmployeesBybranchID(@PathVariable String employeeKey) {
+        return  employeeService.FNC_getMatchedEmployees(employeeKey);
+    }
+
+    @PostMapping("/searchBody")
+    public ResponseEntity<ResponseObject> searchEmployees(@RequestBody SearchRequest request) {
+        return  employeeService.FNC_getMatchedEmployees(request.getValue());
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SearchRequest {
+        private String value;
     }
 
     @GetMapping("/{employeeID}")

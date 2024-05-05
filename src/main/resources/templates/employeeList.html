@@ -20,14 +20,15 @@
                 <h1>Danh sách nhân viên</h1>
                 <div class="data-manipulation">
 
-                    <form action="" class="search-box">
+                    <form id="searchForm" class="search-box" action="">
                         <!--icon------>
                         <i class="fas fa-search"></i>
                         <!--input----->
-                        <input type="text" class="search-input" placeholder="TÌm Kiếm" name="search" size="80px"
+                        <input type="text" class="search-input" placeholder="Tìm Kiếm" name="search" size="80px" id = "searchBox"
                             required>
                         <!--btn------->
-                        <input type="submit" class="search-btn" value="Search">
+                        <!-- <input type="submit" class="search-btn" value="Search"> -->
+                        <button type="button" class="search-btn" value="Search" onclick="searchEmployees()">Search</button>
                     </form>
 
                     <button class="add">

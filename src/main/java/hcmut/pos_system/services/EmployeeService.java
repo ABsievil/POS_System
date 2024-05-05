@@ -69,6 +69,19 @@ public class EmployeeService {
         }
     }
 
+    public ResponseEntity<ResponseObject> FNC_getMatchedEmployees(String employeeKey){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query(
+            "SELECT * FROM dbo.GetMatchedEmployees(?)", new EmployeeRowMapper(), employeeKey);
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to search Employee By employeeKey successfully", employees));
+        } catch(DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error searching Employee By employeeKey", null));
+        }
+    }
+
 
     public ResponseEntity<ResponseObject> PROC_insertEmp(EmployeeDTO newEmployee){
         try {
