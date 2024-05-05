@@ -54,6 +54,10 @@ document
                 status.textContent = responseData.status;
                 message.textContent = responseData.message;
                 // You can handle the response data here (e.g., display success message)
+
+                // Show the BE messages
+                status.style.display = 'block';
+                message.style.display = 'block';
             })
             .catch((error) => {
                 // Handle errors
