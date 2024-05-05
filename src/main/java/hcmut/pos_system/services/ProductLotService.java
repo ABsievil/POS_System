@@ -21,7 +21,23 @@ public class ProductLotService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-     public ResponseEntity<ResponseObject> PROC_getExpiredLots(LocalDate GivenDate){
+    public ResponseEntity<ResponseObject> FNC_getAllProductLot(){
+        try {
+            List<ExpiredLotDTO> expiredLots = jdbcTemplate.query(
+                "SELECT * FROM dbo.FindAllProductLots()",
+                new ExpiredLotRowMapper());
+
+                return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to call Func getAllProductLot successfully", expiredLots));
+
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ResponseObject("ERROR", "Query to call Func getAllProductLot error", null));
+
+        }
+     }
+
+     public ResponseEntity<ResponseObject> FNC_getExpiredLots(LocalDate GivenDate){
         try {
             List<ExpiredLotDTO> expiredLots = jdbcTemplate.query(
                 "SELECT * FROM dbo.GetExpiredLots(?)",
@@ -37,7 +53,7 @@ public class ProductLotService {
         }
      }
 
-     public ResponseEntity<ResponseObject> PROC_getExpiredLotsWithProductLotId(Integer productLotId, LocalDate GivenDate){
+     public ResponseEntity<ResponseObject> FNC_getExpiredLotsWithProductLotId(Integer productLotId, LocalDate GivenDate){
         try {
             List<ExpiredLotDTO> expiredLots = jdbcTemplate.query(
                 "SELECT * FROM dbo.GetExpiredLots(?) WHERE ProductLotID =?",
