@@ -36,7 +36,7 @@ begin
 <<<<<<< HEAD
 	if not exists (select * from employee where supervisorid = @Supervisorid) 
 	begin 
-		raiserror('Nhân viên quản lí không tồn tại',16,1);
+		raiserror('Nhân viên giám sát không tồn tại',16,1);
 		return; 
 	end
 	if( len(@CCCD) != 12) 

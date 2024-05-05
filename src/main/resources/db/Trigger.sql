@@ -1,7 +1,7 @@
 -- kiểm tra số ca làm tối đa 
 Create Trigger CheckShift
 On Shift 
-after INSERT
+after INSERT, UPDATE
 As 
 begin 
 	declare @sumofshift int;
