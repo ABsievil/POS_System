@@ -37,7 +37,7 @@ public class EmployeeController {
         return  employeeService.PROC_findEmployeesByBranchID(branchID);
     }
 
-    @GetMapping("/search/{employeeKey}")
+    @GetMapping("/search/{employeeKey}") // look to not used
     public ResponseEntity<ResponseObject> getEmployeesBybranchID(@PathVariable String employeeKey) {
         return  employeeService.FNC_getMatchedEmployees(employeeKey);
     }
@@ -63,6 +63,11 @@ public class EmployeeController {
     @PostMapping("/insertEmployee")
     public ResponseEntity<ResponseObject> insertEmployee(@RequestBody EmployeeDTO newEmployee) {
         return employeeService.PROC_insertEmp(newEmployee);
+    }
+
+    @PostMapping("/updateEmployee")
+    public ResponseEntity<ResponseObject> updateEmployee(@RequestBody EmployeeDTO employee) {
+        return employeeService.PROC_updateEmp(employee);
     }
 
     @GetMapping("/deleteById/{employeeId}")
