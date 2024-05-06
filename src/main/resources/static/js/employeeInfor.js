@@ -1,6 +1,7 @@
 // Send GET request to backend API
 const employeeID = document.getElementById('employeeID').textContent;
 
+//render data for navbar row
 fetch(`http://localhost:8090/api/v1/Employee/${employeeID}`)
 .then(response => response.json())
 .then(data => {
@@ -23,7 +24,7 @@ fetch(`http://localhost:8090/api/v1/Employee/${employeeID}`)
       <td>${employee.supervisorID}</td>
       <td>${employee.salary}</td>
       <td>${employee.branchID}</td>
-      <td><button>Xóa</button></td>
+      <td><button onclick="deleteEmployee()">Xóa</button></td>
     `;
     employeeBody.appendChild(row);
 
@@ -52,7 +53,7 @@ fetch(`http://localhost:8090/api/v1/Employee/${employeeID}`)
  })
 .catch(error => console.error('Error:', error));
 
-
+// send request to update infor
 document.addEventListener('DOMContentLoaded', () => {
   document
       .getElementById('infoForm')
@@ -120,3 +121,25 @@ document.addEventListener('DOMContentLoaded', () => {
               });
       });
   });
+
+
+function deleteEmployee(){
+    fetch(`http://localhost:8090/api/v1/Employee/deleteById/${employeeID}`)
+    .then((response) => {
+        return response.json(); // Parse the response as JSON (if applicable)
+    })
+    .then((responseData) => {
+        // Use the parsed response data (responseData)
+        console.log('Response:', responseData);
+        const status = document.getElementById('postStatus');
+        const message = document.getElementById('postMessage');
+        status.textContent = responseData.status;
+        message.textContent = responseData.message;
+        // You can handle the response data here (e.g., display success message)
+
+        // Show the BE messages
+        status.style.display = 'block';
+        message.style.display = 'block';
+    })
+    .catch(error => console.error('Error:', error));
+}
