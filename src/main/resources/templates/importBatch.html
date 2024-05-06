@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <script src="/js/importBatch.js"></script>
 </head>
+
 <body>
     <div class="container">
         <nav th:replace="navbar :: nav"></nav>
@@ -17,13 +18,16 @@
         <section class="main">
             <div class="table-wrapper">
                 <h1>Kiểm tra nhập hàng</h1>
-                
+
                 <form action="" class="search-box">
                     <!--icon------>
                     <i class="fas fa-search"></i>
                     <!--input----->
-                    <input type="text" class="search-input" placeholder="Nhập tên nhà cung cấp" name="search" size="80px"
-                        required>
+                    <input type="text" class="search-input" placeholder="Nhập tên nhà cung cấp" name="search"
+                        size="80px" required>
+                    |
+                    <input type="text" class="search-input" placeholder="Nhập giá tiền tối đa" name="search"
+                        size="80px" required>
                     <!--btn------->
                     <input type="submit" class="search-btn" value="Search">
                 </form>
@@ -39,7 +43,7 @@
                             <th>Tổng tiền</th>
                         </tr>
                     </thead>
-                    <tbody id = "importBatchBody">
+                    <tbody id="importBatchBody">
                     </tbody>
                 </table>
             </div>
