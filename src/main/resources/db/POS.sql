@@ -1,5 +1,6 @@
-﻿CREATE DATABASE POS_System
-GO 
+﻿USE POS;
+GO
+
 CREATE TABLE Employee (
 	EmployeeID INT NOT NULL,
 	LastName NVARCHAR(10) NOT NULL,

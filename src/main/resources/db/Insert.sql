@@ -86,7 +86,6 @@ VALUES
 GO
 
 -- Insert Shift
-CREATE PROCEDURE Insert_Shift AS
 BEGIN
 	DECLARE @EmployeeID INT = 1
 	WHILE @EmployeeID <= 50
@@ -151,8 +150,6 @@ BEGIN
 				SET @EmployeeID = @EmployeeID + 1;
 			END
 END
-EXEC Insert_Shift
-DROP PROCEDURE Insert_Shift
 
 GO
 
