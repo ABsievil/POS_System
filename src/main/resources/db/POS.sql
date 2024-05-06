@@ -1,5 +1,5 @@
-﻿CREATE DATABASE POS
-
+﻿CREATE DATABASE POS_System
+GO 
 CREATE TABLE Employee (
 	EmployeeID INT NOT NULL,
 	LastName NVARCHAR(10) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE Employee (
 	CONSTRAINT PK_Employee PRIMARY KEY (EmployeeID),
 
 	CONSTRAINT FK_SupervisorEmployee FOREIGN KEY (SupervisorID)
-		REFERENCES Employee(EmployeeID),
+		REFERENCES Employee(EmployeeID) ON DELETE NO ACTION,
 
 	CONSTRAINT UC_CCCD UNIQUE (CCCD),
 );
@@ -27,7 +27,7 @@ CREATE TABLE Cashier (
 	CONSTRAINT PK_Cashier PRIMARY KEY (EmployeeID),
 	
 	CONSTRAINT FK_CashierEmployee FOREIGN KEY (EmployeeID)
-		REFERENCES Employee(EmployeeID),
+		REFERENCES Employee(EmployeeID) ON DELETE CASCADE,
 );
 
 
@@ -50,7 +50,7 @@ CREATE TABLE Shift (
 	CONSTRAINT PK_WorkShift PRIMARY KEY (EmployeeID, ShiftTime, ShiftDay),
 	
 	CONSTRAINT FK_WorkShiftEmployee FOREIGN KEY (EmployeeID)
-		REFERENCES Employee(EmployeeID),
+		REFERENCES Employee(EmployeeID) ON DELETE CASCADE,
 );
 
 CREATE TABLE Branch (
@@ -83,12 +83,12 @@ CREATE TABLE BranchSchedules (
 CREATE TABLE Bill (
 	BillID INT NOT NULL,
 	OrderDate DATETIME NOT NULL,
-	CashierID INT NOT NULL,
+	CashierID INT,
 
 	CONSTRAINT PK_Bill PRIMARY KEY (BillID),
 	
 	CONSTRAINT FK_BillCashier FOREIGN KEY (CashierID)
-		REFERENCES Cashier(EmployeeID),
+		REFERENCES Cashier(EmployeeID) ON DELETE SET NULL,
 );
 
 CREATE TABLE Supplier (
