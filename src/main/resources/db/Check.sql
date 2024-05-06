@@ -1,3 +1,5 @@
+GO
+
 -- Constraint on employee's salary
 CREATE TRIGGER trg_SalaryCheck_Employee
 ON Employee
@@ -10,6 +12,8 @@ BEGIN
         ROLLBACK;
     END
 END
+
+GO
 
 -- Constraint on available shift's time
 CREATE TRIGGER trg_TimeCheck_Shift
@@ -24,6 +28,8 @@ BEGIN
     END
 END
 
+GO
+
 -- Constraint on Discount's discount rate (in %)
 CREATE TRIGGER trg_RangeCheck_Discount
 ON Discount
@@ -36,6 +42,8 @@ BEGIN
         ROLLBACK;
     END
 END
+
+GO
 
 -- Constraint on the number of each product type in a batch
 CREATE TRIGGER trg_QuantityCheck_ImportBatch
@@ -50,6 +58,8 @@ BEGIN
     END
 END
 
+GO
+
 -- Constraint on typing speed of a cashier
 CREATE TRIGGER trg_Cashier_TypingSpeed_Check
 ON Cashier
@@ -63,6 +73,8 @@ BEGIN
     END
 END
 
+GO
+
 -- Constraint on order date of a bill
 CREATE TRIGGER trg_Bill_OrderDate_Check
 ON Bill
@@ -75,6 +87,8 @@ BEGIN
         ROLLBACK;
     END
 END
+
+GO
 
 -- Constraint on warranty period of equipment
 CREATE TRIGGER trg_WarrantyPeriodCheck_Equipments
