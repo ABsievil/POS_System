@@ -45,7 +45,7 @@ exec callSupervisor
 CREATE PROCEDURE callNormalEmployee
 AS
 BEGIN
-	SELECT EmployeeID, LastName, MiddleName,FirstName AS FullName, CCCD, PhoneNo, Email, Salary, SupervisorID, BranchID
+	SELECT EmployeeID, LastName, MiddleName,FirstName , CCCD, PhoneNo, Email, Salary, SupervisorID, BranchID
 	FROM Employee AS E
 	WHERE 
 			E.EmployeeID NOT IN (SELECT EmployeeID FROM Cashier) AND
