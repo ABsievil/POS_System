@@ -17,9 +17,22 @@
 
         <section class="main">
             <div class="table-wrapper">
-                <div class="table-top" style = "display: flex; justify-content: space-between;">
-                    <h1>Danh sách Sản phẩm</h1>
-                    <span onclick="location.href='#'">Xem sản phẩm đã hết hạn</span>
+                <h1>Danh sách Sản phẩm</h1>
+                <div class="data-manipulation">
+                    <form id="searchForm" class="search-box" action="">
+                        <!--icon------>
+                        <i class="fas fa-search"></i>
+                        <!--input----->
+                        <input type="text" class="search-input" placeholder="Nhập ngày hết hạn" name="search"
+                            size="80px" id="searchBox" required>
+                        |
+                        <input type="text" class="search-input" placeholder="Nhập mã lô sản phẩm (nếu cần)" name="search"
+                            size="80px" id="searchBox">
+                        <!--btn------->
+                        <!-- <input type="submit" class="search-btn" value="Search"> -->
+                        <button type="button" class="search-btn" value="Search"
+                            onclick="searchEmployees()">Search</button>
+                    </form>
                 </div>
                 <table class="table">
                     <thead>
@@ -30,7 +43,7 @@
                             <th>Ngày hết hạn</th>
                         </tr>
                     </thead>
-                    <tbody id = "productBody">
+                    <tbody id="productBody">
                     </tbody>
                 </table>
             </div>
