@@ -133,13 +133,33 @@ function deleteEmployee(){
         console.log('Response:', responseData);
         const status = document.getElementById('postStatus');
         const message = document.getElementById('postMessage');
+        const postSecondElement = document.getElementById('postSecond');
         status.textContent = responseData.status;
         message.textContent = responseData.message;
-        // You can handle the response data here (e.g., display success message)
-
+        
         // Show the BE messages
         status.style.display = 'block';
         message.style.display = 'block';
+        postSecondElement.style.display = 'block';
+
+        // Set a timeout to redirect to /employee after 5 seconds
+        const timeoutId = setTimeout(() => {
+            window.location.href = '/employeeList';
+        }, 5000);
+
+        // Update the #postSecond element to display the postSecond
+        let remainingSeconds = 5;
+
+        const postSecondInterval = setInterval(() => {
+        postSecondElement.textContent = `Auto Back! (${remainingSeconds}s)`;
+        remainingSeconds--;
+
+        if (remainingSeconds < 0) {
+            clearInterval(postSecondInterval);
+            postSecondElement.textContent = '...';
+        }
+        }, 1000);
+
     })
     .catch(error => console.error('Error:', error));
 }
