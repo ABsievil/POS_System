@@ -88,7 +88,11 @@ begin
 		raiserror ('Nhân viên không tồn tại',16,1); 
 		return;
 	end 
-	--NOTE: nếu set on delete set null ở khoá ngoại supervisorid -> employeeid thì không cần đoạn này nữa
+	if exists ( select * from manager where @manv = employeeid) 
+	begin 	
+		raiserror ('Không thể xóa quản lí chi nhánh',16,1); 
+		return 
+	end 
 	if exists ( select supervisorid from employee where supervisorid = @manv) 
 	begin 
 		update employee set supervisorID = null where SupervisorID = @manv;
