@@ -1,53 +1,60 @@
-/*
-Sắp xếp theo EmployeeID
-*/
-CREATE PROCEDURE EmployeeInforEA AS
+CREATE PROCEDURE EmployeeInfor AS
 BEGIN
 	SELECT * FROM EMPLOYEE ORDER BY EmployeeID ASC;
 END
-EXEC dbo.EmployeeInforEA 
-DROP PROCEDURE EmployeeInforEA
+EXEC dbo.EmployeeInfor 
+DROP PROCEDURE EmployeeInfor
 
-CREATE PROCEDURE EmployeeInforED AS
+/*
+Sắp xếp theo EmployeeID
+*/
+CREATE PROCEDURE employeeID_ASC AS
+BEGIN
+	SELECT * FROM EMPLOYEE ORDER BY EmployeeID ASC;
+END
+EXEC dbo.employeeID_ASC 
+DROP PROCEDURE employeeID_ASC
+
+CREATE PROCEDURE employeeID_DESC AS
 BEGIN
 	SELECT * FROM EMPLOYEE ORDER BY EmployeeID DESC;
 END
-EXEC dbo.EmployeeInforED 
-DROP PROCEDURE EmployeeInforED
+EXEC dbo.employeeID_DESC 
+DROP PROCEDURE employeeID_DESC
 
 /*
 Sắp xếp theo BranchID
 */
-CREATE PROCEDURE EmployeeInforBA AS
+CREATE PROCEDURE BranchID_ASC AS
 BEGIN
 	SELECT * FROM EMPLOYEE ORDER BY BranchID ASC;
 END
-EXEC dbo.EmployeeInforBA 
-DROP PROCEDURE EmployeeInforBA
+EXEC dbo.BranchID_ASC 
+DROP PROCEDURE BranchID_ASC
 
-CREATE PROCEDURE EmployeeInforBD AS
+CREATE PROCEDURE BranchID_DESC AS
 BEGIN
 	SELECT * FROM EMPLOYEE ORDER BY BranchID DESC;
 END
-EXEC dbo.EmployeeInforBD 
-DROP PROCEDURE EmployeeInforBD
+EXEC dbo.BranchID_DESC 
+DROP PROCEDURE BranchID_DESC
 
 /*
 Sắp xếp theo SupervisorID
 */
-CREATE PROCEDURE EmployeeInforSA AS
+CREATE PROCEDURE SupervisorID_ASC AS
 BEGIN
 	SELECT * FROM EMPLOYEE ORDER BY SupervisorID ASC;
 END
-EXEC dbo.EmployeeInforSA 
-DROP PROCEDURE EmployeeInforSA
+EXEC dbo.SupervisorID_ASC 
+DROP PROCEDURE SupervisorID_ASC
 
-CREATE PROCEDURE EmployeeInforSD AS
+CREATE PROCEDURE SupervisorID_DESC AS
 BEGIN
 	SELECT * FROM EMPLOYEE ORDER BY SupervisorID DESC;
 END
-EXEC dbo.EmployeeInforSD 
-DROP PROCEDURE EmployeeInforSD
+EXEC dbo.SupervisorID_DESC 
+DROP PROCEDURE SupervisorID_DESC
 
 /*
 Tìm employee theo EmployeeID
