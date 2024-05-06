@@ -21,17 +21,6 @@
                 <h1>Danh sách nhân viên</h1>
                 <div class="data-manipulation">
 
-                    <form id="searchForm" class="search-box" action="">
-                        <!--icon------>
-                        <i class="fas fa-search"></i>
-                        <!--input----->
-                        <input type="text" class="search-input" placeholder="Tìm Kiếm" name="search" size="80px" id = "searchBox"
-                            required>
-                        <!--btn------->
-                        <!-- <input type="submit" class="search-btn" value="Search"> -->
-                        <button type="button" class="search-btn" value="Search" onclick="searchEmployees()">Search</button>
-                    </form>
-
                     <div class="dropdown">
                         <div id = "branchContent">Tất cả</div>
                         <div class="dropdown-content">
@@ -42,7 +31,29 @@
                           <button onclick="searchProductLot(4)">Chi nhánh 4</button>
                           <button onclick="searchProductLot(5)">Chi nhánh 5</button>
                         </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <div id = "empTypeContent">Tất cả</div>
+                        <div class="dropdown-content">
+                          <button onclick="location.href='/employeeList'">Tất cả</button>
+                          <button onclick="">Quản lí</button>
+                          <button onclick="">Thu ngân</button>
+                          <button onclick="">giám sát</button>
+                          <button onclick="">Nhân viên khác</button>
+                        </div>
                       </div>
+
+                    <form id="searchForm" class="search-box" action="">
+                        <!--icon------>
+                        <i class="fas fa-search"></i>
+                        <!--input----->
+                        <input type="text" class="search-input" placeholder="Tìm Kiếm" name="search" size="80px" id = "searchBox"
+                            required>
+                        <!--btn------->
+                        <!-- <input type="submit" class="search-btn" value="Search"> -->
+                        <button type="button" class="search-btn" value="Search" onclick="searchEmployees()">Search</button>
+                    </form>
 
                     <button type="button" class="add" onclick="location.href='/employeeList/insert'">
                         <i class="fas fa-plus" aria-hidden="true"></i>

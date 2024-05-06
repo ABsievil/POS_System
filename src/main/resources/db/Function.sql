@@ -65,62 +65,6 @@ WHERE ProductLotID = 4;
 GO
 
 /*
-  Function GetExpiredLotsToday retrieves expired product lots respect to today date.
-
-  Return:
-    - Return a table with ProductLotID, ProductTypeID, QuantityInLot, ExpireDate for product lots
-	that have been expired.
-*/
-CREATE FUNCTION dbo.GetExpiredLotsToday()
-RETURNS TABLE
-AS
-RETURN (
-	-- Reuse GetExpiredLots with today as GivenDate parameter
-	SELECT * FROM dbo.GetExpiredLots(CAST(GETDATE() AS DATE))
-);
-
-GO
-
--- Exampple for GetExpiredLotsToday
-SELECT * FROM dbo.GetExpiredLotsToday();
-
-GO
-
-/*
-  Function GetExceedQuantityLots retrieves table of lots that has quantity exceeding certain limit.
-
-  Parameter:
-    - @MaxLimitQuantity: the given limit of maximum quantity.
-  Return:
-    - Return a table with ProductLotID, ProductTypeID, QuantityInLot, ExpireDate for product lots
-	that have exceeded the given limit of quantity.
-*/
-CREATE FUNCTION dbo.GetExceedQuantityLots(@MaxLimitQuantity INT)
-RETURNS TABLE
-AS
-RETURN (
-	SELECT * FROM ProductLot
-	WHERE QuantityInLot > @MaxLimitQuantity
-);
-
-GO
-
--- Example for GetExceedQuantityLots: getting product lots that exceed 50 in quantity
-SELECT * FROM dbo.GetExceedQuantityLots(50);
-
-GO
-
--- Example for both GetExpiredLotsToday and GetExceedQuantityLots (optional):
--- getting product lots that have expired and also exceed 30 in quantity
-SELECT exp.ProductLotID, exp.ProductTypeID, exp.QuantityInLot, exp.ExpireDate
-FROM dbo.GetExpiredLots('2025-01-01') AS exp
-INNER JOIN dbo.GetExceedQuantityLots(30) AS exc
-    ON exp.ProductLotID = exc.ProductLotID
-   AND exp.ProductTypeID = exc.ProductTypeID;
-
-GO
-
-/*
   Function CalcBillPrice retrieves the total price of a given bill.
 
   Parameters:
@@ -184,7 +128,7 @@ SELECT BillID, dbo.CalcBillPrice(BillID) AS TotalPrice
 FROM Bill_ProductLot
 GROUP BY BillID;
 
-CREATE PROCEDURE CallAllBill 
+CREATE PROCEDURE CallAllBill
 AS
 BEGIN
 	SELECT *
@@ -232,21 +176,22 @@ BEGIN
 	BEGIN
 		SET @MatchingString = REPLACE(@MatchingString, '  ', ' ');
 	END;
-	
+	SET @MatchingString = LOWER(@MatchingString);
+
 	-- Case 1: MatchingString contains no spaces
 	--		   MatchingString is likely a single word, CCCD, PhoneNo or Email
 	IF CHARINDEX(' ', @MatchingString) = 0
 	BEGIN
 		INSERT INTO @MatchedEmployees
 		SELECT * FROM Employee
-		WHERE LastName = @MatchingString OR
-			MiddleName = @MatchingString OR
-			FirstName = @MatchingString OR
-			CCCD = @MatchingString OR
-			PhoneNo = @MatchingString OR
-			Email = @MatchingString OR
+		WHERE LOWER(LastName) = @MatchingString OR
+			LOWER(MiddleName) = @MatchingString OR
+			LOWER(FirstName) = @MatchingString OR
+			LOWER(CCCD) = @MatchingString OR
+			LOWER(PhoneNo) = @MatchingString OR
+			LOWER(Email) = @MatchingString OR
 			-- Matching part of email
-			(@MatchingString NOT LIKE '@' AND CHARINDEX(@MatchingString, Email) > 0);
+			(@MatchingString NOT LIKE '@' AND CHARINDEX(@MatchingString, LOWER(Email)) > 0);
 		RETURN;
 	END
 	-- Case 2: MatchingString contains spaces as seperators
@@ -255,15 +200,22 @@ BEGIN
 	BEGIN
 		INSERT INTO @MatchedEmployees
 		SELECT * FROM Employee
-		WHERE @MatchingString = LastName + ' ' + ISNULL(MiddleName, '') OR
-			  @MatchingString = LastName + ' ' + FirstName OR
-			  @MatchingString = ISNULL(MiddleName, '') + ' ' + FirstName OR
-			  @MatchingString = LastName + ' ' + ISNULL(MiddleName, '') + ' ' + FirstName;
+		WHERE @MatchingString = LOWER(LastName) + ' ' + ISNULL(LOWER(MiddleName), '') OR
+			  @MatchingString = LOWER(LastName) + ' ' + LOWER(FirstName) OR
+			  @MatchingString = ISNULL(LOWER(MiddleName), '') + ' ' + LOWER(FirstName) OR
+			  @MatchingString = LOWER(LastName) + ' ' + ISNULL(LOWER(MiddleName), '') + ' ' + LOWER(FirstName);
 		RETURN;
 	END;
 	
 	RETURN;
 END;
+
+GO
+
+-- Example for GetMatchedEmployee: getting employees
+SELECT * FROM dbo.GetMatchedEmployees(N'TrầN    thị  ');
+SELECT * FROM dbo.GetMatchedEmployees(N'    trần Trang');
+SELECT * FROM dbo.GetMatchedEmployees(N'Trần thị');
 
 GO
 
