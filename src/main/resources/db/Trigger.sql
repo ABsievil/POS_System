@@ -142,3 +142,43 @@ BEGIN
     CLOSE ShiftCursor;
     DEALLOCATE ShiftCursor;
 END
+
+-- Constraint on day interval between each batch of the same product type
+CREATE TRIGGER trg_CheckBatchDateInterval_ImportBatch
+ON ImportBatch
+BEFORE INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @ProductTypeID NVARCHAR(20);
+    DECLARE @BatchDate DATE;
+
+    -- Create cursor to loop through information of inserted batches
+    DECLARE BatchCursor CURSOR FOR
+    SELECT ProductTypeID, BatchDate FROM inserted;
+    OPEN BatchCursor;
+    FETCH NEXT FROM BatchCursor INTO @ProductTypeID, @BatchDate;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        -- Get the most recent batch date of this product type
+        DECLARE @LatestBatchDate DATE;
+        SELECT @LatestBatchDate = MAX(BatchDate) FROM ImportBatch
+        WHERE ProductTypeID = @ProductTypeID;
+
+		-- Check the constrain if this latest batch date does exist
+        IF @LatestBatchDate IS NOT NULL
+        BEGIN
+            IF DATEDIFF(DAY, @LatestBatchDate, @BatchDate) > 7
+            BEGIN
+                RAISERROR('Đợt nhập hàng của cùng một loại sản phẩm không thể cách quá 7 ngày so với đợt nhập trước đó.', 16, 1);
+                ROLLBACK;
+                RETURN;
+            END
+        END
+
+        FETCH NEXT FROM BatchCursor INTO @ProductTypeID, @BatchDate;
+    END
+
+    CLOSE BatchCursor;
+    DEALLOCATE BatchCursor;
+END
