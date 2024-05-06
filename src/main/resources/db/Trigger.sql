@@ -20,88 +20,93 @@ BEGIN
     -- If the total price exceeds the limit 20,000,000 vnd, raise an error
     IF @TotalPrice > 20000
     BEGIN
-        RAISERROR('Total price for the Bill exceeds the limit of 20,000,000 vnd.', 16, 1)
-        ROLLBACK TRANSACTION
-    END
-END
+        RAISERROR('Tổng giá tiền của hóa đơn không thể vượt quá 20 triệu đồng.', 16, 1);
+        ROLLBACK TRANSACTION;
+    END;
+END;
 
 GO
 
 -- kiểm tra số ca làm tối đa 
 CREATE TRIGGER CheckShift
-ON Shift 
-after INSERT, UPDATE
-As 
-begin 
-	declare @sumofshift int;
-	declare @manv int
-	select @manv = EmployeeID 
-	from inserted 
-	select @sumofshift = count(employeeID)
-	from shift 
-	where @manv= employeeID 
-	if @sumofshift > 8 
-	begin 
-		raiserror('Nhân viên làm việc quá 8 ca một tuần',16,2);
-		rollback transaction 
-	end 
-end;
+ON Shift
+AFTER INSERT, UPDATE
+AS
+BEGIN
+	DECLARE @sumofshift INT;
+	DECLARE @manv INT;
+	SELECT @manv = EmployeeID
+	FROM inserted;
+	SELECT @sumofshift = COUNT(EmployeeID)
+	FROM Shift
+	WHERE @manv = EmployeeID;
+
+	IF @sumofshift > 8 
+	BEGIN
+		RAISERROR('Nhân viên làm việc quá 8 ca một tuần', 16, 2);
+		ROLLBACK TRANSACTION;
+	END;
+END;
 
 GO
 
 -- kiểm tra số ca làmm tối thiếu của nhân viên 
 CREATE TRIGGER CheckshiftMin 
-on shift 
-for delete 
-As 
-begin 
-	declare @manv int;
-	declare @sumofshift int;
-	select @manv = EmployeeID 
-	from deleted; 
-	select @sumofshift = count(employeeID)
-	from shift
-	where @manv= employeeID ;
-	if @sumofshift < 4 
-		begin 
-		raiserror ('Nhân viên làm việc không đủ 4 ca một tuần',16,2); 
-		end ;
-end;
+ON Shift
+FOR DELETE
+AS
+BEGIN
+	DECLARE @manv INT;
+	DECLARE @sumofshift INT;
+	SELECT @manv = EmployeeID
+	FROM deleted;
+	SELECT @sumofshift = COUNT(EmployeeID)
+	FROM Shift
+	WHERE @manv = EmployeeID;
+
+	iF @sumofshift < 4
+	BEGIN
+		RAISERROR('Nhân viên làm việc không đủ 4 ca một tuần', 16, 2); 
+	END;
+END;
 
 GO
 
 -- tự động cập nhật số lượng hàng tồn sau mỗi lần xuất hóa đơn 
 CREATE TRIGGER Soluongton 
-on Bill_ProductLot 
-after insert
-as 
-begin 
- declare @malo int; 
- declare @maloaisp nvarchar(20); 
- declare @sluongban int; 
- select @sluongban = QuantityInBill from inserted ; --  số lượng sản phẩm bán từ bill vừa được insert
- select @malo =  ProductLotID from inserted ;	-- mã lô được bán
- select @maloaisp = ProductTypeID from inserted ; -- mã loại sp được bán
- update ProductLot 	-- cập nhật số sản phẩm tồn ở bảng lô sp
- set QuantityinLot= quantityinlot - @sluongban
- where ProductLotID = @malo and ProductTypeID = @maloaisp ;
- update ProductType -- cập nhật số sản phẩm tồn ở bảng loại sp 
- set Stockquantity = stockquantity - @sluongban 
- where ProductTypeID = @maloaisp ;
-end;
+ON Bill_ProductLot 
+AFTER INSERT
+AS
+BEGIN 
+	DECLARE @malo INT;
+	DECLARE @maloaisp NVARCHAR(20);
+	DECLARE @sluongban INT;
+
+	SELECT @sluongban = QuantityInBill FROM inserted; --  số lượng sản phẩm bán từ bill vừa được insert
+	SELECT @malo =  ProductLotID FROM inserted;	-- mã lô được bán
+	SELECT @maloaisp = ProductTypeID FROM inserted; -- mã loại sp được bán
+
+	UPDATE ProductLot 	-- cập nhật số sản phẩm tồn ở bảng lô sp
+	SET QuantityinLot = quantityinlot - @sluongban
+	WHERE ProductLotID = @malo and ProductTypeID = @maloaisp;
+
+	UPDATE ProductType -- cập nhật số sản phẩm tồn ở bảng loại sp 
+	SET Stockquantity = stockquantity - @sluongban 
+	WHERE ProductTypeID = @maloaisp;
+END;
 
 GO
 
 -- Kiem tra trigger
-delete from shift 
-where EmployeeID = 2 and ShiftTime =3; 
-insert into Shift values (1,2,6) 
-insert into Bill  values (7,'2023-02-02 12:00:00',35);
-delete from bill where billID = 7
+DELETE FROM Shift 
+WHERE EmployeeID = 2 AND ShiftTime = 3; 
+INSERT INTO Shift VALUES (1,2,6);
+INSERT INTO Bill  VALUES (7, '2023-02-02 12:00:00', 35);
+DELETE FROM bill WHERE BillID = 7;
 INSERT INTO Bill_ProductLot (BillID, ProductLotID, ProductTypeID, QuantityInBill, SalePrice)
 VALUES
-	(7, 2, 'VNM001', 3, 49.500)
-delete form Bill_ProductLot where billID = 7;
+	(7, 2, 'VNM001', 3, 49.500);
+DELETE FROM Bill_ProductLot WHERE BillID = 7;
 
 GO
 
@@ -133,15 +138,17 @@ BEGIN
             RAISERROR('Mỗi ca làm cần ít nhất một nhân viên giám sát. Vui lòng chọn nhân viên giám sát khác trước khi xóa ca làm này.', 16, 1);
             ROLLBACK;
             RETURN;
-        END
+        END;
 
         FETCH NEXT FROM ShiftCursor INTO @ShiftTime, @ShiftDay;
-    END
+    END;
 
 	-- Clean up cursor
     CLOSE ShiftCursor;
     DEALLOCATE ShiftCursor;
-END
+END;
+
+GO
 
 -- Constraint on day interval between each batch of the same product type
 CREATE TRIGGER trg_CheckBatchDateInterval_ImportBatch
@@ -173,12 +180,12 @@ BEGIN
                 RAISERROR('Đợt nhập hàng của cùng một loại sản phẩm không thể cách quá 7 ngày so với đợt nhập trước đó.', 16, 1);
                 ROLLBACK;
                 RETURN;
-            END
-        END
+            END;
+        END;
 
         FETCH NEXT FROM BatchCursor INTO @ProductTypeID, @BatchDate;
-    END
+    END;
 
     CLOSE BatchCursor;
     DEALLOCATE BatchCursor;
-END
+END;
