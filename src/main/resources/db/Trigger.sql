@@ -16,10 +16,6 @@ begin
 		raiserror('Nhân viên làm việc quá 8 ca một tuần',16,2);
 		rollback transaction 
 	end 
-	if @sumofshift <4 
-	begin 
-		print('Nhân viên làm việc chưa đủ số ca qui định',16,2);  -- chỉ thông báo không báo lỗi, có thể không có  
-		end
 end;
 -- kiểm tra số ca làmm tối thiếu của nhân viên 
 Create trigger CheckshiftMin 
