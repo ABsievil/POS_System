@@ -198,25 +198,72 @@ DROP PROCEDURE FindEmployeeByEmployeeID
 GO
 
 /*
-  Function GetMatchedEmployees retrieves a list of employees that at least one cell match MatchingString
+  Function GetMatchedEmployees retrieves a list of employees that at least one cell match MatchingString.
 
   Parameters:
-    - @MatchingString: the given string to be matched
+    - @MatchingString: the given string to be matched.
   Return:
-    - Return a table of employees who has at least one cell matches given string
+    - Return a table of employees who has at least one cell matches given string.
 */
 CREATE FUNCTION dbo.GetMatchedEmployees(@MatchingString NVARCHAR(320))
-RETURNS TABLE
+RETURNS @MatchedEmployees TABLE (
+	EmployeeID INT,
+    LastName NVARCHAR(10),
+    MiddleName NVARCHAR(20),
+    FirstName NVARCHAR(10),
+    CCCD VARCHAR(12),
+    PhoneNo VARCHAR(10),
+    Email NVARCHAR(320),
+    Salary DECIMAL(6, 3),
+    SupervisorID INT,
+    BranchID INT
+)
 AS
-RETURN (
-	SELECT * FROM Employee
-	WHERE LastName = @MatchingString OR
-		  MiddleName = @MatchingString OR
-		  FirstName = @MatchingString OR
-		  CCCD = @MatchingString OR
-		  PhoneNo = @MatchingString OR
-		  Email = @MatchingString
-);
+BEGIN
+	-- Ensure MatchingString is not null
+	IF @MatchingString IS NULL
+	BEGIN
+		RETURN;
+	END;
+
+	-- Remove redundant spaces in MatchingString
+	SET @MatchingString = LTRIM(RTRIM(@MatchingString));
+	WHILE @MatchingString LIKE '%  %'
+	BEGIN
+		SET @MatchingString = REPLACE(@MatchingString, '  ', ' ');
+	END;
+	
+	-- Case 1: MatchingString contains no spaces
+	--		   MatchingString is likely a single word, CCCD, PhoneNo or Email
+	IF CHARINDEX(' ', @MatchingString) = 0
+	BEGIN
+		INSERT INTO @MatchedEmployees
+		SELECT * FROM Employee
+		WHERE LastName = @MatchingString OR
+			MiddleName = @MatchingString OR
+			FirstName = @MatchingString OR
+			CCCD = @MatchingString OR
+			PhoneNo = @MatchingString OR
+			Email = @MatchingString OR
+			-- Matching part of email
+			(@MatchingString NOT LIKE '@' AND CHARINDEX(@MatchingString, Email) > 0);
+		RETURN;
+	END
+	-- Case 2: MatchingString contains spaces as seperators
+	--		   MatchingString is likely a complex name
+	ELSE
+	BEGIN
+		INSERT INTO @MatchedEmployees
+		SELECT * FROM Employee
+		WHERE @MatchingString = LastName + ' ' + ISNULL(MiddleName, '') OR
+			  @MatchingString = LastName + ' ' + FirstName OR
+			  @MatchingString = ISNULL(MiddleName, '') + ' ' + FirstName OR
+			  @MatchingString = LastName + ' ' + ISNULL(MiddleName, '') + ' ' + FirstName;
+		RETURN;
+	END;
+	
+	RETURN;
+END;
 
 GO
 
@@ -230,3 +277,6 @@ AS
 RETURN (
 	SELECT * FROM ProductLot
 );
+
+-- Example for FindAllProductLots
+SELECT * FROM dbo.FindAllProductLots();
