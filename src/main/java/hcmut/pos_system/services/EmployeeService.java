@@ -214,6 +214,77 @@ public class EmployeeService {
         }
     }
 
+    /* SORT METHOD */
+    public ResponseEntity<ResponseObject> PROC_employeeID_ASC (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.employeeID_ASC", new EmployeeRowMapper());
 
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to sort Employee by employeeID ASC successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error sorting Employee by employeeID ASC failed", null));
+        }
+    }
+    
+    public ResponseEntity<ResponseObject> PROC_employeeID_DESC (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.employeeID_DESC", new EmployeeRowMapper());
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to sort Employee by employeeID DESC successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error sorting Employee by employeeID DESC failed", null));
+        }
+    }
+
+    public ResponseEntity<ResponseObject> PROC_supervisorID_ASC (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.SupervisorID_ASC", new EmployeeRowMapper());
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to sort Employee by supervisor ASC successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error sorting Employee by supervisor ASC failed", null));
+        }
+    }
+
+    public ResponseEntity<ResponseObject> PROC_supervisorID_DESC (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.SupervisorID_DESC", new EmployeeRowMapper());
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to sort Employee by supervisorID DESC successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error sorting Employee by supervisorID DESC failed", null));
+        }
+    }
+
+    public ResponseEntity<ResponseObject> PROC_branchID_ASC (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.BranchID_ASC", new EmployeeRowMapper());
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to sort Employee by branchID ASC successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error sorting Employee by branchID ASC failed", null));
+        }
+    }
+
+    public ResponseEntity<ResponseObject> PROC_branchID_DESC (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.BranchID_DESC", new EmployeeRowMapper());
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to sort Employee by branchID DESC successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error sorting Employee by branchID DESC failed", null));
+        }
+    }
 
 }

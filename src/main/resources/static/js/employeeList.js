@@ -58,35 +58,35 @@ fetch('http://localhost:8090/api/v1/Employee/getAllEmployee')
         updateTableContent(data.data);
       })
       .catch(error => console.error('Error:', error));
-      
-      function updateTableContent(employees) {
-        const employeeBody = document.getElementById('employeeBody');
-        // delete all current child
-        while (employeeBody.firstChild) {
-          employeeBody.removeChild(employeeBody.firstChild);
-        }
-      
-        employees.forEach(employee => {
-          // Tạo hàng bảng mới và thêm nội dung
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${employee.employeeID}</td>
-            <td>${employee.lastName} ${employee.middleName} ${employee.firstName}</td>
-            <td>${employee.cccd}</td>
-            <td>${employee.phoneNo}</td>
-            <td>${employee.email}</td>
-            <td>${employee.supervisorID}</td>
-            <td>${employee.salary}</td>
-            <td>${employee.branchID}</td>
-            <td><button onclick="location.href='/employeeList/updateInfor/${employee.employeeID}'">Chỉnh Sửa</button></td>
-          `;
-      
-          employeeBody.appendChild(row);
-        });
-      }
     }
 };
 
+// func to update Table
+function updateTableContent(employees) {
+  const employeeBody = document.getElementById('employeeBody');
+  // delete all current child
+  while (employeeBody.firstChild) {
+    employeeBody.removeChild(employeeBody.firstChild);
+  }
+
+  employees.forEach(employee => {
+    // Tạo hàng bảng mới và thêm nội dung
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${employee.employeeID}</td>
+      <td>${employee.lastName} ${employee.middleName} ${employee.firstName}</td>
+      <td>${employee.cccd}</td>
+      <td>${employee.phoneNo}</td>
+      <td>${employee.email}</td>
+      <td>${employee.supervisorID}</td>
+      <td>${employee.salary}</td>
+      <td>${employee.branchID}</td>
+      <td><button onclick="location.href='/employeeList/updateInfor/${employee.employeeID}'">Chỉnh Sửa</button></td>
+    `;
+
+    employeeBody.appendChild(row);
+  });
+}
 
 function searchProductLot(branchID) {
    // prevent default behavior of submit
@@ -135,3 +135,67 @@ function searchProductLot(branchID) {
     const branchContent = document.getElementById('branchContent');
     branchContent.textContent = `Chi nhánh ${branchID}`;
 };
+
+/* SORT FUNC */
+let employeeID_key = true;
+function sortByEmployeeID(){
+  const employeeBody = document.getElementById('employeeBody');
+    
+  // delete all current child
+  while (employeeBody.firstChild) {
+    employeeBody.removeChild(employeeBody.firstChild);
+  }
+
+  const sortType = employeeID_key == true ?"ASC" : "DESC";
+  employeeID_key =  employeeID_key ? false : true;
+
+  fetch(`http://localhost:8090/api/v1/Employee/sort/employeeID/${sortType}`)
+  .then(response => response.json())
+  .then(data => {
+    // update searched employee list by updateTableContent func
+    updateTableContent(data.data);
+  })
+  .catch(error => console.error('Error:', error));
+
+}
+let supervisorID_key = true;
+function sortBySupervisorID(){
+  const employeeBody = document.getElementById('employeeBody');
+    
+  // delete all current child
+  while (employeeBody.firstChild) {
+    employeeBody.removeChild(employeeBody.firstChild);
+  }
+
+  const sortType = supervisorID_key == true ?"ASC" : "DESC";
+  supervisorID_key = supervisorID_key ? false : true;
+
+  fetch(`http://localhost:8090/api/v1/Employee/sort/supervisorID/${sortType}`)
+  .then(response => response.json())
+  .then(data => {
+    // update searched employee list by updateTableContent func
+    updateTableContent(data.data);
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+let branchID_key = true;
+function sortByBranchID(){
+  const employeeBody = document.getElementById('employeeBody');
+    
+  // delete all current child
+  while (employeeBody.firstChild) {
+    employeeBody.removeChild(employeeBody.firstChild);
+  }
+
+  const sortType = branchID_key == true ?"ASC" : "DESC";
+  branchID_key = branchID_key ? false : true;
+
+  fetch(`http://localhost:8090/api/v1/Employee/sort/branchID/${sortType}`)
+  .then(response => response.json())
+  .then(data => {
+    // update searched employee list by updateTableContent func
+    updateTableContent(data.data);
+  })
+  .catch(error => console.error('Error:', error));
+}

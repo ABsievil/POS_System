@@ -74,4 +74,35 @@ public class EmployeeController {
     public ResponseEntity<ResponseObject> deleteEmployeeById(@PathVariable Integer employeeId) {
         return employeeService.PROC_deleteEmployeeById(employeeId);
     }
+
+    /* SORT METHOD */
+    @GetMapping("/sort/employeeID/ASC")
+    public ResponseEntity<ResponseObject> employeeID_ASC() {
+        return employeeService.PROC_employeeID_ASC();
+    }
+
+    @GetMapping("/sort/employeeID/DESC")
+    public ResponseEntity<ResponseObject> employeeID_DESC() {
+        return employeeService.PROC_employeeID_DESC();
+    }
+
+    @GetMapping("/sort/supervisorID/ASC")
+    public ResponseEntity<ResponseObject> supervisorID_ASC() {
+        return employeeService.PROC_supervisorID_ASC();
+    }
+
+    @GetMapping("/sort/supervisorID/DESC")
+    public ResponseEntity<ResponseObject> supervisorID_DESC() {
+        return employeeService.PROC_supervisorID_DESC();
+    }
+
+    @GetMapping("/sort/branchID/ASC")
+    public ResponseEntity<ResponseObject> branchID_ASC() {
+        return employeeService.PROC_branchID_ASC();
+    }
+
+    @GetMapping("/sort/branchID/DESC")
+    public ResponseEntity<ResponseObject> branchID_DESC() {
+        return employeeService.PROC_branchID_DESC();
+    }
 }
