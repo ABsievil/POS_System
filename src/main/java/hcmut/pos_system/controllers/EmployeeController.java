@@ -105,4 +105,25 @@ public class EmployeeController {
     public ResponseEntity<ResponseObject> branchID_DESC() {
         return employeeService.PROC_branchID_DESC();
     }
+
+    /* EMPLOYEE TYPE */
+    @GetMapping("/employeeType/cashier")
+    public ResponseEntity<ResponseObject> cashier() {
+        return employeeService.PROC_callCashier();
+    }
+
+    @GetMapping("/employeeType/manager")
+    public ResponseEntity<ResponseObject> manager() {
+        return employeeService.PROC_callManager();
+    }
+
+    @GetMapping("/employeeType/supervisor")
+    public ResponseEntity<ResponseObject> supervisor() {
+        return employeeService.PROC_callSupervisor();
+    }
+
+    @GetMapping("/employeeType/normalEmployee")
+    public ResponseEntity<ResponseObject> normalEmployee() {
+        return employeeService.PROC_callNormalEmployee();
+    }
 }

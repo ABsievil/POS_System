@@ -199,3 +199,85 @@ function sortByBranchID(){
   })
   .catch(error => console.error('Error:', error));
 }
+
+
+/* EMPLOYEE TYPE METHOD */
+function callManager(){
+  const employeeBody = document.getElementById('employeeBody');
+    
+  // delete all current child
+  while (employeeBody.firstChild) {
+    employeeBody.removeChild(employeeBody.firstChild);
+  }
+
+  fetch(`http://localhost:8090/api/v1/Employee/employeeType/manager`)
+  .then(response => response.json())
+  .then(data => {
+    // update searched employee list by updateTableContent func
+    updateTableContent(data.data);
+  })
+  .catch(error => console.error('Error:', error));
+
+  const empTypeContent = document.getElementById('empTypeContent');
+    empTypeContent.textContent = `Quản lí`;
+}
+
+function callCashier(){
+  const employeeBody = document.getElementById('employeeBody');
+    
+  // delete all current child
+  while (employeeBody.firstChild) {
+    employeeBody.removeChild(employeeBody.firstChild);
+  }
+
+  fetch(`http://localhost:8090/api/v1/Employee/employeeType/cashier`)
+  .then(response => response.json())
+  .then(data => {
+    // update searched employee list by updateTableContent func
+    updateTableContent(data.data);
+  })
+  .catch(error => console.error('Error:', error));
+
+  const empTypeContent = document.getElementById('empTypeContent');
+    empTypeContent.textContent = `Thu ngân`;
+}
+
+function callSupervisor(){
+  const employeeBody = document.getElementById('employeeBody');
+    
+  // delete all current child
+  while (employeeBody.firstChild) {
+    employeeBody.removeChild(employeeBody.firstChild);
+  }
+
+  fetch(`http://localhost:8090/api/v1/Employee/employeeType/supervisor`)
+  .then(response => response.json())
+  .then(data => {
+    // update searched employee list by updateTableContent func
+    updateTableContent(data.data);
+  })
+  .catch(error => console.error('Error:', error));
+
+  const empTypeContent = document.getElementById('empTypeContent');
+    empTypeContent.textContent = `Giám sát`;
+}
+
+function callNormalEmployee(){
+  const employeeBody = document.getElementById('employeeBody');
+    
+  // delete all current child
+  while (employeeBody.firstChild) {
+    employeeBody.removeChild(employeeBody.firstChild);
+  }
+
+  fetch(`http://localhost:8090/api/v1/Employee/employeeType/normalEmployee`)
+  .then(response => response.json())
+  .then(data => {
+    // update searched employee list by updateTableContent func
+    updateTableContent(data.data);
+  })
+  .catch(error => console.error('Error:', error));
+
+  const empTypeContent = document.getElementById('empTypeContent');
+    empTypeContent.textContent = `Nhân viên khác`;
+}
