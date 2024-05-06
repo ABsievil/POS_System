@@ -20,30 +20,31 @@
             <div class="table-wrapper">
                 <h1>Danh sách nhân viên</h1>
                 <div class="data-manipulation">
-
-                    <div class="dropdown">
-                        <div id = "branchContent">Tất cả</div>
-                        <div class="dropdown-content">
-                          <button onclick="location.href='/employeeList'">Tất cả</button>
-                          <button onclick="searchProductLot(1)">Chi nhánh 1</button>
-                          <button onclick="searchProductLot(2)">Chi nhánh 2</button>
-                          <button onclick="searchProductLot(3)">Chi nhánh 3</button>
-                          <button onclick="searchProductLot(4)">Chi nhánh 4</button>
-                          <button onclick="searchProductLot(5)">Chi nhánh 5</button>
+                    <div class="filter">
+                        <div class="dropdown">
+                            <div class="dropdown-content">
+                                <button onclick="location.href='/employeeList'">Tất cả</button>
+                                <button onclick="searchProductLot(1)">Chi nhánh 1</button>
+                                <button onclick="searchProductLot(2)">Chi nhánh 2</button>
+                                <button onclick="searchProductLot(3)">Chi nhánh 3</button>
+                                <button onclick="searchProductLot(4)">Chi nhánh 4</button>
+                                <button onclick="searchProductLot(5)">Chi nhánh 5</button>
+                            </div>
+                            <div id = "branchContent">Tất cả</div>
+                        </div>
+                        
+                        <div class="dropdown">
+                            <div class="dropdown-content">
+                                <button onclick="location.href='/employeeList'">Tất cả</button>
+                                <button onclick="">Quản lí</button>
+                                <button onclick="">Thu ngân</button>
+                                <button onclick="">giám sát</button>
+                                <button onclick="">Nhân viên khác</button>
+                            </div>
+                            <div id = "empTypeContent">Tất cả</div>
                         </div>
                     </div>
-
-                    <div class="dropdown">
-                        <div id = "empTypeContent">Tất cả</div>
-                        <div class="dropdown-content">
-                          <button onclick="location.href='/employeeList'">Tất cả</button>
-                          <button onclick="">Quản lí</button>
-                          <button onclick="">Thu ngân</button>
-                          <button onclick="">giám sát</button>
-                          <button onclick="">Nhân viên khác</button>
-                        </div>
-                      </div>
-
+                        
                     <form id="searchForm" class="search-box" action="">
                         <!--icon------>
                         <i class="fas fa-search"></i>
