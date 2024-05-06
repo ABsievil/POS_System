@@ -23,13 +23,14 @@
                     <!--icon------>
                     <i class="fas fa-search"></i>
                     <!--input----->
-                    <input type="text" class="search-input" placeholder="Nhập tên nhà cung cấp" name="search"
-                        size="80px" required>
-                    |
-                    <input type="text" class="search-input" placeholder="Nhập giá tiền tối đa" name="search"
-                        size="80px" required>
+                    <input type="text" class="search-input" placeholder="Nhập tên nhà cung cấp" name="nameSuplier"
+                        id = "nameSuplier" size="80px" required>
+                    
+                    <input type="text" class="search-input" placeholder="Nhập giá tiền tối thiểu" name="minPrice"
+                        id = "minPrice"size="80px" required>
                     <!--btn------->
-                    <input type="submit" class="search-btn" value="Search">
+                    <!-- <input type="submit" class="search-btn" value="Search"> -->
+                    <button type="button" class="search-btn" value="Search" onclick="searching()">Search</button>
                 </form>
 
 

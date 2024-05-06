@@ -33,7 +33,7 @@ begin
 		raiserror('Chi nhánh không tồn tại',16,1); 
 		return; 
 	end
-	if not exists (select * from employee where supervisorid = @nguoigiamsat) or @nguoigiamsat !=null 
+	if not exists (select * from employee where employeeid = @nguoigiamsat) and (@nguoigiamsat is not null ) 
 	begin 
 		raiserror('Nhân viên giám sát không tồn tại',16,1);
 		return; 
@@ -254,7 +254,7 @@ exec updatePhoneno 1,'023423421234'
 --thủ tục update người giám sát 
 create proc updateSupervisor 
 @manv	int, 
-@manguoigiamsat	int
+@nguoigiamsat	int
 as 
 begin
 	if not exists (select * from employee where @manv = EmployeeID) 
@@ -262,17 +262,17 @@ begin
 		raiserror('Nhân viên không tồn tại',16,1); 
 		return; 
 	end; 
-	if not exists (select * from employee where supervisorid = @manguoigiamsat) or @manguoigiamsat !=null
+	if not exists (select * from employee where employeeid = @nguoigiamsat) and (@nguoigiamsat is not null ) 
 	begin 
 		raiserror('Nhân viên giám sát không tồn tại',16,1);
 		return; 
 	end
-	if (@manv = @manguoigiamsat) 
+	if (@manv = @nguoigiamsat) 
 	begin 
 		raiserror('Nhân viên không thể là người giám sát của mình',16,1);
 		return; 
 	end
-	update employee set supervisorid = @manguoigiamsat where employeeid = @manv
+	update employee set supervisorid = @nguoigiamsat where employeeid = @manv
 end
 ------------------------------------------
 drop proc updateSupervisor
