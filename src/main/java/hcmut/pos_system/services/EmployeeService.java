@@ -152,7 +152,7 @@ public class EmployeeService {
             emp.getEmployeeID(), emp.getPhoneNo());
 
             //update supervisorID
-            jdbcTemplate.update("EXEC dbo.updateSupervisor @manv =?, @manguoigiamsat =?",  
+            jdbcTemplate.update("EXEC dbo.updateSupervisor @manv =?, @nguoigiamsat =?",  
             emp.getEmployeeID(), emp.getSupervisorID());
 
             //update Lname, Mname, Fname
