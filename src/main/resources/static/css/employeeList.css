@@ -13,20 +13,19 @@
 }
 .add {
     justify-content: space-between;
-    /* width: 17%; */
     background-color: #ffffff;
     height: 50px;
     display: flex;
     align-items: center;
-    margin-top: 25px;
+    margin-top: 25px;   
     padding: 0px 15px 0px 20px;
     border-radius: 30px;
-    border-width: 1.5px;
-    border-color: #78d98f;
-    border-style: solid;
+    border: 1.5px solid #78d98f;
 }
-.add :hover{
+.add:hover{
     cursor: pointer;
+    background: #78d98f;
+    transition: all ease 0.3s;
 }
 .search-box{
     height: 50px;
