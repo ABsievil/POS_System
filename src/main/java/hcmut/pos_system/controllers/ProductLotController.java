@@ -20,16 +20,21 @@ public class ProductLotController {
     @Autowired
     private ProductLotService productLotService;
 
+    @GetMapping("/getAllProductLot")
+    public ResponseEntity<ResponseObject> getAllProductLot() {
+        return productLotService.FNC_getAllProductLot();
+    }
+
     @GetMapping("/getExpiredLots")
     public ResponseEntity<ResponseObject> getExpiredLots(
         @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate givenDate) {
-        return productLotService.PROC_getExpiredLots(givenDate);
+        return productLotService.FNC_getExpiredLots(givenDate);
     }
 
     @GetMapping("/getExpiredLotsWithProductLotId/{productLotId}")
     public ResponseEntity<ResponseObject> getExpiredLotsWithProductLotId(
         @PathVariable Integer productLotId, 
         @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate givenDate) {
-        return productLotService.PROC_getExpiredLotsWithProductLotId(productLotId, givenDate);
+        return productLotService.FNC_getExpiredLotsWithProductLotId(productLotId, givenDate);
     }
 }

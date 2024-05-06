@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee list page</title>
+    <title>Display page</title>
     <link rel="stylesheet" href="/css/employeeList.css" />
     <link rel="stylesheet" href="/css/navbar.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <script src="/js/employeeList.js"></script>
+    <script src="/js/productLot.js"></script>
 </head>
 
 <body>
@@ -17,41 +17,33 @@
 
         <section class="main">
             <div class="table-wrapper">
-                <h1>Danh sách nhân viên</h1>
+                <h1>Danh sách Sản phẩm</h1>
                 <div class="data-manipulation">
-
                     <form id="searchForm" class="search-box" action="">
                         <!--icon------>
                         <i class="fas fa-search"></i>
                         <!--input----->
-                        <input type="text" class="search-input" placeholder="Tìm Kiếm" name="search" size="80px" id = "searchBox"
-                            required>
+                        <input type="text" class="search-input" placeholder="Nhập ngày hết hạn" name="search"
+                            size="80px" id="searchBox" required>
+                        |
+                        <input type="text" class="search-input" placeholder="Nhập mã lô sản phẩm (nếu cần)" name="search"
+                            size="80px" id="searchBox">
                         <!--btn------->
                         <!-- <input type="submit" class="search-btn" value="Search"> -->
-                        <button type="button" class="search-btn" value="Search" onclick="searchEmployees()">Search</button>
+                        <button type="button" class="search-btn" value="Search"
+                            onclick="searchEmployees()">Search</button>
                     </form>
-
-                    <button type="button" class="add" onclick="location.href='/employeeList/insert'">
-                        <i class="fas fa-plus" aria-hidden="true"></i>
-                        Thêm Nhân Viên
-                    </button>
                 </div>
-
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Mã nhân viên</th>
-                            <th>Họ và tên</th>
-                            <th>CCCD</th>
-                            <th>Số điện thoại</th>
-                            <th>Email</th>
-                            <th>Giám sát viên</th>
-                            <th>Lương</th>
-                            <th>Chi nhánh</th>
-                            <th>Chỉnh sửa</th>
+                            <th>Mã lô sản phẩm</th>
+                            <th>Mã loại sản phẩm</th>
+                            <th>Số lượng trong lô</th>
+                            <th>Ngày hết hạn</th>
                         </tr>
                     </thead>
-                    <tbody id = "employeeBody">
+                    <tbody id="productBody">
                     </tbody>
                 </table>
             </div>

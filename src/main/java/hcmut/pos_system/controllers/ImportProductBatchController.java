@@ -19,6 +19,11 @@ public class ImportProductBatchController {
     @Autowired
     ImportProductBatchService importProductBatchService;
 
+    @GetMapping("/getAllProductBatch")
+    public ResponseEntity<ResponseObject> getAllProductBatch() {
+        return importProductBatchService.PROC_ImportProductBatchAll();
+    }
+
     @GetMapping("/getImportProductBatch")
     public ResponseEntity<ResponseObject> importProductBatch(@RequestParam("supplierName") String supplierName,
                                                               @RequestParam("maxMoney") BigDecimal maxMoney) {

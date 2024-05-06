@@ -33,23 +33,24 @@ begin
 		raiserror('Chi nhánh không tồn tại',16,1); 
 		return; 
 	end
-<<<<<<< HEAD
-	if not exists (select * from employee where supervisorid = @Supervisorid) 
+	if not exists (select * from employee where supervisorid = @nguoigiamsat) or @nguoigiamsat !=null 
 	begin 
 		raiserror('Nhân viên giám sát không tồn tại',16,1);
 		return; 
 	end
-	if( len(@CCCD) != 12) 
-=======
 	if( len(@cccd) != 12)    -- kiểm tra cccd có đủ 12 ký tự không 
->>>>>>> 31e454f9a5139b02f4a5e5ec8f7e40eff9e55856
 	begin 
 		raiserror('Căn cước công dân không hợp lệ',16,1); 
 		return; 
 	end
+	if (@email not like '%@%' ) 
+	begin 
+		raiserror('Email không hợp lệ',16,1);
+		return; 
+	end
 	if (@sdt not like '0%')  -- kiểm tra sdt có bắt đầu bằng 0 
 	begin 
-		raiserror('Số điện thoại không họp lệ',16,1); 
+		raiserror('Số điện thoại không hợp lệ',16,1); 
 		return; 
 	end
 	if(@luongnv >= @luongql)  -- kiểm tra lương nhân viên có ít hơn lương quản lí không 
@@ -77,12 +78,7 @@ begin catch
 	Error_procedure() as ErrorProcedure
 end catch; 
 
-<<<<<<< HEAD
 -- thủ tục xóa nhân viên
-=======
-
--- thu tuc xoa nhan vien
->>>>>>> 31e454f9a5139b02f4a5e5ec8f7e40eff9e55856
 create proc deleteemployee 
 @manv int
 as 
@@ -171,6 +167,7 @@ begin
 		raiserror('Chi nhánh không tồn tại',16,1); 
 		return; 
 	end; 
+	update employee set branchid = @machinhanh where employeeid = @manv;
 end;
 -----------------------------------------------------------------------
 drop proc updatebranch 
@@ -263,6 +260,11 @@ begin
 		raiserror('Nhân viên không tồn tại',16,1); 
 		return; 
 	end; 
+	if not exists (select * from employee where supervisorid = @manguoigiamsat) or @manguoigiamsat !=null
+	begin 
+		raiserror('Nhân viên giám sát không tồn tại',16,1);
+		return; 
+	end
 	if (@manv = @manguoigiamsat) 
 	begin 
 		raiserror('Nhân viên không thể là người giám sát của mình',16,1);

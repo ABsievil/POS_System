@@ -14,6 +14,10 @@ import hcmut.pos_system.DTO.EmployeeDTO;
 import hcmut.pos_system.models.Employee;
 import hcmut.pos_system.models.ResponseObject;
 import hcmut.pos_system.services.EmployeeService;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/Employee")
@@ -33,6 +37,24 @@ public class EmployeeController {
         return  employeeService.PROC_findEmployeesByBranchID(branchID);
     }
 
+    @GetMapping("/search/{employeeKey}") // look to not used
+    public ResponseEntity<ResponseObject> getEmployeesBybranchID(@PathVariable String employeeKey) {
+        return  employeeService.FNC_getMatchedEmployees(employeeKey);
+    }
+
+    @PostMapping("/searchBody")
+    public ResponseEntity<ResponseObject> searchEmployees(@RequestBody SearchRequest request) {
+        return  employeeService.FNC_getMatchedEmployees(request.getValue());
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SearchRequest {
+        private String value;
+    }
+
     @GetMapping("/{employeeID}")
     public ResponseEntity<ResponseObject> getEmployeesByEmployeeID(@PathVariable Integer employeeID) {
         return  employeeService.PROC_findEmployeeByEmployeeID(employeeID);
@@ -41,6 +63,11 @@ public class EmployeeController {
     @PostMapping("/insertEmployee")
     public ResponseEntity<ResponseObject> insertEmployee(@RequestBody EmployeeDTO newEmployee) {
         return employeeService.PROC_insertEmp(newEmployee);
+    }
+
+    @PostMapping("/updateEmployee")
+    public ResponseEntity<ResponseObject> updateEmployee(@RequestBody EmployeeDTO employee) {
+        return employeeService.PROC_updateEmp(employee);
     }
 
     @GetMapping("/deleteById/{employeeId}")

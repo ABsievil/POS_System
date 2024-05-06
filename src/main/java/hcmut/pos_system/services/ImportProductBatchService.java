@@ -19,6 +19,22 @@ public class ImportProductBatchService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public ResponseEntity<ResponseObject> PROC_ImportProductBatchAll(){
+        try {
+            List<ImportProductBatchDTO> importProductBatchDTOs = jdbcTemplate.query(
+            "EXEC dbo.ImportProductBatchAll", 
+            new ImportProductBatchRowMapper());
+    
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to execute PROCEDURE Import Product Batch ALL successfully", importProductBatchDTOs));
+
+        } catch (DataAccessException e) {
+            // Catch the exception raised by the RAISERROR statement
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error execute PROCEDURE Import Product Batch ALL", null));
+        }
+    }
+
     public ResponseEntity<ResponseObject> PROC_importProductBatch(String SupplierName, BigDecimal MaxMoney){
         try {
             List<ImportProductBatchDTO> importProductBatchDTOs = jdbcTemplate.query(
