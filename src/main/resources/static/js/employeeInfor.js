@@ -140,25 +140,28 @@ function deleteEmployee(){
         // Show the BE messages
         status.style.display = 'block';
         message.style.display = 'block';
-        postSecondElement.style.display = 'block';
+        
+        if(responseData.status == "OK"){
+            postSecondElement.style.display = 'block';
 
-        // Set a timeout to redirect to /employee after 5 seconds
-        const timeoutId = setTimeout(() => {
-            window.location.href = '/employeeList';
-        }, 5000);
+            // Set a timeout to redirect to /employee after 5 seconds
+            const timeoutId = setTimeout(() => {
+                window.location.href = '/employeeList';
+            }, 5000);
 
-        // Update the #postSecond element to display the postSecond
-        let remainingSeconds = 5;
+            // Update the #postSecond element to display the postSecond
+            let remainingSeconds = 5;
 
-        const postSecondInterval = setInterval(() => {
-        postSecondElement.textContent = `Auto Back! (${remainingSeconds}s)`;
-        remainingSeconds--;
+            const postSecondInterval = setInterval(() => {
+            postSecondElement.textContent = `Auto Back! (${remainingSeconds}s)`;
+            remainingSeconds--;
 
-        if (remainingSeconds < 0) {
-            clearInterval(postSecondInterval);
-            postSecondElement.textContent = '...';
+            if (remainingSeconds < 0) {
+                clearInterval(postSecondInterval);
+                postSecondElement.textContent = '...';
+            }
+            }, 1000);
         }
-        }, 1000);
 
     })
     .catch(error => console.error('Error:', error));
