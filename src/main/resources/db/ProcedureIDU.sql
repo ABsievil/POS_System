@@ -33,7 +33,7 @@ begin
 		raiserror('Chi nhánh không tồn tại',16,1); 
 		return; 
 	end
-	if not exists (select * from employee where supervisorid = @nguoigiamsat) and @nguoigiamsat !=null 
+	if not exists (select * from employee where supervisorid = @nguoigiamsat) or @nguoigiamsat !=null 
 	begin 
 		raiserror('Nhân viên giám sát không tồn tại',16,1);
 		return; 
@@ -167,7 +167,7 @@ begin
 		raiserror('Chi nhánh không tồn tại',16,1); 
 		return; 
 	end; 
-	update Employee set BranchID = @machinhanh where employeeid = @manv; 
+	update employee set branchid = @machinhanh where employeeid = @manv;
 end;
 -----------------------------------------------------------------------
 drop proc updatebranch 
@@ -260,7 +260,7 @@ begin
 		raiserror('Nhân viên không tồn tại',16,1); 
 		return; 
 	end; 
-	if not exists (select * from employee where supervisorid = @manguoigiamsat) and @manguoigiamsat !=null
+	if not exists (select * from employee where supervisorid = @manguoigiamsat) or @manguoigiamsat !=null
 	begin 
 		raiserror('Nhân viên giám sát không tồn tại',16,1);
 		return; 
