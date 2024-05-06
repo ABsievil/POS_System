@@ -200,7 +200,8 @@ BEGIN
 	BEGIN
 		INSERT INTO @MatchedEmployees
 		SELECT * FROM Employee
-		WHERE @MatchingString = LOWER(LastName) + ' ' + ISNULL(LOWER(MiddleName), '') OR
+		WHERE @MatchingString = ISNULL(LOWER(MiddleName), '') OR
+			  @MatchingString = LOWER(LastName) + ' ' + ISNULL(LOWER(MiddleName), '') OR
 			  @MatchingString = LOWER(LastName) + ' ' + LOWER(FirstName) OR
 			  @MatchingString = ISNULL(LOWER(MiddleName), '') + ' ' + LOWER(FirstName) OR
 			  @MatchingString = LOWER(LastName) + ' ' + ISNULL(LOWER(MiddleName), '') + ' ' + LOWER(FirstName);
@@ -213,9 +214,10 @@ END;
 GO
 
 -- Example for GetMatchedEmployee: getting employees
-SELECT * FROM dbo.GetMatchedEmployees(N'TrầN    thị  ');
-SELECT * FROM dbo.GetMatchedEmployees(N'    trần Trang');
-SELECT * FROM dbo.GetMatchedEmployees(N'Trần thị');
+SElECT * FROM Employee;
+SELECT * FROM dbo.GetMatchedEmployees(N'trần');
+SELECT * FROM dbo.GetMatchedEmployees(N'trần thị');
+SELECT * FROM dbo.GetMatchedEmployees(N' Trần');
 
 GO
 
