@@ -132,4 +132,6 @@ function searchProductLot(branchID) {
       });
     }
     
+    const branchContent = document.getElementById('branchContent');
+    branchContent.textContent = `Chi nhánh ${branchID}`;
 };
