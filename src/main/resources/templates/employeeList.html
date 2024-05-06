@@ -26,7 +26,7 @@
                             Loc nhan vien
                         </div> -->
                         <div class="dropdown">
-                            chi nhánh |     
+                            <p>chi nhánh</p>|   
                             <div class="dropdown-content">
                                 <button onclick="location.href='/employeeList'"> Tất cả</button>
                                 <button onclick="searchProductLot(1)">Chi nhánh 1</button>
@@ -39,13 +39,13 @@
                         </div>
                         
                         <div class="dropdown">
-                            nhân viên  |
+                            <p>nhân viên</p>|
                             <div class="dropdown-content">
                                 <button onclick="location.href='/employeeList'">Tất cả</button>
-                                <button onclick="">Quản lí</button>
-                                <button onclick="">Thu ngân</button>
-                                <button onclick="">giám sát</button>
-                                <button onclick="">Nhân viên khác</button>
+                                <button onclick="callManager()">Quản lí</button>
+                                <button onclick="callCashier()">Thu ngân</button>
+                                <button onclick="callSupervisor()">Giám sát</button>
+                                <button onclick="callNormalEmployee()">Nhân viên khác</button>
                             </div>
                             <div id = "empTypeContent">Tất cả</div>
                         </div>

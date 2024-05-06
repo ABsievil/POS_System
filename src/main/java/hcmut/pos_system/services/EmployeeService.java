@@ -287,4 +287,52 @@ public class EmployeeService {
         }
     }
 
+    /* EMPLOYEE TYPE METHOD */
+    public ResponseEntity<ResponseObject> PROC_callCashier (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.callCashier", new EmployeeRowMapper());
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to callCashier successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error callCashier failed", null));
+        }
+    }
+
+    public ResponseEntity<ResponseObject> PROC_callManager (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.callManager", new EmployeeRowMapper());
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to callManager successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error callManager failed", null));
+        }
+    }
+
+    public ResponseEntity<ResponseObject> PROC_callSupervisor (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.callSupervisor", new EmployeeRowMapper());
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to callSupervisor successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error callSupervisor failed", null));
+        }
+    }
+
+    public ResponseEntity<ResponseObject> PROC_callNormalEmployee (){
+        try {
+            List<EmployeeDTO> employees = jdbcTemplate.query("EXEC dbo.callNormalEmployee", new EmployeeRowMapper());
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseObject("OK", "Query to callNormalEmployee successfully", employees));
+        } catch (DataAccessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error callNormalEmployee failed", null));
+        }
+    }
 }
