@@ -128,16 +128,18 @@ SELECT BillID, dbo.CalcBillPrice(BillID) AS TotalPrice
 FROM Bill_ProductLot
 GROUP BY BillID;
 
+GO
+
 CREATE PROCEDURE CallAllBill
 AS
 BEGIN
 	SELECT *
 	FROM Bill_ProductLot
-END
+END;
 
-EXEC dbo.CallAllBill 
-DROP PROCEDURE FindEmployeeByEmployeeID
+GO
 
+EXEC dbo.CallAllBill
 
 GO
 
@@ -221,9 +223,6 @@ SELECT * FROM dbo.GetMatchedEmployees(N' Trần');
 
 GO
 
--- Example for GetMatchedEmployees: getting employes that has Thị in their name
-SELECT * FROM dbo.GetMatchedEmployees(N'Thị');
-
 -- Function to get all entries in ProductLot table
 CREATE FUNCTION dbo.FindAllProductLots()
 RETURNS TABLE
@@ -231,6 +230,8 @@ AS
 RETURN (
 	SELECT * FROM ProductLot
 );
+
+GO
 
 -- Example for FindAllProductLots
 SELECT * FROM dbo.FindAllProductLots();

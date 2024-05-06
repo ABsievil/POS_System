@@ -6,6 +6,8 @@ from manager
 
 */
 
+GO
+
 -- thủ tục thêm nhân viên mới 
 create proc insertemp 
 	@manv INT ,
@@ -208,7 +210,7 @@ select
 	ERROR_PROCEDURE() as ErrorProcedure
 end catch
 
--- thủ tục cập nhâtj cccd 
+-- thủ tục cập nhật cccd 
 create proc updateCCCD
 @manv	int,
 @cccd	varchar(13)

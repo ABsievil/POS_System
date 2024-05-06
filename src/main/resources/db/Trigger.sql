@@ -41,7 +41,7 @@ BEGIN
 	FROM Shift
 	WHERE @manv = EmployeeID;
 
-	IF @sumofshift > 8 
+	IF @sumofshift > 8
 	BEGIN
 		RAISERROR('Nhân viên làm việc quá 8 ca một tuần', 16, 2);
 		ROLLBACK TRANSACTION;
@@ -50,7 +50,7 @@ END;
 
 GO
 
--- kiểm tra số ca làmm tối thiếu của nhân viên 
+-- kiểm tra số ca làm tối thiếu của nhân viên 
 CREATE TRIGGER CheckshiftMin 
 ON Shift
 FOR DELETE
@@ -153,24 +153,27 @@ GO
 -- Constraint on day interval between each batch of the same product type
 CREATE TRIGGER trg_CheckBatchDateInterval_ImportBatch
 ON ImportBatch
-BEFORE INSERT, UPDATE
+AFTER INSERT, UPDATE
 AS
 BEGIN
     DECLARE @ProductTypeID NVARCHAR(20);
+	DECLARE @BranchID INT;
     DECLARE @BatchDate DATE;
 
     -- Create cursor to loop through information of inserted batches
     DECLARE BatchCursor CURSOR FOR
-    SELECT ProductTypeID, BatchDate FROM inserted;
+    SELECT ProductTypeID, BranchID, BatchDate FROM inserted;
     OPEN BatchCursor;
-    FETCH NEXT FROM BatchCursor INTO @ProductTypeID, @BatchDate;
+    FETCH NEXT FROM BatchCursor INTO @ProductTypeID, @BranchID, @BatchDate;
 
     WHILE @@FETCH_STATUS = 0
     BEGIN
         -- Get the most recent batch date of this product type
         DECLARE @LatestBatchDate DATE;
         SELECT @LatestBatchDate = MAX(BatchDate) FROM ImportBatch
-        WHERE ProductTypeID = @ProductTypeID;
+        WHERE ProductTypeID = @ProductTypeID
+		  AND BranchID = @BranchID
+		  AND BatchDate < @BatchDate;
 
 		-- Check the constrain if this latest batch date does exist
         IF @LatestBatchDate IS NOT NULL
@@ -183,7 +186,7 @@ BEGIN
             END;
         END;
 
-        FETCH NEXT FROM BatchCursor INTO @ProductTypeID, @BatchDate;
+        FETCH NEXT FROM BatchCursor INTO @ProductTypeID, @BranchID, @BatchDate;
     END;
 
     CLOSE BatchCursor;
