@@ -481,8 +481,3 @@ VALUES
 	('VNM001', 2, '20240425', 5),
 	('VNM002', 1, '20240429', 20),
 	('VNM002', 2, '20240430', 5);
-
-
-SELECT ProductTypeName, QuantityInBill, Bill_ProductLot.SalePrice
-FROM Bill_ProductLot, ProductType
-WHERE BillID = 1 AND Bill_ProductLot.ProductTypeID = ProductType.ProductTypeID

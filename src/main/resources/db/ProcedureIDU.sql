@@ -87,13 +87,11 @@ begin
 	begin 
 		raiserror ('Nhân viên không tồn tại',16,1); 
 		return;
-	end
-	declare @supervisedID int; 
-	select @supervisedID = EmployeeID from employee where @manv = SupervisorID; 
+	end 
 	--NOTE: nếu set on delete set null ở khoá ngoại supervisorid -> employeeid thì không cần đoạn này nữa
 	if exists ( select supervisorid from employee where supervisorid = @manv) 
 	begin 
-		update employee set supervisorID = null where @supervisedID = employeeID; 
+		update employee set supervisorID = null where SupervisorID = @manv;
 	end; 
 	delete from employee where employeeid = @manv; 
 end;
@@ -101,7 +99,7 @@ end;
 drop proc deleteemployee
 ---------------------------------------------------------
 begin try 
-	exec deleteemployee 120
+	exec deleteemployee 44
 	print ('Xóa nhân viên thành công')
 end try 
 begin catch 
