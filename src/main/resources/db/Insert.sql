@@ -83,6 +83,8 @@ VALUES
 	(28, N'Cử nhân Quản trị kinh doanh', 4,'20240423'),
 	(1, N'Cử nhân Quản trị kinh doanh', 5,'20240423');  
 
+GO
+
 -- Insert Shift
 CREATE PROCEDURE Insert_Shift AS
 BEGIN
@@ -152,44 +154,7 @@ END
 EXEC Insert_Shift
 DROP PROCEDURE Insert_Shift
 
-Create Trigger CheckShiftMax  
-On Shift 
-after insert, update 
-As 
-begin 
-	declare @sumofshift int;
-	declare @manv int
-	select @manv = EmployeeID 
-	from inserted 
-	select @sumofshift = count(employeeID)
-	from shift 
-	where @manv= employeeID 
-	if @sumofshift > 8 
-	begin 
-		raiserror('Nhan vien lam viec qua 8 ca mot tuan',16,2);
-		rollback transaction 
-	end 
-	if @sumofshift <4 
-	begin 
-		raiserror('Nhan vien lam viec khong du so ca qui dinh',16,2); 
-		end
-end 
-
-Create trigger CheckshiftMin 
-on shift 
-for delete 
-As 
-begin 
-	select @manv = EmployeeID 
-	from deleted  
-	select @sumofshift = count(employeeID)
-	from shift 
-	where @manv= employeeID 
-	if @sumofshift < 4 
-		begin 
-		raiserror ('Nhan vien lam viec khong du so ca qui dinh',16,2); 
-		end 
-end
+GO
 
 -- Insert Branchschedules 
 INSERT INTO Branchschedules (BranchID,OpenDays,OpenTime,CloseTime) VALUES (1, N'Thứ 2 đến Thứ 7','07:00:00', '10:30:00');  
@@ -267,49 +232,49 @@ VALUES
 	(9, 'VNM001', 10, '20241231'),
 	(10, 'VNM001', 10, '20241231'),
 
-	(1, 'VNM002', 10, '20241231'),
-	(2, 'VNM002', 10, '20241231'),
-	(3, 'VNM002', 10, '20241231'),
-	(4, 'VNM002', 10, '20241231'),
-	(5, 'VNM002', 10, '20241231'),
-	(6, 'VNM002', 10, '20241231'),
-	(7, 'VNM002', 10, '20241231'),
-	(8, 'VNM002', 10, '20241231'),
-	(9, 'VNM002', 10, '20241231'),
-	(10, 'VNM002', 10, '20241231'),
+	(1, 'VNM002', 10, '20250608'),
+	(2, 'VNM002', 10, '20250608'),
+	(3, 'VNM002', 10, '20250608'),
+	(4, 'VNM002', 10, '20250608'),
+	(5, 'VNM002', 10, '20250608'),
+	(6, 'VNM002', 10, '20250608'),
+	(7, 'VNM002', 10, '20250608'),
+	(8, 'VNM002', 10, '20250608'),
+	(9, 'VNM002', 10, '20250608'),
+	(10, 'VNM002', 10, '20250608'),
 
-	(1, 'VNM003', 10, '20241231'),
-	(2, 'VNM003', 10, '20241231'),
-	(3, 'VNM003', 10, '20241231'),
-	(4, 'VNM003', 10, '20241231'),
-	(5, 'VNM003', 10, '20241231'),
-	(6, 'VNM003', 10, '20241231'),
-	(7, 'VNM003', 10, '20241231'),
-	(8, 'VNM003', 10, '20241231'),
-	(9, 'VNM003', 10, '20241231'),
-	(10, 'VNM003', 10, '20241231'),
+	(1, 'VNM003', 10, '20250620'),
+	(2, 'VNM003', 10, '20250620'),
+	(3, 'VNM003', 10, '20250620'),
+	(4, 'VNM003', 10, '20250620'),
+	(5, 'VNM003', 10, '20250620'),
+	(6, 'VNM003', 10, '20250620'),
+	(7, 'VNM003', 10, '20250620'),
+	(8, 'VNM003', 10, '20250620'),
+	(9, 'VNM003', 10, '20250620'),
+	(10, 'VNM003', 10, '20250620'),
 
-	(1, 'VNM004', 10, '20241231'),
-	(2, 'VNM004', 10, '20241231'),
-	(3, 'VNM004', 10, '20241231'),
-	(4, 'VNM004', 10, '20241231'),
-	(5, 'VNM004', 10, '20241231'),
-	(6, 'VNM004', 10, '20241231'),
-	(7, 'VNM004', 10, '20241231'),
-	(8, 'VNM004', 10, '20241231'),
-	(9, 'VNM004', 10, '20241231'),
-	(10, 'VNM004', 10, '20241231'),
+	(1, 'VNM004', 10, '20251231'),
+	(2, 'VNM004', 10, '20251231'),
+	(3, 'VNM004', 10, '20251231'),
+	(4, 'VNM004', 10, '20251231'),
+	(5, 'VNM004', 10, '20251231'),
+	(6, 'VNM004', 10, '20251231'),
+	(7, 'VNM004', 10, '20251231'),
+	(8, 'VNM004', 10, '20251231'),
+	(9, 'VNM004', 10, '20251231'),
+	(10, 'VNM004', 10, '20251231'),
 
-	(1, 'VNM005', 10, '20241231'),
-	(2, 'VNM005', 10, '20241231'),
-	(3, 'VNM005', 10, '20241231'),
-	(4, 'VNM005', 10, '20241231'),
-	(5, 'VNM005', 10, '20241231'),
-	(6, 'VNM005', 10, '20241231'),
-	(7, 'VNM005', 10, '20241231'),
-	(8, 'VNM005', 10, '20241231'),
-	(9, 'VNM005', 10, '20241231'),
-	(10, 'VNM005', 10, '20241231'),
+	(1, 'VNM005', 10, '20260201'),
+	(2, 'VNM005', 10, '20260201'),
+	(3, 'VNM005', 10, '20260201'),
+	(4, 'VNM005', 10, '20260201'),
+	(5, 'VNM005', 10, '20260201'),
+	(6, 'VNM005', 10, '20260201'),
+	(7, 'VNM005', 10, '20260201'),
+	(8, 'VNM005', 10, '20260201'),
+	(9, 'VNM005', 10, '20260201'),
+	(10, 'VNM005', 10, '20260201'),
 
 	(1, 'ACE001', 50, '20241231'),
 	(2, 'ACE001', 50, '20241231'),
