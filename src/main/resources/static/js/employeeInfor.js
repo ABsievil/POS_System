@@ -1,6 +1,7 @@
 // Send GET request to backend API
 const employeeID = document.getElementById('employeeID').textContent;
 
+//render data for navbar row
 fetch(`http://localhost:8090/api/v1/Employee/${employeeID}`)
 .then(response => response.json())
 .then(data => {
@@ -23,7 +24,7 @@ fetch(`http://localhost:8090/api/v1/Employee/${employeeID}`)
       <td>${employee.supervisorID}</td>
       <td>${employee.salary}</td>
       <td>${employee.branchID}</td>
-      <td><button>Xóa</button></td>
+      <td><button onclick="deleteEmployee()">Xóa</button></td>
     `;
     employeeBody.appendChild(row);
 
@@ -52,7 +53,7 @@ fetch(`http://localhost:8090/api/v1/Employee/${employeeID}`)
  })
 .catch(error => console.error('Error:', error));
 
-
+// send request to update infor
 document.addEventListener('DOMContentLoaded', () => {
   document
       .getElementById('infoForm')
@@ -120,3 +121,45 @@ document.addEventListener('DOMContentLoaded', () => {
               });
       });
   });
+
+
+function deleteEmployee(){
+    fetch(`http://localhost:8090/api/v1/Employee/deleteById/${employeeID}`)
+    .then((response) => {
+        return response.json(); // Parse the response as JSON (if applicable)
+    })
+    .then((responseData) => {
+        // Use the parsed response data (responseData)
+        console.log('Response:', responseData);
+        const status = document.getElementById('postStatus');
+        const message = document.getElementById('postMessage');
+        const postSecondElement = document.getElementById('postSecond');
+        status.textContent = responseData.status;
+        message.textContent = responseData.message;
+        
+        // Show the BE messages
+        status.style.display = 'block';
+        message.style.display = 'block';
+        postSecondElement.style.display = 'block';
+
+        // Set a timeout to redirect to /employee after 5 seconds
+        const timeoutId = setTimeout(() => {
+            window.location.href = '/employeeList';
+        }, 5000);
+
+        // Update the #postSecond element to display the postSecond
+        let remainingSeconds = 5;
+
+        const postSecondInterval = setInterval(() => {
+        postSecondElement.textContent = `Auto Back! (${remainingSeconds}s)`;
+        remainingSeconds--;
+
+        if (remainingSeconds < 0) {
+            clearInterval(postSecondInterval);
+            postSecondElement.textContent = '...';
+        }
+        }, 1000);
+
+    })
+    .catch(error => console.error('Error:', error));
+}
