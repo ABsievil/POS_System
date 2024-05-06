@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee list page</title>
     <link rel="stylesheet" href="/css/employeeList.css" />
+    <link rel="stylesheet" href="/css/dropdown.css" />
     <link rel="stylesheet" href="/css/navbar.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <script src="/js/employeeList.js"></script>
@@ -31,6 +32,17 @@
                         <button type="button" class="search-btn" value="Search" onclick="searchEmployees()">Search</button>
                     </form>
 
+                    <div class="dropdown">
+                        <div>Chi nhánh</div>
+                        <div class="dropdown-content">
+                          <a href="#">Tất cả</a>
+                          <a href="#">Chi nhánh 1</a>
+                          <a href="#">Chi nhánh 2</a>
+                          <a href="#">Chi nhánh 3</a>
+                          <a href="#">Chi nhánh 4</a>
+                        </div>
+                      </div>
+
                     <button type="button" class="add" onclick="location.href='/employeeList/insert'">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                         Thêm Nhân Viên
@@ -40,14 +52,14 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th onclick="">Mã nhân viên <i class="fas fa-sort"></i></th>
+                            <th onclick="">MSNV <i class="fas fa-sort"></i></th>
                             <th>Họ và tên <i class="fas fa-sort"></i></th>
                             <th>CCCD <i class="fas fa-sort"></i></th>
                             <th>Số điện thoại <i class="fas fa-sort"></i></th>
                             <th>Email <i class="fas fa-sort"></i></th>
-                            <th>Giám sát viên  <i class="fas fa-sort"></i></th>
+                            <th>Giám sát viên <i class="fas fa-sort"></i></th>
                             <th>Lương <i class="fas fa-sort"></i></th>
-                            <th>Chi nhánh  <i class="fas fa-sort"></i></th>
+                            <th>Chi nhánh <i class="fas fa-sort"></i></th>
                             <th>Chỉnh sửa</th>
                         </tr>
                     </thead>
