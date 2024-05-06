@@ -16,10 +16,6 @@ begin
 		raiserror('Nhan vien lam viec qua 8 ca mot tuan',16,2);
 		rollback transaction 
 	end 
-	if @sumofshift <4 
-	begin 
-		print('Nhan vien lam viec chua du so ca qui dinh',16,2);  -- chỉ thông báo không báo lỗi, có thể không có  
-		end
 end;
 -- kiểm tra số ca làmm tối thiếu của nhân viên 
 Create trigger CheckshiftMin 
