@@ -65,4 +65,29 @@ delete from bill where billID = 7
 INSERT INTO Bill_ProductLot (BillID, ProductLotID, ProductTypeID, QuantityInBill, SalePrice)
 VALUES
 	(7, 2, 'VNM001', 3, 49.500)
-delete form Bill_ProductLot where billID = 7; 
+delete form Bill_ProductLot where billID = 7;
+
+-- Constraint on total price of an Bill (trigger when Product changes)
+CREATE TRIGGER trg_CheckBillTotalPrice_Bill
+ON Bill
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @BillID INT;
+    DECLARE @TotalPrice DECIMAL(10, 3);
+
+    -- Get the BillID from the inserted or updated data
+    SELECT @BillID = BillID FROM inserted;
+
+    -- Calculate the total price for this Bill
+   SELECT @TotalPrice = SUM(bp.SalePrice * bp.QuantityInBill)
+   FROM Bill_ProductLot AS bp
+   WHERE BillID = @BillID;
+
+    -- If the total price exceeds the limit 20,000,000 vnd, raise an error
+    IF @TotalPrice > 20000
+    BEGIN
+        RAISERROR('Total price for the Bill exceeds the limit of 20,000,000 vnd.', 16, 1)
+        ROLLBACK TRANSACTION
+    END
+END
