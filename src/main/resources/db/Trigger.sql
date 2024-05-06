@@ -13,7 +13,7 @@ begin
 	where @manv= employeeID 
 	if @sumofshift > 8 
 	begin 
-		raiserror('Nhan vien lam viec qua 8 ca mot tuan',16,2);
+		raiserror('Nhân viên làm việc quá 8 ca một tuần',16,2);
 		rollback transaction 
 	end 
 end;
@@ -32,7 +32,7 @@ begin
 	where @manv= employeeID ;
 	if @sumofshift < 4 
 		begin 
-		raiserror ('Nhan vien lam viec khong du so ca qui dinh',16,2); 
+		raiserror ('Nhân viên làm việc không đủ 4 ca một tuần',16,2); 
 		end ;
 end;
 -- tự động cập nhật số lượng hàng tồn sau mỗi lần xuất hóa đơn 

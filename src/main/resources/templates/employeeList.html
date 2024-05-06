@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee list page</title>
     <link rel="stylesheet" href="/css/employeeList.css" />
+    <link rel="stylesheet" href="/css/dropdown.css" />
     <link rel="stylesheet" href="/css/navbar.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <script src="/js/employeeList.js"></script>
@@ -30,6 +31,17 @@
                         <!-- <input type="submit" class="search-btn" value="Search"> -->
                         <button type="button" class="search-btn" value="Search" onclick="searchEmployees()">Search</button>
                     </form>
+
+                    <div class="dropdown">
+                        <div>Chi nhánh</div>
+                        <div class="dropdown-content">
+                          <a href="#">Tất cả</a>
+                          <a href="#">Chi nhánh 1</a>
+                          <a href="#">Chi nhánh 2</a>
+                          <a href="#">Chi nhánh 3</a>
+                          <a href="#">Chi nhánh 4</a>
+                        </div>
+                      </div>
 
                     <button type="button" class="add" onclick="location.href='/employeeList/insert'">
                         <i class="fas fa-plus" aria-hidden="true"></i>
