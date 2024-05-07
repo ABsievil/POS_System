@@ -137,7 +137,7 @@ function searchProductLot(branchID) {
 };
 
 /* SORT FUNC */
-let employeeID_key = true;
+let employeeID_key = false;
 function sortByEmployeeID(){
   const employeeBody = document.getElementById('employeeBody');
     
@@ -158,7 +158,7 @@ function sortByEmployeeID(){
   .catch(error => console.error('Error:', error));
 
 }
-let supervisorID_key = true;
+let supervisorID_key = false;
 function sortBySupervisorID(){
   const employeeBody = document.getElementById('employeeBody');
     
@@ -179,7 +179,7 @@ function sortBySupervisorID(){
   .catch(error => console.error('Error:', error));
 }
 
-let branchID_key = true;
+let branchID_key = false;
 function sortByBranchID(){
   const employeeBody = document.getElementById('employeeBody');
     

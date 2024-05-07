@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class PageController {
     
-    @RequestMapping(value = {"/", "home"})
+    @RequestMapping(value = {"/", "home", "index"})
     public String welcome(){
         return "homePage";
     }

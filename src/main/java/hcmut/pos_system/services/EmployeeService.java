@@ -96,7 +96,7 @@ public class EmployeeService {
             newEmployee.getSalary(), 
             newEmployee.getSupervisorID(), 
             newEmployee.getBranchID());
-
+            
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ResponseObject("OK", "Query to insert Employee successfully", null));
 
@@ -126,7 +126,8 @@ public class EmployeeService {
     "Căn cước công dân không hợp lệ",
     "Email không hợp lệ",
     "Số điện thoại không hợp lệ",
-    "Lương nhân viên phải thấp hơn lương quản lí"
+    "Lương nhân viên phải thấp hơn lương quản lí",
+    "Tiền lương phải ít nhất là 5 triệu"
     );
 
     public ResponseEntity<ResponseObject> PROC_updateEmp(EmployeeDTO emp){
