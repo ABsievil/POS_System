@@ -190,7 +190,7 @@ public class EmployeeService {
     "Căn cước công dân không hợp lệ",
     "Số điện thoại không hợp lệ",
     "Nhân viên giám sát không tồn tại",
-    "Nhân viên không thể là người giám sát chính bản thân mình"
+    "Nhân viên không thể là người giám sát của mình"
     );
 
     public ResponseEntity<ResponseObject> PROC_deleteEmployeeById(Integer manv){
@@ -201,19 +201,28 @@ public class EmployeeService {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ResponseObject("OK", "Query to delete Employee by Id successfully", null));
         } catch (DataAccessException e) {
-            if (e.getMessage().contains("Nhân viên đã tồn tại") ||
-                e.getMessage().contains("Chi nhánh không tồn tại") ||
-                e.getMessage().contains("Căn cước công dân không hợp lệ") ||
-                e.getMessage().contains("Số điện thoại không hợp lệ") ||
-                e.getMessage().contains("Lương nhân viên phải thấp hơn lương quản lí")) {
+            String errorMessage = null;
+            for (String error : ERROR_MESSAGES_deleteEmp) {
+                if (e.getMessage().contains(error)) {
+                    errorMessage = error;
+                    break;
+                }
+            }
+        
+            if (errorMessage != null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ResponseObject("ERROR", e.getMessage(), null));
+                        .body(new ResponseObject("FAILED", errorMessage, null));
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ResponseObject("ERROR" + ", " + e.getMessage().toString(), "Error inserting Employee failed", null));
+                        .body(new ResponseObject("ERROR " + e.getMessage().toString(), "Error deleting Employee failed", null));
             }
         }
     }
+
+    private static final List<String> ERROR_MESSAGES_deleteEmp = Arrays.asList(
+    "Nhân viên không tồn tại",
+    "Không thể xóa quản lí chi nhánh"
+    );
 
     /* SORT METHOD */
     public ResponseEntity<ResponseObject> PROC_employeeID_ASC (){
